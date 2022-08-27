@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "twigs:calcite_wall",
+    "twigs:cobblestone_brick_wall",
+    "twigs:mossy_cobblestone_brick_wall"
+  ]
+}

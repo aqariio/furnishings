@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "twigs",
+  "version": "1.0",
+
+  "name": "Twigs",
+  "description": "Architect's Arsenal",
+  "authors": [
+    "aqario"
+  ],
+  "contact": {
+    "sources": "https://github.com/aqariio/twigs"
+  },
+
+  "license": "MIT",
+  "icon": "assets/twigs/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "aqario.twigs.Twigs"
+    ],
+    "client": [
+      "aqario.twigs.TwigsClient"
+    ]
+  },
+  "mixins": [
+    "twigs.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
