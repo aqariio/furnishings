@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "twigs:block/soul_lamp"
+    },
+    "lit=true": {
+      "model": "twigs:block/soul_lamp_on"
+    }
+  }
+}

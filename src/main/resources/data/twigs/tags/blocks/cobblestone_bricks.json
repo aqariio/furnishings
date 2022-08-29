@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "twigs:cobblestone_bricks",
+    "twigs:cracked_cobblestone_bricks",
+    "twigs:mossy_cobblestone_bricks"
+  ]
+}

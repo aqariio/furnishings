@@ -6,10 +6,12 @@
     "twigs:cobblestone_brick_wall",
     "twigs:cobblestone_bricks",
     "twigs:cracked_cobblestone_bricks",
+    "twigs:lamp",
     "twigs:mossy_cobblestone_brick_slab",
     "twigs:mossy_cobblestone_brick_stairs",
     "twigs:mossy_cobblestone_brick_wall",
     "twigs:mossy_cobblestone_bricks",
-    "twigs:pebbled_dirt"
+    "twigs:rocky_dirt",
+    "twigs:soul_lamp"
   ]
 }

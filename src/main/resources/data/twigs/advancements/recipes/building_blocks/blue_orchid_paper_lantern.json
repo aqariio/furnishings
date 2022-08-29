@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "twigs:pebbled_dirt"
+      "twigs:blue_orchid_paper_lantern"
     ]
   },
   "criteria": {
-    "has_cobblestone": {
+    "has_paper_lantern": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:cobblestone"
+              "twigs:paper_lantern"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "twigs:pebbled_dirt"
+        "recipe": "twigs:blue_orchid_paper_lantern"
       }
     }
   },
   "requirements": [
     [
-      "has_cobblestone",
+      "has_paper_lantern",
       "has_the_recipe"
     ]
   ]

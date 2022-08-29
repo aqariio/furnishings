@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "twigs:pebbled_dirt"
+          "name": "twigs:rocky_dirt"
         }
       ],
       "conditions": [

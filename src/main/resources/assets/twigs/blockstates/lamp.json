@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "twigs:block/lamp"
+    },
+    "lit=true": {
+      "model": "twigs:block/lamp_on"
+    }
+  }
+}
