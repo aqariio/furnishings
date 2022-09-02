@@ -1,0 +1,9 @@
+{
+  "parent": "twigs:block/template_brazier_off",
+  "textures": {
+    "all": "twigs:block/brazier_base",
+    "particle": "twigs:block/brazier_base",
+    "side": "twigs:block/brazier",
+    "base": "twigs:block/brazier_base"
+  }
+}

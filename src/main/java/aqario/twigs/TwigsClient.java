@@ -14,5 +14,9 @@ public class TwigsClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.CRIMSON_ROOTS_PAPER_LANTERN, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.DANDELION_PAPER_LANTERN, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.RED_PAPER_LANTERN, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.FRAMED_GLASS, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.FRAMED_GLASS_PANE, RenderLayer.getTranslucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.BRAZIER, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(TwigsBlocks.SOUL_BRAZIER, RenderLayer.getCutout());
     }
 }

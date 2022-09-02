@@ -1,17 +1,27 @@
 {
   "replace": false,
   "values": [
+    "twigs:brazier",
+    "twigs:chiseled_bricks",
     "twigs:cobblestone_brick_slab",
     "twigs:cobblestone_brick_stairs",
     "twigs:cobblestone_brick_wall",
     "twigs:cobblestone_bricks",
+    "twigs:cracked_bricks",
     "twigs:cracked_cobblestone_bricks",
+    "twigs:framed_glass",
+    "twigs:framed_glass_pane",
     "twigs:lamp",
+    "twigs:mossy_bricks",
+    "twigs:mossy_brick_slab",
+    "twigs:mossy_brick_stairs",
+    "twigs:mossy_brick_wall",
     "twigs:mossy_cobblestone_brick_slab",
     "twigs:mossy_cobblestone_brick_stairs",
     "twigs:mossy_cobblestone_brick_wall",
     "twigs:mossy_cobblestone_bricks",
     "twigs:rocky_dirt",
+    "twigs:soul_brazier",
     "twigs:soul_lamp"
   ]
 }

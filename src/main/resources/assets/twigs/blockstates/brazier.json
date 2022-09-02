@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=true" : {
+     "model" : "twigs:block/brazier"
+    },
+    "lit=false" : {
+      "model" : "twigs:block/brazier_off"
+    }
+  }
+}
