@@ -89,7 +89,9 @@ public class BrazierBlock extends Block implements Waterloggable {
                 world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
                 world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
                 world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
-                context.getStack().decrement(1);
+                if (!player.isCreative()) {
+                    context.getStack().decrement(1);
+                }
                 return ActionResult.SUCCESS;
             }
         }

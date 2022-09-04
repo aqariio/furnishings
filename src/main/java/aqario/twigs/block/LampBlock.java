@@ -21,7 +21,7 @@ public class LampBlock extends Block {
 
     public LampBlock(AbstractBlock.Settings settings) {
         super(settings);
-        this.setDefaultState((BlockState)this.getDefaultState().with(LIT, true));
+        this.setDefaultState(this.getDefaultState().with(LIT, true));
     }
 
     @Override
@@ -29,7 +29,7 @@ public class LampBlock extends Block {
         if (!world.isClient) {
             boolean currentState = state.get(LIT);
             world.setBlockState(pos, state.with(LIT, !currentState), Block.NOTIFY_ALL);
-            world.playSound(null, pos, currentState ? TwigsSoundEvents.BLOCK_LAMP_EXTINGUISH : TwigsSoundEvents.BLOCK_LAMP_LIGHT, SoundCategory.PLAYERS, 0.3f, 2.0f);
+            world.playSound(null, pos, currentState ? TwigsSoundEvents.BLOCK_LAMP_EXTINGUISH : TwigsSoundEvents.BLOCK_LAMP_LIGHT, SoundCategory.BLOCKS, 0.3f, 2.0f);
         }
         return ActionResult.SUCCESS;
     }
