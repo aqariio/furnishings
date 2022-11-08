@@ -92,7 +92,7 @@ public class TwigsBlocks {
     public static final Block POLISHED_TUFF_BRICK_WALL = register("polished_tuff_brick_wall", new WallBlock(FabricBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CRACKED_POLISHED_TUFF_BRICKS = register("cracked_polished_tuff_bricks", new Block(FabricBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 
-    /* Registration and Initialization */
+    /** Registration and Initialization */
 
     private static Block register(String id, Block block, ItemGroup group) {
         registerBlockItem(id, block, group);
