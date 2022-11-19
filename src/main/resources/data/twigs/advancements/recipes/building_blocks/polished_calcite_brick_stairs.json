@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "twigs:calcite_stairs_from_calcite_stonecutting"
+      "twigs:polished_calcite_brick_stairs"
     ]
   },
   "criteria": {
-    "has_calcite": {
+    "has_polished_calcite_bricks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:calcite"
+              "twigs:polished_calcite_bricks"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "twigs:calcite_stairs_from_calcite_stonecutting"
+        "recipe": "twigs:polished_calcite_brick_stairs"
       }
     }
   },
   "requirements": [
     [
-      "has_calcite",
+      "has_polished_calcite_bricks",
       "has_the_recipe"
     ]
   ]

@@ -1,21 +1,28 @@
 {
   "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "twigs:calcite_wall"
+    ]
+  },
   "criteria": {
     "has_calcite": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:calcite"
+            "items": [
+              "minecraft:calcite"
+            ]
           }
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
+      }
     },
     "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "twigs:calcite_wall"
-      },
-      "trigger": "minecraft:recipe_unlocked"
+      }
     }
   },
   "requirements": [
@@ -23,10 +30,5 @@
       "has_calcite",
       "has_the_recipe"
     ]
-  ],
-  "rewards": {
-    "recipes": [
-      "twigs:calcite_wall"
-    ]
-  }
+  ]
 }
