@@ -1,10 +1,6 @@
 package aqario.twigs.block;
 
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityTicker;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.CampfireBlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -15,23 +11,20 @@ import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
-import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.CampfireCookingRecipe;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -41,12 +34,15 @@ import net.minecraft.world.WorldEvents;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-import java.util.Random;
-
 public class BrazierBlock extends Block implements Waterloggable {
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(2D, 0.0D, 2D, 14D, 14D, 14D);
-    protected static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 13.5D, 13.5D);
+    protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 15, 14);
+    protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(3, 5, 3, 13, 7, 13);
+    protected static final VoxelShape TOP_LEG_SHAPE = Block.createCuboidShape(2, 2, 2, 14, 5, 14);
+    protected static final VoxelShape BOTTOM_LEG_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 3, 16);
+    protected static final VoxelShape HEAD = VoxelShapes.combineAndSimplify(TOP_SHAPE, BASE_SHAPE, BooleanBiFunction.OR);
+    protected static final VoxelShape BASE = VoxelShapes.combineAndSimplify(TOP_LEG_SHAPE, BOTTOM_LEG_SHAPE, BooleanBiFunction.OR);
+    protected static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(HEAD, BASE, BooleanBiFunction.OR);
+    protected static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 16, 14);
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     private static final VoxelShape SMOKEY_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 16.0, 10.0);
@@ -85,7 +81,7 @@ public class BrazierBlock extends Block implements Waterloggable {
                 return ActionResult.SUCCESS;
             }
             if (itemStack.getItem() == Items.FIRE_CHARGE) {
-                Random random = world.getRandom();
+                Random random = (Random) world.getRandom();
                 world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
                 world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
                 world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
@@ -100,7 +96,7 @@ public class BrazierBlock extends Block implements Waterloggable {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (!entity.isFireImmune() && state.get(LIT).booleanValue() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity)) {
+        if (!entity.isFireImmune() && state.get(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity)) {
             if (entity.getY() >= state.getCollisionShape(world, pos).getMax(Direction.Axis.Y) + pos.getY() - 0.1f) {
                 entity.damage(DamageSource.IN_FIRE, this.fireDamage);
             }
@@ -127,8 +123,11 @@ public class BrazierBlock extends Block implements Waterloggable {
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if (state.get(WATERLOGGED).booleanValue()) {
+        if (state.get(WATERLOGGED)) {
             world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+        if (direction == Direction.UP && !state.canPlaceAt(world, pos)) {
+            world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
@@ -164,7 +163,7 @@ public class BrazierBlock extends Block implements Waterloggable {
 
     @Override
     public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
-        if (!state.get(Properties.WATERLOGGED).booleanValue() && fluidState.getFluid() == Fluids.WATER) {
+        if (!state.get(Properties.WATERLOGGED) && fluidState.getFluid() == Fluids.WATER) {
             boolean bl = state.get(LIT);
             if (bl) {
                 if (!world.isClient()) {
@@ -182,14 +181,14 @@ public class BrazierBlock extends Block implements Waterloggable {
     @Override
     public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
         BlockPos blockPos = hit.getBlockPos();
-        if (!world.isClient && projectile.isOnFire() && projectile.canModifyAt(world, blockPos) && !state.get(LIT).booleanValue() && !state.get(WATERLOGGED).booleanValue()) {
+        if (!world.isClient && projectile.isOnFire() && projectile.canModifyAt(world, blockPos) && !state.get(LIT) && !state.get(WATERLOGGED)) {
             world.setBlockState(blockPos, (BlockState)state.with(Properties.LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
         }
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        if (state.get(WATERLOGGED).booleanValue()) {
+        if (state.get(WATERLOGGED)) {
             return Fluids.WATER.getStill(false);
         }
         return super.getFluidState(state);
@@ -206,6 +205,6 @@ public class BrazierBlock extends Block implements Waterloggable {
     }
 
     public static boolean canBeLit(BlockState state2) {
-        return state2.isIn(BlockTags.CAMPFIRES, state -> state.contains(WATERLOGGED) && state.contains(LIT)) && state2.get(WATERLOGGED) == false && state2.get(LIT) == false;
+        return state2.isIn(BlockTags.CAMPFIRES, state -> state.contains(WATERLOGGED) && state.contains(LIT)) && !state2.get(WATERLOGGED) && !state2.get(LIT);
     }
 }

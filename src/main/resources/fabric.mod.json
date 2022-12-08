@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "twigs",
-  "version": "1.0",
+  "version": "1.1.0",
 
-  "name": "Twigs",
-  "description": "Architect's Arsenal",
+  "name": "Medieval Furnishings",
+  "description": "Spruce up your interior with decorations that makes it feel like home",
   "authors": [
     "aqario"
   ],
@@ -18,20 +18,23 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "aqario.twigs.Twigs"
+      "aqario.twigs.Furnishings"
     ],
     "client": [
-      "aqario.twigs.TwigsClient"
+      "aqario.twigs.FurnishingsClient"
+    ],
+    "fabric-datagen": [
+      "aqario.twigs.datagen.FurnishingsDataGeneration"
     ]
   },
   "mixins": [
-    "twigs.mixins.json"
+    "furnishings.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.14.9",
+    "fabricloader": ">=0.14.11",
     "fabric": "*",
-    "minecraft": "1.18.x",
+    "minecraft": "1.19.x",
     "java": ">=17"
   },
   "suggests": {

@@ -3,6 +3,6 @@
   "textures": {
     "top": "twigs:block/soul_lamp_top",
     "bottom": "twigs:block/soul_lamp_bottom",
-    "side": "twigs:block/soul_lamp_side_off"
+    "side": "twigs:block/soul_lamp_side"
   }
 }

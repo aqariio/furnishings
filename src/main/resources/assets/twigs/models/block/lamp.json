@@ -3,6 +3,6 @@
   "textures": {
     "top": "twigs:block/lamp_top",
     "bottom": "twigs:block/lamp_bottom",
-    "side": "twigs:block/lamp_side_off"
+    "side": "twigs:block/lamp_side"
   }
 }

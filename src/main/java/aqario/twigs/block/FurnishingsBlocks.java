@@ -1,6 +1,6 @@
 package aqario.twigs.block;
 
-import aqario.twigs.Twigs;
+import aqario.twigs.Furnishings;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -11,14 +11,12 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import static net.minecraft.block.Blocks.GLASS;
-
-public class TwigsBlocks {
+public class FurnishingsBlocks {
 
     /** Braziers */
 
-    public static final Block BRAZIER = register("brazier", new BrazierBlock(true, 1, FabricBlockSettings.of(Material.METAL, MapColor.IRON_GRAY).strength(3.0f).sounds(BlockSoundGroup.METAL).luminance((state) -> state.get(BrazierBlock.LIT) ? 15 : 0).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
-    public static final Block SOUL_BRAZIER = register("soul_brazier", new BrazierBlock(false, 2, FabricBlockSettings.of(Material.METAL, MapColor.IRON_GRAY).strength(3.0f).sounds(BlockSoundGroup.METAL).luminance((state) -> state.get(BrazierBlock.LIT) ? 10 : 0).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
+    public static final Block BRAZIER = register("brazier", new BrazierBlock(true, 1, FabricBlockSettings.of(Material.METAL, MapColor.IRON_GRAY).strength(3.0f).sounds(BlockSoundGroup.METAL).luminance((state) -> state.get(BrazierBlock.LIT) ? 15 : 0).nonOpaque()), ItemGroup.DECORATIONS);
+    public static final Block SOUL_BRAZIER = register("soul_brazier", new BrazierBlock(false, 2, FabricBlockSettings.of(Material.METAL, MapColor.IRON_GRAY).strength(3.0f).sounds(BlockSoundGroup.METAL).luminance((state) -> state.get(BrazierBlock.LIT) ? 10 : 0).nonOpaque()), ItemGroup.DECORATIONS);
 
     /** Bricks */
 
@@ -67,17 +65,17 @@ public class TwigsBlocks {
 
     /** Lamps */
 
-    public static final Block LAMP = register("lamp", new LampBlock(FabricBlockSettings.of(Material.METAL).luminance((state) -> state.get(LampBlock.LIT) ? 15 : 0).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block SOUL_LAMP = register("soul_lamp", new LampBlock(FabricBlockSettings.of(Material.METAL).luminance((state) -> state.get(LampBlock.LIT) ? 10 : 0).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block LAMP = register("lamp", new Block(FabricBlockSettings.of(Material.METAL).luminance(state -> 15).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
+    public static final Block SOUL_LAMP = register("soul_lamp", new Block(FabricBlockSettings.of(Material.METAL).luminance(state -> 10).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 
     /** Paper Lanterns */
 
-    public static final Block PAPER_LANTERN = register("paper_lantern", new PaperLanternBlock(FabricBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
-    public static final Block ALLIUM_PAPER_LANTERN = register("allium_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block BLUE_ORCHID_PAPER_LANTERN = register("blue_orchid_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block CRIMSON_ROOTS_PAPER_LANTERN = register("crimson_roots_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block DANDELION_PAPER_LANTERN = register("dandelion_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block PAPER_LANTERN = register("paper_lantern", new PaperLanternBlock(FabricBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.DECORATIONS);
+    public static final Block ALLIUM_PAPER_LANTERN = register("allium_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
+    public static final Block BLUE_ORCHID_PAPER_LANTERN = register("blue_orchid_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
+    public static final Block CRIMSON_ROOTS_PAPER_LANTERN = register("crimson_roots_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
+    public static final Block DANDELION_PAPER_LANTERN = register("dandelion_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
+    public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new PaperLanternBlock(FabricBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
 
     /* Tuff */
 
@@ -98,11 +96,11 @@ public class TwigsBlocks {
 
     private static Block register(String id, Block block, ItemGroup group) {
         registerBlockItem(id, block, group);
-        return Registry.register(Registry.BLOCK, new Identifier(Twigs.MODID, id), block);
+        return Registry.register(Registry.BLOCK, new Identifier(Furnishings.MODID, id), block);
     }
 
     private static Item registerBlockItem(String id, Block block, ItemGroup group) {
-        return Registry.register(Registry.ITEM, new Identifier(Twigs.MODID, id), new BlockItem(block, new FabricItemSettings().group(group)));
+        return Registry.register(Registry.ITEM, new Identifier(Furnishings.MODID, id), new BlockItem(block, new FabricItemSettings().group(group)));
     }
 
     public static void init() {

@@ -1,12 +1,11 @@
 package aqario.twigs.block;
 
-import aqario.twigs.sound.TwigsSoundEvents;
+import aqario.twigs.sound.FurnishingsSoundEvents;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -29,7 +28,7 @@ public class LampBlock extends Block {
         if (!world.isClient) {
             boolean currentState = state.get(LIT);
             world.setBlockState(pos, state.with(LIT, !currentState), Block.NOTIFY_ALL);
-            world.playSound(null, pos, currentState ? TwigsSoundEvents.BLOCK_LAMP_EXTINGUISH : TwigsSoundEvents.BLOCK_LAMP_LIGHT, SoundCategory.BLOCKS, 0.3f, 2.0f);
+            world.playSound(null, pos, currentState ? FurnishingsSoundEvents.BLOCK_LAMP_EXTINGUISH : FurnishingsSoundEvents.BLOCK_LAMP_LIGHT, SoundCategory.BLOCKS, 0.3f, 2.0f);
         }
         return ActionResult.SUCCESS;
     }
