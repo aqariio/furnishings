@@ -1,0 +1,6 @@
+{
+  "parent": "twigs:block/embossed_carpet_template",
+  "textures": {
+    "wool": "twigs:block/embossed_carpet_new"
+  }
+}

@@ -58,10 +58,18 @@ public class FurnishingsBlocks {
 
     public static final Block ROCKY_DIRT = register("rocky_dirt", new Block(FabricBlockSettings.copyOf(Blocks.DIRT).strength(1.0F).sounds(BlockSoundGroup.TUFF).requiresTool()), ItemGroup.BUILDING_BLOCKS);
 
+    /** Embossed Carpet */
+
+    public static final Block EMBOSSED_CARPET = register("embossed_carpet", new EmbossedCarpetBlock(FabricBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
+
     /** Framed Glass */
 
     public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(1.0f, 1.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
     public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(FabricBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(1.0f, 1.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
+
+    /* Iron Scaffolding */
+
+
 
     /** Lamps */
 
