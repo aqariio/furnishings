@@ -14,6 +14,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -66,6 +67,11 @@ public class EmbossedCarpetBlock extends Block {
             return (BlockState)state.with(FACING_PROPERTIES.get(direction), this.canConnect(neighborState));
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return !world.isAir(pos.down());
     }
 
     @Override

@@ -39,9 +39,7 @@ public class BrazierBlock extends Block implements Waterloggable {
     protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(3, 5, 3, 13, 7, 13);
     protected static final VoxelShape TOP_LEG_SHAPE = Block.createCuboidShape(2, 2, 2, 14, 5, 14);
     protected static final VoxelShape BOTTOM_LEG_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 3, 16);
-    protected static final VoxelShape HEAD = VoxelShapes.combineAndSimplify(TOP_SHAPE, BASE_SHAPE, BooleanBiFunction.OR);
-    protected static final VoxelShape BASE = VoxelShapes.combineAndSimplify(TOP_LEG_SHAPE, BOTTOM_LEG_SHAPE, BooleanBiFunction.OR);
-    protected static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(HEAD, BASE, BooleanBiFunction.OR);
+    protected static final VoxelShape SHAPE = VoxelShapes.union(TOP_SHAPE, BASE_SHAPE, TOP_LEG_SHAPE, BOTTOM_LEG_SHAPE);
     protected static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 16, 14);
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;

@@ -1,12 +1,14 @@
 package aqario.twigs.block;
 
 import aqario.twigs.Furnishings;
+import aqario.twigs.item.IronScaffoldingItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ScaffoldingItem;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -69,7 +71,7 @@ public class FurnishingsBlocks {
 
     /* Iron Scaffolding */
 
-
+    public static final Block IRON_SCAFFOLDING = registerScaffolding("iron_scaffolding", new IronScaffoldingBlock(FabricBlockSettings.of(Material.METAL).mapColor(MapColor.IRON_GRAY).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN).noCollision().dynamicBounds()));
 
     /** Lamps */
 
@@ -107,8 +109,17 @@ public class FurnishingsBlocks {
         return Registry.register(Registry.BLOCK, new Identifier(Furnishings.MODID, id), block);
     }
 
+    private static Block registerScaffolding(String id, Block block) {
+        registerScaffoldingBlockItem(id, block);
+        return Registry.register(Registry.BLOCK, new Identifier(Furnishings.MODID, id), block);
+    }
+
     private static Item registerBlockItem(String id, Block block, ItemGroup group) {
         return Registry.register(Registry.ITEM, new Identifier(Furnishings.MODID, id), new BlockItem(block, new FabricItemSettings().group(group)));
+    }
+
+    private static Item registerScaffoldingBlockItem(String id, Block block) {
+        return Registry.register(Registry.ITEM, new Identifier(Furnishings.MODID, id), new IronScaffoldingItem(block, new FabricItemSettings().group(ItemGroup.DECORATIONS)));
     }
 
     public static void init() {
