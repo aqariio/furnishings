@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "furnishings:block/crimson_roots_paper_lantern"
+    },
+    "hanging=true": {
+      "model": "furnishings:block/crimson_roots_paper_lantern_hanging"
+    }
+  }
+}

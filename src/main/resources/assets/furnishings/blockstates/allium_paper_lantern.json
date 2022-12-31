@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "furnishings:block/allium_paper_lantern"
+    },
+    "hanging=true": {
+      "model": "furnishings:block/allium_paper_lantern_hanging"
+    }
+  }
+}

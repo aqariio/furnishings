@@ -1,6 +1,0 @@
-{
-  "parent": "twigs:block/embossed_carpet",
-  "textures": {
-    "1": "twigs:block/embossed_carpet_esw"
-  }
-}

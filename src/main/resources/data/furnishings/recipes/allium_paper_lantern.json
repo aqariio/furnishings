@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "furnishings:paper_lantern"
+    },
+    {
+      "item": "minecraft:allium"
+    }
+  ],
+  "result": {
+    "item": "furnishings:allium_paper_lantern"
+  }
+}

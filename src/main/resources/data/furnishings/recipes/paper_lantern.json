@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "P#P",
+    "PPP"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:torch"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "furnishings:paper_lantern"
+  }
+}

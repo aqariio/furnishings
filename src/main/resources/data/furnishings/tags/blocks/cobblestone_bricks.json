@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "furnishings:cobblestone_bricks",
+    "furnishings:cracked_cobblestone_bricks",
+    "furnishings:mossy_cobblestone_bricks"
+  ]
+}

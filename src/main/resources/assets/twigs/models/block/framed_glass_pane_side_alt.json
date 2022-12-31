@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_glass_pane_side_alt",
-  "textures": {
-    "edge": "twigs:block/framed_glass_pane_top",
-    "pane": "twigs:block/framed_glass"
-  }
-}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "furnishings:block/blue_orchid_paper_lantern"
+    },
+    "hanging=true": {
+      "model": "furnishings:block/blue_orchid_paper_lantern_hanging"
+    }
+  }
+}

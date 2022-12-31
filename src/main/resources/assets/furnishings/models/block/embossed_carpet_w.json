@@ -1,0 +1,6 @@
+{
+  "parent": "furnishings:block/embossed_carpet",
+  "textures": {
+    "1": "furnishings:block/embossed_carpet_w"
+  }
+}

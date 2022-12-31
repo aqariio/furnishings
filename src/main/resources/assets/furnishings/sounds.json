@@ -1,0 +1,14 @@
+{
+  "block.lamp.light": {
+    "subtitle": "subtitles.furnishings.block.lamp.light",
+    "sounds": [
+      "minecraft:mob/ghast/fireball4"
+    ]
+  },
+  "block.lamp.extinguish": {
+    "subtitle": "subtitles.furnishings.block.lamp.extinguish",
+    "sounds": [
+      "minecraft:random/fizz"
+    ]
+  }
+}

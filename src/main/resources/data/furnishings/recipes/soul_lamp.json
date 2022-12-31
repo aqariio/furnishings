@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "I#I",
+    "ISI"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:soul_torch"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "tag": "minecraft:soul_fire_base_blocks"
+    }
+  },
+  "result": {
+    "item": "furnishings:soul_lamp"
+  }
+}

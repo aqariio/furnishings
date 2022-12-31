@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "furnishings:blue_orchid_paper_lantern"
+    ]
+  },
+  "criteria": {
+    "has_paper_lantern": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "furnishings:paper_lantern"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "furnishings:blue_orchid_paper_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_paper_lantern",
+      "has_the_recipe"
+    ]
+  ]
+}

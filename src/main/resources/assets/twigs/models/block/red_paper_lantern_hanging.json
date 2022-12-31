@@ -1,8 +1,0 @@
-{
-  "parent": "twigs:block/template_paper_lantern_hanging",
-  "textures": {
-    "top": "twigs:block/red_paper_lantern_top",
-    "bottom": "twigs:block/red_paper_lantern_bottom",
-    "side": "twigs:block/red_paper_lantern_side"
-  }
-}

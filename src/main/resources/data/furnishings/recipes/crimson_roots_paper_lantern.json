@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "furnishings:paper_lantern"
+    },
+    {
+      "item": "minecraft:crimson_roots"
+    }
+  ],
+  "result": {
+    "item": "furnishings:crimson_roots_paper_lantern"
+  }
+}
