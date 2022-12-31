@@ -29,7 +29,7 @@ public class FurnishingsBlocks {
     public static final Block MOSSY_BRICK_STAIRS = register("mossy_brick_stairs", new PublicStairsBlock(MOSSY_BRICKS.getDefaultState(), FabricBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_BRICK_WALL = register("mossy_brick_wall", new WallBlock(FabricBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 
-    /* Calcite */
+    /** Calcite */
 
     public static final Block CALCITE_SLAB = register("calcite_slab", new SlabBlock(FabricBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CALCITE_STAIRS = register("calcite_stairs", new PublicStairsBlock(Blocks.CALCITE.getDefaultState(), FabricBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
@@ -69,7 +69,7 @@ public class FurnishingsBlocks {
     public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(FabricBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(1.0f, 1.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
     public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(FabricBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(1.0f, 1.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
 
-    /* Iron Scaffolding */
+    /** Iron Scaffolding */
 
     public static final Block IRON_SCAFFOLDING = registerScaffolding("iron_scaffolding", new IronScaffoldingBlock(FabricBlockSettings.of(Material.METAL).mapColor(MapColor.IRON_GRAY).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN).noCollision().dynamicBounds()));
 

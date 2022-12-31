@@ -1,6 +1,5 @@
 package aqario.twigs.block;
 
-import aqario.twigs.block.property.FurnishingsProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -31,7 +30,7 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     private static final VoxelShape BOTTOM_OUTLINE_SHAPE;
     private static final VoxelShape COLLISION_SHAPE;
     private static final VoxelShape OUTLINE_SHAPE;
-    public static final IntProperty DISTANCE = FurnishingsProperties.DISTANCE_0_32;
+    public static final IntProperty DISTANCE = IntProperty.of("distance", 0, 32);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty BOTTOM = Properties.BOTTOM;
 

@@ -27,23 +27,33 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldEvents;
+import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.stream.Stream;
+
 public class BrazierBlock extends Block implements Waterloggable {
+    protected static final VoxelShape CHAIN_SHAPE = Block.createCuboidShape(6.5, 7, 6.5, 9.5, 16, 9.5);
     protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 15, 14);
     protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(3, 5, 3, 13, 7, 13);
-    protected static final VoxelShape TOP_LEG_SHAPE = Block.createCuboidShape(2, 2, 2, 14, 5, 14);
-    protected static final VoxelShape BOTTOM_LEG_SHAPE = Block.createCuboidShape(0, 0, 0, 16, 3, 16);
-    protected static final VoxelShape SHAPE = VoxelShapes.union(TOP_SHAPE, BASE_SHAPE, TOP_LEG_SHAPE, BOTTOM_LEG_SHAPE);
+    protected static final VoxelShape LEG_SHAPE = Stream.of(
+            Block.createCuboidShape(7, 2, 2, 9, 5, 4),
+            Block.createCuboidShape(12, 2, 7, 14, 5, 9),
+            Block.createCuboidShape(7, 2, 12, 9, 5, 14),
+            Block.createCuboidShape(2, 2, 7, 4, 5, 9),
+            Block.createCuboidShape(7, 0, 0, 9, 3, 2),
+            Block.createCuboidShape(14, 0, 7, 16, 3, 9),
+            Block.createCuboidShape(7, 0, 14, 9, 3, 16),
+            Block.createCuboidShape(0, 0, 7, 2, 3, 9)
+            ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+    protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(TOP_SHAPE, BASE_SHAPE, LEG_SHAPE);
+    protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(CHAIN_SHAPE, TOP_SHAPE, BASE_SHAPE);
     protected static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 16, 14);
-    public static final BooleanProperty LIT = Properties.LIT;
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     private static final VoxelShape SMOKEY_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 16.0, 10.0);
+    public static final BooleanProperty LIT = Properties.LIT;
+    public static final BooleanProperty HANGING = Properties.HANGING;
+    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     private final boolean emitsParticles;
     private final int fireDamage;
 
@@ -51,7 +61,7 @@ public class BrazierBlock extends Block implements Waterloggable {
         super(settings);
         this.emitsParticles = emitsParticles;
         this.fireDamage = fireDamage;
-        this.setDefaultState((BlockState)((BlockState)((BlockState)this.stateManager.getDefaultState()).with(LIT, true)).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(LIT, false).with(HANGING, false).with(WATERLOGGED, false));
     }
 
     @Override
@@ -111,28 +121,49 @@ public class BrazierBlock extends Block implements Waterloggable {
     }
 
     @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        Direction direction = attachedDirection(state).getOpposite();
+        return Block.sideCoversSmallSquare(world, pos.offset(direction), direction.getOpposite());
+    }
+
+    protected static Direction attachedDirection(BlockState state) {
+        return state.get(HANGING) ? Direction.DOWN : Direction.UP;
+    }
+
+    @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockPos blockPos;
-        World worldAccess = ctx.getWorld();
-        boolean bl = worldAccess.getFluidState(blockPos = ctx.getBlockPos()).getFluid() == Fluids.WATER;
-        return ((BlockState)((BlockState)this.getDefaultState().with(WATERLOGGED, bl)).with(LIT, !bl));
+        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        for (Direction direction : ctx.getPlacementDirections()) {
+            BlockState blockState;
+            if (direction.getAxis() != Direction.Axis.Y || !(blockState = this.getDefaultState().with(HANGING, direction == Direction.UP)).canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) continue;
+            return blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+        }
+        return null;
     }
+//        BlockPos blockPos;
+//        World worldAccess = ctx.getWorld();
+//        for (Direction direction : ctx.getPlacementDirections()) {
+//            if (direction.getAxis() != Direction.Axis.Y || !this.getDefaultState().with(HANGING, direction == Direction.UP).canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) continue;
+//        }
+//        boolean bl = worldAccess.getFluidState(blockPos = ctx.getBlockPos()).getFluid() == Fluids.WATER;
+//        return this.getDefaultState().with(WATERLOGGED, bl).with(LIT, !bl);
+//    }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
             world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
-        if (direction == Direction.UP && !state.canPlaceAt(world, pos)) {
-            world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+        if (attachedDirection(state).getOpposite() == direction && !state.canPlaceAt(world, pos)) {
+            return Blocks.AIR.getDefaultState();
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
+        return state.get(HANGING) ? HANGING_SHAPE : STANDING_SHAPE;
     }
 
     @Override
@@ -194,7 +225,7 @@ public class BrazierBlock extends Block implements Waterloggable {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(LIT, WATERLOGGED);
+        builder.add(LIT, HANGING, WATERLOGGED);
     }
 
     @Override
