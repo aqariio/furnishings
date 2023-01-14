@@ -16,7 +16,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.random.RandomGenerator;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -73,28 +73,28 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
         if (!world.isClient) {
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.scheduleBlockTick(pos, this, 1);
         }
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
         if (!world.isClient()) {
-            world.createAndScheduleBlockTick(pos, this, 1);
+            world.scheduleBlockTick(pos, this, 1);
         }
         return state;
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         int i = calculateDistance(world, pos);
         BlockState blockState = state.with(DISTANCE, i).with(BOTTOM, this.shouldBeBottom(world, pos, i));
         if (blockState.get(DISTANCE) == 32) {
             if (state.get(DISTANCE) == 32) {
-                FallingBlockEntity.spawnFromBlock(world, pos, blockState);
+                FallingBlockEntity.fall(world, pos, blockState);
             } else {
                 world.breakBlock(pos, true);
             }
@@ -116,7 +116,7 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        if (state.get(WATERLOGGED).booleanValue()) {
+        if (state.get(WATERLOGGED)) {
             return Fluids.WATER.getStill(false);
         }
         return super.getFluidState(state);
@@ -138,7 +138,7 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
             return 0;
         }
         Iterator<Direction> iterator = Direction.Type.HORIZONTAL.iterator();
-        while (iterator.hasNext() && (!(blockState2 = world.getBlockState(mutable.set((Vec3i)pos, direction = iterator.next()))).isOf(FurnishingsBlocks.IRON_SCAFFOLDING) || (i = Math.min(i, blockState2.get(DISTANCE) + 1)) != 1)) {
+        while (iterator.hasNext() && (!(blockState2 = world.getBlockState(mutable.set(pos, direction = iterator.next()))).isOf(FurnishingsBlocks.IRON_SCAFFOLDING) || (i = Math.min(i, blockState2.get(DISTANCE) + 1)) != 1)) {
         }
         return i;
     }

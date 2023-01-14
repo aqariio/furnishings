@@ -4,11 +4,11 @@ import aqario.furnishings.block.FurnishingsBlocks;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.RecipeProvider;
-import net.minecraft.data.server.recipe.CraftingRecipeJsonBuilder;
+import net.minecraft.data.server.RecipesProvider;
+import net.minecraft.data.server.recipe.CraftingRecipeJsonFactory;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
-import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
-import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory;
+import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -27,11 +27,11 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_BRICKS, Blocks.BRICKS);
         offerChiseledBlockRecipe(exporter, FurnishingsBlocks.CHISELED_BRICKS, Blocks.BRICK_SLAB);
-        ShapelessRecipeJsonBuilder.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Blocks.MOSS_BLOCK)
-                .criterion(RecipeProvider.hasItem(Blocks.MOSS_BLOCK), RecipeProvider.conditionsFromItem(Items.VINE))
+        ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Blocks.MOSS_BLOCK)
+                .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.VINE))
                 .group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_moss_block");
-        ShapelessRecipeJsonBuilder.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Items.VINE)
-                .criterion(RecipeProvider.hasItem(Items.VINE), RecipeProvider.conditionsFromItem(Items.VINE))
+		ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Items.VINE)
+                .criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
                 .group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_vine");
         offerSlabRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS);
         offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS, 2);
@@ -66,15 +66,15 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
     }
 
     public static void offerStairsRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        RecipeProvider.createStairsRecipe(output, Ingredient.ofItems(input)).criterion(RecipeProvider.hasItem(input), RecipeProvider.conditionsFromItem(input)).offerTo(exporter);
+		RecipesProvider.createStairsRecipe(output, Ingredient.ofItems(input)).criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input)).offerTo(exporter);
     }
 
     public static void offerPolishedBricksRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        createPolishedBricksRecipe(output, Ingredient.ofItems(input)).criterion(RecipeProvider.hasItem(input), RecipeProvider.conditionsFromItem(input)).offerTo(exporter);
+        createPolishedBricksRecipe(output, Ingredient.ofItems(input)).criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input)).offerTo(exporter);
     }
 
-    public static CraftingRecipeJsonBuilder createPolishedBricksRecipe(ItemConvertible output, Ingredient input) {
-        return ShapedRecipeJsonBuilder.create(output, 4).input(Character.valueOf('#'), input).pattern("##").pattern("##");
+    public static CraftingRecipeJsonFactory createPolishedBricksRecipe(ItemConvertible output, Ingredient input) {
+        return ShapedRecipeJsonFactory.create(output, 4).input('#', input).pattern("##").pattern("##");
     }
 
 }

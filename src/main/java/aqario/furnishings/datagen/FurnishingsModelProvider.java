@@ -2,8 +2,8 @@ package aqario.furnishings.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.model.BlockStateModelGenerator;
 
 public class FurnishingsModelProvider extends FabricModelProvider {
     public FurnishingsModelProvider(FabricDataGenerator dataGenerator) {
