@@ -7,10 +7,10 @@
       "model" : "furnishings:block/soul_brazier_hanging"
     },
     "lit=false,hanging=false" : {
-      "model" : "furnishings:block/brazier_off"
+      "model" : "furnishings:block/soul_brazier_off"
     },
     "lit=false,hanging=true" : {
-      "model" : "furnishings:block/brazier_off_hanging"
+      "model" : "furnishings:block/soul_brazier_off_hanging"
     }
   }
 }

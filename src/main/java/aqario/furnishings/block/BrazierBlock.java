@@ -61,7 +61,7 @@ public class BrazierBlock extends Block implements Waterloggable {
         super(settings);
         this.emitsParticles = emitsParticles;
         this.fireDamage = fireDamage;
-        this.setDefaultState(this.stateManager.getDefaultState().with(LIT, false).with(HANGING, false).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(LIT, true).with(HANGING, false).with(WATERLOGGED, false));
     }
 
     @Override
@@ -133,22 +133,15 @@ public class BrazierBlock extends Block implements Waterloggable {
     @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+        World worldAccess = ctx.getWorld();
+        boolean bl = worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
         for (Direction direction : ctx.getPlacementDirections()) {
             BlockState blockState;
             if (direction.getAxis() != Direction.Axis.Y || !(blockState = this.getDefaultState().with(HANGING, direction == Direction.UP)).canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) continue;
-            return blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+            return blockState.with(WATERLOGGED, bl).with(LIT, !bl);
         }
         return null;
     }
-//        BlockPos blockPos;
-//        World worldAccess = ctx.getWorld();
-//        for (Direction direction : ctx.getPlacementDirections()) {
-//            if (direction.getAxis() != Direction.Axis.Y || !this.getDefaultState().with(HANGING, direction == Direction.UP).canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) continue;
-//        }
-//        boolean bl = worldAccess.getFluidState(blockPos = ctx.getBlockPos()).getFluid() == Fluids.WATER;
-//        return this.getDefaultState().with(WATERLOGGED, bl).with(LIT, !bl);
-//    }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
