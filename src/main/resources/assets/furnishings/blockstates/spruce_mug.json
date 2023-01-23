@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "furnishings:block/spruce_mug"
+    },
+    "facing=east": {
+      "model": "furnishings:block/spruce_mug",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "furnishings:block/spruce_mug",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "furnishings:block/spruce_mug",
+      "y": 270
+    }
+  }
+}

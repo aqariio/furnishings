@@ -77,6 +77,10 @@ public class FurnishingsBlocks {
     public static final Block LAMP = register("lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 15).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
     public static final Block SOUL_LAMP = register("soul_lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 10).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 
+	/* Mug */
+
+	public static final Block SPRUCE_MUG = register("spruce_mug", new MugBlock(QuiltBlockSettings.of(Material.WOOD).breakInstantly().sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);
+
     /** Paper Lanterns */
 
     public static final Block PAPER_LANTERN = register("paper_lantern", new PaperLanternBlock(QuiltBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.DECORATIONS);
@@ -85,6 +89,10 @@ public class FurnishingsBlocks {
     public static final Block CRIMSON_ROOTS_PAPER_LANTERN = register("crimson_roots_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
     public static final Block DANDELION_PAPER_LANTERN = register("dandelion_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
     public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
+
+	/* Pedestal */
+
+	public static final Block STONE_PEDESTAL = register("stone_pedestal", new PedestalBlock(QuiltBlockSettings.of(Material.STONE).mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F)), ItemGroup.DECORATIONS);
 
     /* Tuff */
 
