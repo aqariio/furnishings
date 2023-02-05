@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "furnishings:lever_sconce"
+    ]
+  },
+  "criteria": {
+    "has_sconce": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "furnishings:sconce"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "furnishings:lever_sconce"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sconce",
+      "has_the_recipe"
+    ]
+  ]
+}

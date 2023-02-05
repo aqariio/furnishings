@@ -1,0 +1,68 @@
+{
+  "variants": {
+    "lit=true,facing=north,powered=false": {
+      "model": "furnishings:block/soul_sconce_wall"
+    },
+    "lit=true,facing=north,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_wall"
+    },
+    "lit=true,facing=east,powered=false": {
+      "model": "furnishings:block/soul_sconce_wall",
+      "y": 90
+    },
+    "lit=true,facing=east,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_wall",
+      "y": 90
+    },
+
+    "lit=true,facing=south,powered=false": {
+      "model": "furnishings:block/soul_sconce_wall",
+      "y": 180
+    },
+    "lit=true,facing=south,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_wall",
+      "y": 180
+    },
+
+    "lit=true,facing=west,powered=false": {
+      "model": "furnishings:block/soul_sconce_wall",
+      "y": 270
+    },
+    "lit=true,facing=west,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_wall",
+      "y": 270
+    },
+
+    "lit=false,facing=north,powered=false": {
+      "model": "furnishings:block/soul_sconce_off_wall"
+    },
+    "lit=false,facing=north,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_off_wall"
+    },
+
+    "lit=false,facing=east,powered=false": {
+      "model": "furnishings:block/soul_sconce_off_wall",
+      "y": 90
+    },
+    "lit=false,facing=east,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_off_wall",
+      "y": 90
+    },
+    "lit=false,facing=south,powered=false": {
+      "model": "furnishings:block/soul_sconce_off_wall",
+      "y": 180
+    },
+    "lit=false,facing=south,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_off_wall",
+      "y": 180
+    },
+    "lit=false,facing=west,powered=false": {
+      "model": "furnishings:block/soul_sconce_off_wall",
+      "y": 270
+    },
+    "lit=false,facing=west,powered=true": {
+      "model": "furnishings:block/lever_soul_sconce_off_wall",
+      "y": 270
+    }
+  }
+}

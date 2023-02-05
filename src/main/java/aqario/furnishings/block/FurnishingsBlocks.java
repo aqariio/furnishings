@@ -6,6 +6,7 @@ import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -77,7 +78,7 @@ public class FurnishingsBlocks {
     public static final Block LAMP = register("lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 15).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
     public static final Block SOUL_LAMP = register("soul_lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 10).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 
-	/* Mug */
+	/** Mug */
 
 	public static final Block SPRUCE_MUG = register("spruce_mug", new MugBlock(QuiltBlockSettings.of(Material.WOOD).breakInstantly().sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);
 
@@ -90,9 +91,16 @@ public class FurnishingsBlocks {
     public static final Block DANDELION_PAPER_LANTERN = register("dandelion_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
     public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
 
-	/* Pedestal */
+	/** Pedestal */
 
 	public static final Block STONE_PEDESTAL = register("stone_pedestal", new PedestalBlock(QuiltBlockSettings.of(Material.STONE).mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F)), ItemGroup.DECORATIONS);
+
+	/* Sconce */
+
+	public static final Block SCONCE = register("sconce", new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.DECORATIONS);
+	public static final Block SOUL_SCONCE = register("soul_sconce", new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.DECORATIONS);
+	public static final Block LEVER_SCONCE = register("lever_sconce", new LeverSconceBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.REDSTONE);
+	public static final Block LEVER_SOUL_SCONCE = register("lever_soul_sconce", new LeverSconceBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.REDSTONE);
 
     /* Tuff */
 

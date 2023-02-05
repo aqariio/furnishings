@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "lit=true,facing=north": {
+      "model": "furnishings:block/sconce_wall"
+    },
+    "lit=true,facing=east": {
+      "model": "furnishings:block/sconce_wall",
+      "y": 90
+    },
+    "lit=true,facing=south": {
+      "model": "furnishings:block/sconce_wall",
+      "y": 180
+    },
+    "lit=true,facing=west": {
+      "model": "furnishings:block/sconce_wall",
+      "y": 270
+    },
+    "lit=true,facing=up": {
+      "model": "furnishings:block/sconce"
+    },
+    "lit=false,facing=north": {
+      "model": "furnishings:block/sconce_off_wall"
+    },
+    "lit=false,facing=east": {
+      "model": "furnishings:block/sconce_off_wall",
+      "y": 90
+    },
+    "lit=false,facing=south": {
+      "model": "furnishings:block/sconce_off_wall",
+      "y": 180
+    },
+    "lit=false,facing=west": {
+      "model": "furnishings:block/sconce_off_wall",
+      "y": 270
+    },
+    "lit=false,facing=up": {
+      "model": "furnishings:block/sconce_off"
+    }
+  }
+}
