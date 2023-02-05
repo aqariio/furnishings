@@ -161,6 +161,16 @@ public class LeverSconceBlock extends Block implements Waterloggable {
 	}
 
 	@Override
+	public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+		return state.get(POWERED) ? 15 : 0;
+	}
+
+	@Override
+	public int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+		return state.get(POWERED) && state.get(FACING) == direction ? 15 : 0;
+	}
+
+	@Override
 	public boolean emitsRedstonePower(BlockState state) {
 		return true;
 	}
