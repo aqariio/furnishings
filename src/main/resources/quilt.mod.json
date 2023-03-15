@@ -18,8 +18,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "aqario.furnishings.Furnishings",
-			"client_init": "aqario.furnishings.FurnishingsClient"
+			"init": "aqario.furnishings.common.Furnishings",
+			"client_init": "aqario.furnishings.client.FurnishingsClient"
 		},
 		"depends": [
 			{

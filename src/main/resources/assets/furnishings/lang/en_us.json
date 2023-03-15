@@ -4,6 +4,8 @@
   "subtitles.furnishings.block.lamp.light": "Lamp lit",
   "subtitles.furnishings.block.lamp.extinguish": "Lamp extinguished",
 
+  "item.furnishings.statue": "Statue",
+
   "block.furnishings.brazier": "Brazier",
   "block.furnishings.soul_brazier": "Soul Brazier",
   "block.furnishings.cracked_bricks": "Cracked Bricks",
@@ -63,5 +65,7 @@
   "block.furnishings.cobblestone_brick_stairs": "Cobblestone Brick Stairs",
   "block.furnishings.cobblestone_brick_slab": "Cobblestone Brick Slab",
   "block.furnishings.cobblestone_brick_wall": "Cobblestone Brick Wall",
-  "block.furnishings.cracked_cobblestone_bricks": "Cracked Cobblestone Bricks"
+  "block.furnishings.cracked_cobblestone_bricks": "Cracked Cobblestone Bricks",
+
+  "entity.furnishings.statue": "Statue"
 }
