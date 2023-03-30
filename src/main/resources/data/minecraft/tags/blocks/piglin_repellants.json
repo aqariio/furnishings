@@ -1,6 +1,8 @@
 {
   "values": [
+    "furnishings:lever_soul_sconce",
     "furnishings:soul_brazier",
-    "furnishings:soul_lamp"
+    "furnishings:soul_lamp",
+    "furnishings:soul_sconce"
   ]
 }

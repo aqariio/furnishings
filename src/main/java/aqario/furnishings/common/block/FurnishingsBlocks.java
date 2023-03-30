@@ -95,7 +95,7 @@ public class FurnishingsBlocks {
 
 	public static final Block STONE_PEDESTAL = register("stone_pedestal", new PedestalBlock(QuiltBlockSettings.of(Material.STONE).mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F)), ItemGroup.DECORATIONS);
 
-	/* Sconce */
+	/** Sconce */
 
 	public static final Block SCONCE = register("sconce", new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.DECORATIONS);
 	public static final Block SOUL_SCONCE = register("soul_sconce", new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).noCollision().breakInstantly().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.DECORATIONS);

@@ -1,10 +1,14 @@
 package aqario.furnishings.common.entity;
 
+import aqario.furnishings.client.gui.screen.PoseableStandScreen;
+import aqario.furnishings.common.screen.PoseableStandScreenHandler;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
@@ -49,5 +53,10 @@ public class MannequinEntity extends PoseableStandEntity {
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEvents.BLOCK_WOOD_BREAK;
+	}
+
+	@Override
+	public PoseableStandScreen getScreen(PoseableStandScreenHandler screenHandler, PlayerInventory inventory) {
+		return null;
 	}
 }

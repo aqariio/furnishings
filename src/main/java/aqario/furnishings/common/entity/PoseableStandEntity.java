@@ -1,5 +1,10 @@
 package aqario.furnishings.common.entity;
 
+import aqario.furnishings.client.gui.screen.PoseableStandScreen;
+import aqario.furnishings.common.network.packet.s2c.OpenPoseableStandScreenS2CPacket;
+import aqario.furnishings.common.screen.PoseableStandScreenHandler;
+import aqario.furnishings.mixin.ServerPlayerEntityAccessor;
+import aqario.furnishings.server.network.FurnishingsServerPlayNetworkHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.entity.*;
@@ -9,6 +14,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.ItemStack;
@@ -16,6 +22,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.screen.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -31,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class PoseableStandEntity extends LivingEntity {
+public abstract class PoseableStandEntity extends LivingEntity implements NamedScreenHandlerFactory {
 	private static final EulerAngle DEFAULT_HEAD_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
 	private static final EulerAngle DEFAULT_BODY_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
 	private static final EulerAngle DEFAULT_LEFT_ARM_ROTATION = new EulerAngle(-10.0F, 0.0F, -10.0F);
@@ -56,6 +63,7 @@ public abstract class PoseableStandEntity extends LivingEntity {
 			&& ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
 	private final Material material;
 	private int disabledSlots;
+	public FurnishingsServerPlayNetworkHandler networkHandler;
 
 	public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, Material material) {
 		super(entityType, world);
@@ -212,16 +220,30 @@ public abstract class PoseableStandEntity extends LivingEntity {
 
 	@Override
 	public ActionResult interact(PlayerEntity player, Hand hand) {
-		if (!player.getStackInHand(hand).isEmpty() && !player.shouldCancelInteraction()) {
-			return ActionResult.PASS;
+		if (!player.world.isClient && player.getStackInHand(hand).isEmpty() && !player.shouldCancelInteraction()) {
+			openInventory((ServerPlayerEntity)player);
+			return ActionResult.CONSUME;
 		}
-
-		ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-		if (serverPlayerEntity.currentScreenHandler != serverPlayerEntity.playerScreenHandler) {
-			serverPlayerEntity.closeScreenHandler();
-		}
-
 		return super.interact(player, hand);
+	}
+
+	int syncId;
+
+	public void openInventory(ServerPlayerEntity player) {
+		syncId = (syncId + 1) % 100 + 100;
+		ScreenHandler screenHandler = createMenu(syncId, player.getInventory(), player);
+		if (screenHandler != null) {
+			ServerPlayerEntityAccessor playerAccessor = (ServerPlayerEntityAccessor) player;
+			FurnishingsServerPlayNetworkHandler.sendPacket(player, new OpenPoseableStandScreenS2CPacket(playerAccessor.getScreenHandlerSyncId(), this.getId(), this.material == Material.STONE));
+			player.currentScreenHandler = screenHandler;
+			screenHandler.updateSyncHandler(playerAccessor.getScreenHandlerSyncHandler());
+		}
+	}
+
+	@Nullable
+	@Override
+	public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+		return new PoseableStandScreenHandler(syncId, playerInventory, this);
 	}
 
 	@Override
@@ -497,6 +519,8 @@ public abstract class PoseableStandEntity extends LivingEntity {
 	@Nullable
 	@Override
 	protected abstract SoundEvent getDeathSound();
+
+	public abstract PoseableStandScreen getScreen(PoseableStandScreenHandler screenHandler, PlayerInventory inventory);
 
 	@Override
 	public boolean isAffectedBySplashPotions() {
