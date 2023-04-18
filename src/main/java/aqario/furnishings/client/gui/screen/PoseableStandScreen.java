@@ -5,11 +5,10 @@ import aqario.furnishings.common.entity.PoseableStandEntity;
 import aqario.furnishings.common.screen.PoseableStandScreenHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.util.math.MathHelper;
@@ -19,45 +18,48 @@ import java.util.function.Function;
 
 public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScreenHandler> {
 	private static PoseableStandPart selectedPart = PoseableStandPart.HEAD;
+	private final PoseableStandEntity poseableStand;
 	protected int backgroundWidth = 176;
 	protected int backgroundHeight = 185;
 	private ScrollbarWidget xScroll;
 	private ScrollbarWidget yScroll;
 	private ScrollbarWidget zScroll;
 
-	public PoseableStandScreen(PoseableStandScreenHandler handler, PlayerInventory inventory) {
-		super(handler, inventory, handler.poseableStand.getDisplayName());
+	public PoseableStandScreen(PoseableStandScreenHandler handler, PlayerInventory inventory, PoseableStandEntity poseableStand) {
+		super(handler, inventory, poseableStand.getDisplayName());
+
+		this.poseableStand = poseableStand;
 	}
 
-	@Override
-	protected void init() {
-		super.init();
-
-		this.addDrawable(this.xScroll = new ScrollbarWidget(this.x + 136, this.y + 20, 8, 65, Text.literal("X")) {
-			@Override
-			public double getScrollRate() {
-				return 0;
-			}
-		});
-
-		this.addDrawable(this.yScroll = new ScrollbarWidget(this.x + 147, this.y + 20, 8, 65, Text.literal("Y")) {
-			@Override
-			public double getScrollRate() {
-				return 0;
-			}
-		});
-
-		this.addDrawable(this.zScroll = new ScrollbarWidget(this.x + 158, this.y + 20, 8, 65, Text.literal("Z")) {
-			@Override
-			public double getScrollRate() {
-				return 0;
-			}
-		});
-		this.updateScrollbar();
-	}
+//	@Override
+//	protected void init() {
+//		super.init();
+//
+//		this.addDrawable(this.xScroll = new ScrollbarWidget(this.x + 136, this.y + 20, 8, 65, Text.literal("X")) {
+//			@Override
+//			public double getScrollRate() {
+//				return 0;
+//			}
+//		});
+//
+//		this.addDrawable(this.yScroll = new ScrollbarWidget(this.x + 147, this.y + 20, 8, 65, Text.literal("Y")) {
+//			@Override
+//			public double getScrollRate() {
+//				return 0;
+//			}
+//		});
+//
+//		this.addDrawable(this.zScroll = new ScrollbarWidget(this.x + 158, this.y + 20, 8, 65, Text.literal("Z")) {
+//			@Override
+//			public double getScrollRate() {
+//				return 0;
+//			}
+//		});
+//		this.updateScrollbar();
+//	}
 
 	private void updateScrollbar() {
-		EulerAngle rotations = selectedPart.getRotation(handler.poseableStand);
+		EulerAngle rotations = selectedPart.getRotation(this.poseableStand);
 		float rotationX = MathHelper.wrapDegrees(rotations.getPitch()) + 180;
 		float rotationY = MathHelper.wrapDegrees(rotations.getYaw()) + 180;
 		float rotationZ = MathHelper.wrapDegrees(rotations.getRoll()) + 180;
@@ -69,20 +71,25 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 		this.zScroll.setScrollAmount(rotationZ % 360 / 360.0F * this.zScroll.getMaxScrollAmount());
 	}
 
-	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		for (PoseableStandPart part : PoseableStandPart.values()) {
-			if (selectedPart != part && part.isHovered(mouseX - this.x, mouseY - this.y)) {
-				selectedPart = part;
-				this.updateScrollbar();
-			}
-		}
-		return super.mouseClicked(mouseX, mouseY, button);
-	}
+//	@Override
+//	public boolean mouseClicked(double mouseX, double mouseY, int button) {
+//		for (PoseableStandPart part : PoseableStandPart.values()) {
+//			if (selectedPart != part && part.isHovered(mouseX - this.x, mouseY - this.y)) {
+//				selectedPart = part;
+//				this.updateScrollbar();
+//			}
+//		}
+//		return super.mouseClicked(mouseX, mouseY, button);
+//	}
+
+//	@Override
+//	public boolean mouseReleased(double mouseX, double mouseY, int button) {
+//		return super.mouseReleased(mouseX, mouseY, button);
+//	}
 
 	@Override
-	public boolean mouseReleased(double mouseX, double mouseY, int button) {
-		return super.mouseReleased(mouseX, mouseY, button);
+	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
+		this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 4210752);
 	}
 
 	@Override
@@ -90,13 +97,12 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, this.getTexture());
-		int leftPos = (this.width - this.backgroundWidth) / 2;
-		int topPos = (this.height - this.backgroundHeight) / 2;
-		this.drawTexture(matrices, leftPos, topPos, 0, 0, this.backgroundWidth, this.backgroundHeight);
-//		this.drawTexture(matrices, leftPos + 59, topPos + 20, 0, this.backgroundHeight + (this.handler.getSlot(0).hasStack() ? 0 : 16), 110, 16);
+		this.drawTexture(matrices, this.x, this.y, 0, 0, this.backgroundWidth, this.backgroundHeight);
+//		this.drawTexture(matrices, this.x + 59, this.y + 20, 0, this.backgroundHeight + (this.handler.getSlot(0).hasStack() ? 0 : 16), 110, 16);
 //		if ((this.handler.getSlot(0).hasStack() || this.handler.getSlot(1).hasStack()) && !this.handler.getSlot(2).hasStack()) {
-//			this.drawTexture(matrices, leftPos + 99, topPos + 45, this.backgroundWidth, 0, 28, 21);
+//			this.drawTexture(matrices, this.x + 99, this.y + 45, this.backgroundWidth, 0, 28, 21);
 //		}
+		InventoryScreen.drawEntity(this.x + 51, this.y + 84, 30, 0, 0, this.poseableStand);
 	}
 
 	@Override
@@ -106,19 +112,19 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 		RenderSystem.disableBlend();
 		this.drawMouseoverTooltip(matrices, mouseX, mouseY);
 
-		EulerAngle rotations = selectedPart.getRotation(handler.poseableStand);
-		float x = this.xScroll.getInterpolatedScrollPercentage(delta) * 360.0F - 180.0F;
-		float y = this.yScroll.getInterpolatedScrollPercentage(delta) * 360.0F - 180.0F;
-		float z = this.zScroll.getInterpolatedScrollPercentage(delta) * 360.0F - 180.0F;
-		if (selectedPart == PoseableStandPart.LEFT_ARM)
-			z *= -1;
-		if (rotations.getPitch() != x || rotations.getRoll() != y || rotations.getYaw() != z)
-			selectedPart.setRotation(handler.poseableStand, new EulerAngle(x, y, z));
+//		EulerAngle rotations = selectedPart.getRotation(this.poseableStand);
+//		float x = this.xScroll.getInterpolatedScrollPercentage(delta) * 360.0F - 180.0F;
+//		float y = this.yScroll.getInterpolatedScrollPercentage(delta) * 360.0F - 180.0F;
+//		float z = this.zScroll.getInterpolatedScrollPercentage(delta) * 360.0F - 180.0F;
+//		if (selectedPart == PoseableStandPart.LEFT_ARM)
+//			z *= -1;
+//		if (rotations.getPitch() != x || rotations.getRoll() != y || rotations.getYaw() != z)
+//			selectedPart.setRotation(this.poseableStand, new EulerAngle(x, y, z));
 	}
 
 	@Override
 	public void closeScreen() {
-		handler.setPose(PoseableStandPart.HEAD.getRotation(handler.poseableStand), PoseableStandPart.BODY.getRotation(handler.poseableStand), PoseableStandPart.LEFT_ARM.getRotation(handler.poseableStand), PoseableStandPart.RIGHT_ARM.getRotation(handler.poseableStand));
+		handler.setPose(PoseableStandPart.HEAD.getRotation(this.poseableStand), PoseableStandPart.BODY.getRotation(this.poseableStand), PoseableStandPart.LEFT_ARM.getRotation(this.poseableStand), PoseableStandPart.RIGHT_ARM.getRotation(this.poseableStand));
 		super.closeScreen();
 	}
 

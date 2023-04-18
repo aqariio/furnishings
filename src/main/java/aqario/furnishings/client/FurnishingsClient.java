@@ -1,16 +1,12 @@
 package aqario.furnishings.client;
 
-import aqario.furnishings.client.gui.screen.PoseableStandScreen;
-import aqario.furnishings.client.gui.screen.StatueScreen;
 import aqario.furnishings.client.model.StatueEntityModel;
 import aqario.furnishings.client.renderer.StatueEntityRenderer;
 import aqario.furnishings.common.Furnishings;
 import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.entity.FurnishingsEntityType;
-import aqario.furnishings.common.screen.FurnishingsScreenHandlerType;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
@@ -38,10 +34,9 @@ public class FurnishingsClient implements ClientModInitializer {
 		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.SOUL_SCONCE);
 		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.LEVER_SCONCE);
 		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.LEVER_SOUL_SCONCE);
+		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.MOSS);
 
 		EntityRendererRegistry.register(FurnishingsEntityType.STATUE, StatueEntityRenderer::new);
 		EntityModelLayerRegistry.registerModelLayer(STATUE, StatueEntityModel::getTexturedModelData);
-
-//		FurnishingsScreenHandlerType.init();
     }
 }

@@ -1,5 +1,6 @@
 package aqario.furnishings.mixin;
 
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerSyncHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,8 +12,8 @@ public interface ServerPlayerEntityAccessor {
 	@Accessor
 	int getScreenHandlerSyncId();
 
-	@Accessor
-	ScreenHandlerSyncHandler getScreenHandlerSyncHandler();
+	@Invoker
+	void callOnSpawn(ScreenHandler screenHandler);
 
 	@Invoker
 	void callIncrementScreenHandlerSyncId();

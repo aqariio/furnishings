@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
@@ -59,8 +58,6 @@ public class StatueEntity extends PoseableStandEntity {
 
 	@Override
 	public PoseableStandScreen getScreen(PoseableStandScreenHandler screenHandler, PlayerInventory inventory) {
-		return new StatueScreen(screenHandler, inventory, this.getDisplayName());
+		return new StatueScreen(screenHandler, inventory, this);
 	}
-
-
 }

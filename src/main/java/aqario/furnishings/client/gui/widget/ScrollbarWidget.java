@@ -27,8 +27,8 @@ public abstract class ScrollbarWidget extends ClickableWidget implements Drawabl
 	public void renderButton(MatrixStack matrices, int mouseX, int mouseY, float delta) {
 		MinecraftClient minecraftClient = MinecraftClient.getInstance();
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, SCROLLBAR_TEXTURE);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
+		RenderSystem.setShaderTexture(0, SCROLLBAR_TEXTURE);
 		int i = this.getYImage(this.isHoveredOrFocused());
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();

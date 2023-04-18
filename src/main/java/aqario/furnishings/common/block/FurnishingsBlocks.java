@@ -78,6 +78,10 @@ public class FurnishingsBlocks {
     public static final Block LAMP = register("lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 15).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
     public static final Block SOUL_LAMP = register("soul_lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 10).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 
+	/* Layers */
+
+	public static final Block MOSS = register("moss", new GlowLichenBlock(QuiltBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).noCollision().strength(0.1F).sounds(BlockSoundGroup.MOSS_CARPET)), ItemGroup.DECORATIONS);
+
 	/** Mug */
 
 	public static final Block SPRUCE_MUG = register("spruce_mug", new MugBlock(QuiltBlockSettings.of(Material.WOOD).breakInstantly().sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);

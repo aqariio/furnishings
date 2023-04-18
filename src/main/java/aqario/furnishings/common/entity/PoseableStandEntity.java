@@ -5,6 +5,7 @@ import aqario.furnishings.common.network.packet.s2c.OpenPoseableStandScreenS2CPa
 import aqario.furnishings.common.screen.PoseableStandScreenHandler;
 import aqario.furnishings.mixin.ServerPlayerEntityAccessor;
 import aqario.furnishings.server.network.FurnishingsServerPlayNetworkHandler;
+import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.entity.*;
@@ -17,6 +18,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.InventoryChangedListener;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -29,7 +33,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -38,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
-public abstract class PoseableStandEntity extends LivingEntity implements NamedScreenHandlerFactory {
+public abstract class PoseableStandEntity extends LivingEntity implements InventoryChangedListener, NamedScreenHandlerFactory {
 	private static final EulerAngle DEFAULT_HEAD_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
 	private static final EulerAngle DEFAULT_BODY_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
 	private static final EulerAngle DEFAULT_LEFT_ARM_ROTATION = new EulerAngle(-10.0F, 0.0F, -10.0F);
@@ -57,18 +60,35 @@ public abstract class PoseableStandEntity extends LivingEntity implements NamedS
 	private EulerAngle rightArmRotation = DEFAULT_RIGHT_ARM_ROTATION;
 	private EulerAngle leftLegRotation = DEFAULT_LEFT_LEG_ROTATION;
 	private EulerAngle rightLegRotation = DEFAULT_RIGHT_LEG_ROTATION;
-	private final DefaultedList<ItemStack> heldItems = DefaultedList.ofSize(2, ItemStack.EMPTY);
-	private final DefaultedList<ItemStack> armorItems = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = entity -> entity instanceof AbstractMinecartEntity
 			&& ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
 	private final Material material;
 	private int disabledSlots;
-	public FurnishingsServerPlayNetworkHandler networkHandler;
+	protected SimpleInventory inventory;
 
 	public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, Material material) {
 		super(entityType, world);
 		this.stepHeight = 0.0F;
 		this.material = material;
+		this.inventory = new SimpleInventory(6);
+		this.inventory.addListener(this);
+	}
+
+	@Override
+	public void onInventoryChanged(Inventory sender) {
+	}
+
+	@Override
+	protected void dropInventory() {
+		super.dropInventory();
+
+		if (this.inventory != null) {
+			for (int i = 0; i < this.inventory.size(); ++i) {
+				ItemStack itemStack = this.inventory.getStack(i);
+				if (itemStack.isEmpty()) continue;
+				this.dropStack(itemStack);
+			}
+		}
 	}
 
 	@Override
@@ -89,28 +109,36 @@ public abstract class PoseableStandEntity extends LivingEntity implements NamedS
 
 	@Override
 	public Iterable<ItemStack> getItemsHand() {
-		return this.heldItems;
+		return ImmutableList.of(this.inventory.getStack(4), this.inventory.getStack(5));
 	}
 
 	@Override
 	public Iterable<ItemStack> getArmorItems() {
-		return this.armorItems;
+		return ImmutableList.of(this.inventory.getStack(0), this.inventory.getStack(1), this.inventory.getStack(2), this.inventory.getStack(3));
 	}
 
 	@Override
 	public ItemStack getEquippedStack(EquipmentSlot slot) {
-		return switch (slot.getType()) {
-			case HAND -> this.heldItems.get(slot.getEntitySlotId());
-			case ARMOR -> this.armorItems.get(slot.getEntitySlotId());
+		return switch (slot) {
+			case HEAD -> this.inventory.getStack(0);
+			case CHEST -> this.inventory.getStack(1);
+			case LEGS -> this.inventory.getStack(2);
+			case FEET -> this.inventory.getStack(3);
+			case MAINHAND -> this.inventory.getStack(4);
+			case OFFHAND -> this.inventory.getStack(5);
 		};
 	}
 
 	@Override
 	public void equipStack(EquipmentSlot slot, ItemStack stack) {
 		this.processEquippedStack(stack);
-		switch (slot.getType()) {
-			case HAND -> this.m_nutvedxs(slot, this.heldItems.set(slot.getEntitySlotId(), stack), stack);
-			case ARMOR -> this.m_nutvedxs(slot, this.armorItems.set(slot.getEntitySlotId(), stack), stack);
+		switch (slot) {
+			case HEAD -> this.inventory.setStack(0, stack);
+			case CHEST -> this.inventory.setStack(1, stack);
+			case LEGS -> this.inventory.setStack(2, stack);
+			case FEET -> this.inventory.setStack(3, stack);
+			case MAINHAND -> this.inventory.setStack(4, stack);
+			case OFFHAND -> this.inventory.setStack(5, stack);
 		}
 	}
 
@@ -125,28 +153,19 @@ public abstract class PoseableStandEntity extends LivingEntity implements NamedS
 		super.writeCustomDataToNbt(nbt);
 		NbtList nbtList = new NbtList();
 
-		for(ItemStack itemStack : this.armorItems) {
-			NbtCompound nbtCompound = new NbtCompound();
+		for(int i = 0; i < this.inventory.size(); ++i) {
+			// debug
+			System.out.println("writingNbt");
+			ItemStack itemStack = this.inventory.getStack(i);
 			if (!itemStack.isEmpty()) {
+				NbtCompound nbtCompound = new NbtCompound();
+				nbtCompound.putByte("Slot", (byte)i);
 				itemStack.writeNbt(nbtCompound);
+				nbtList.add(nbtCompound);
 			}
-
-			nbtList.add(nbtCompound);
 		}
 
-		nbt.put("ArmorItems", nbtList);
-		NbtList nbtList2 = new NbtList();
-
-		for(ItemStack itemStack2 : this.heldItems) {
-			NbtCompound nbtCompound2 = new NbtCompound();
-			if (!itemStack2.isEmpty()) {
-				itemStack2.writeNbt(nbtCompound2);
-			}
-
-			nbtList2.add(nbtCompound2);
-		}
-
-		nbt.put("HandItems", nbtList2);
+		nbt.put("Items", nbtList);
 		nbt.putInt("DisabledSlots", this.disabledSlots);
 		nbt.put("Pose", this.poseToNbt());
 	}
@@ -154,19 +173,13 @@ public abstract class PoseableStandEntity extends LivingEntity implements NamedS
 	@Override
 	public void readCustomDataFromNbt(NbtCompound nbt) {
 		super.readCustomDataFromNbt(nbt);
-		if (nbt.contains("ArmorItems", NbtElement.LIST_TYPE)) {
-			NbtList nbtList = nbt.getList("ArmorItems", NbtElement.COMPOUND_TYPE);
+		NbtList nbtList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
 
-			for(int i = 0; i < this.armorItems.size(); ++i) {
-				this.armorItems.set(i, ItemStack.fromNbt(nbtList.getCompound(i)));
-			}
-		}
-
-		if (nbt.contains("HandItems", NbtElement.LIST_TYPE)) {
-			NbtList nbtList = nbt.getList("HandItems", NbtElement.COMPOUND_TYPE);
-
-			for(int i = 0; i < this.heldItems.size(); ++i) {
-				this.heldItems.set(i, ItemStack.fromNbt(nbtList.getCompound(i)));
+		for(int i = 0; i < nbtList.size(); ++i) {
+			NbtCompound nbtCompound = nbtList.getCompound(i);
+			int j = nbtCompound.getByte("Slot") & 255;
+			if (j < this.inventory.size()) {
+				this.inventory.setStack(j, ItemStack.fromNbt(nbtCompound));
 			}
 		}
 		NbtCompound nbtCompound = nbt.getCompound("Pose");
@@ -227,23 +240,21 @@ public abstract class PoseableStandEntity extends LivingEntity implements NamedS
 		return super.interact(player, hand);
 	}
 
-	int syncId;
-
 	public void openInventory(ServerPlayerEntity player) {
-		syncId = (syncId + 1) % 100 + 100;
-		ScreenHandler screenHandler = createMenu(syncId, player.getInventory(), player);
+		ServerPlayerEntityAccessor playerAccessor = (ServerPlayerEntityAccessor) player;
+		ScreenHandler screenHandler = createMenu(playerAccessor.getScreenHandlerSyncId() % 100 + 1, player.getInventory(), player);
 		if (screenHandler != null) {
-			ServerPlayerEntityAccessor playerAccessor = (ServerPlayerEntityAccessor) player;
+			playerAccessor.callIncrementScreenHandlerSyncId();
 			FurnishingsServerPlayNetworkHandler.sendPacket(player, new OpenPoseableStandScreenS2CPacket(playerAccessor.getScreenHandlerSyncId(), this.getId(), this.material == Material.STONE));
 			player.currentScreenHandler = screenHandler;
-			screenHandler.updateSyncHandler(playerAccessor.getScreenHandlerSyncHandler());
+			playerAccessor.callOnSpawn(player.currentScreenHandler);
 		}
 	}
 
 	@Nullable
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new PoseableStandScreenHandler(syncId, playerInventory, this);
+		return new PoseableStandScreenHandler(syncId, playerInventory, this.inventory, this);
 	}
 
 	@Override
@@ -476,22 +487,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements NamedS
 	private void onBreak(DamageSource damageSource) {
 		this.playBreakSound();
 		this.drop(damageSource);
-
-		for(int i = 0; i < this.heldItems.size(); ++i) {
-			ItemStack itemStack = this.heldItems.get(i);
-			if (!itemStack.isEmpty()) {
-				Block.dropStack(this.world, this.getBlockPos().up(), itemStack);
-				this.heldItems.set(i, ItemStack.EMPTY);
-			}
-		}
-
-		for(int i = 0; i < this.armorItems.size(); ++i) {
-			ItemStack itemStack = this.armorItems.get(i);
-			if (!itemStack.isEmpty()) {
-				Block.dropStack(this.world, this.getBlockPos().up(), itemStack);
-				this.armorItems.set(i, ItemStack.EMPTY);
-			}
-		}
 	}
 
 	private void playBreakSound() {

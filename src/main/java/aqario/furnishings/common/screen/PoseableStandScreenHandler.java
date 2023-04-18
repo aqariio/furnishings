@@ -7,7 +7,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
@@ -17,13 +16,13 @@ import net.minecraft.util.math.EulerAngle;
 
 public class PoseableStandScreenHandler extends ScreenHandler {
 	public final PoseableStandEntity poseableStand;
-	private final Inventory inventory = new SimpleInventory(6);
+	private final Inventory inventory;
 
-
-	public PoseableStandScreenHandler(int syncId, PlayerInventory playerInventory, PoseableStandEntity poseableStand) {
+	public PoseableStandScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PoseableStandEntity poseableStand) {
 		super(null, syncId);
 		checkSize(inventory, 6);
 		this.poseableStand = poseableStand;
+		this.inventory = inventory;
 		inventory.onOpen(playerInventory.player);
 
 		// Head
