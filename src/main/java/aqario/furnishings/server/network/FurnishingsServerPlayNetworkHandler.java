@@ -3,31 +3,21 @@ package aqario.furnishings.server.network;
 import aqario.furnishings.client.network.FurnishingsClientPlayNetworkHandler;
 import aqario.furnishings.common.Furnishings;
 import aqario.furnishings.common.network.FurnishingsPacket;
-import aqario.furnishings.common.network.listener.FurnishingsClientPlayPacketListener;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import org.quiltmc.loader.api.QuiltLoader;
 import org.quiltmc.loader.api.minecraft.MinecraftQuiltLoader;
 import org.quiltmc.qsl.networking.api.ServerPlayNetworking;
 import org.quiltmc.qsl.networking.api.client.ClientPlayNetworking;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 public class FurnishingsServerPlayNetworkHandler {
 	private static final Map<Class<?>, Identifier> identifiers = new HashMap<>();
-
-	private static int id = 0;
-
-	private static <T> Identifier createMessageIdentifier(Class<T> packet) {
-		return new Identifier(Furnishings.ID, packet.getSimpleName().toLowerCase(Locale.ROOT).substring(0, 8) + id++);
-	}
 
 	private static Identifier getMessageIdentifier(FurnishingsPacket packet) {
 		return Objects.requireNonNull(identifiers.get(packet.getClass()), "Used unregistered message!");

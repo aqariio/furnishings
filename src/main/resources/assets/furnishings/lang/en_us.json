@@ -4,6 +4,7 @@
   "subtitles.furnishings.block.lamp.light": "Lamp lit",
   "subtitles.furnishings.block.lamp.extinguish": "Lamp extinguished",
 
+  "item.furnishings.scarecrow": "Scarecrow",
   "item.furnishings.statue": "Statue",
 
 
@@ -69,5 +70,6 @@
   "block.furnishings.cobblestone_brick_wall": "Cobblestone Brick Wall",
   "block.furnishings.cracked_cobblestone_bricks": "Cracked Cobblestone Bricks",
 
+  "entity.furnishings.scarecrow": "Scarecrow",
   "entity.furnishings.statue": "Statue"
 }

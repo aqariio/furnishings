@@ -8,6 +8,7 @@ import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 public class FurnishingsItems {
+	public static final Item SCARECROW = register("scarecrow", new ScarecrowItem(new QuiltItemSettings().maxCount(16).group(ItemGroup.DECORATIONS)));
 	public static final Item STATUE = register("statue", new StatueItem(new QuiltItemSettings().maxCount(16).group(ItemGroup.DECORATIONS)));
 
 	private static Item register(String id, Item item) {

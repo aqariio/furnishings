@@ -3,6 +3,7 @@ package aqario.furnishings.common.entity;
 import aqario.furnishings.common.item.FurnishingsItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -20,28 +21,22 @@ import net.minecraft.util.math.EulerAngle;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class StatueEntity extends PoseableStandEntity {
+public class ScarecrowEntity extends PoseableStandEntity {
 	private static final EulerAngle DEFAULT_HEAD_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
 	private static final EulerAngle DEFAULT_BODY_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
-	private static final EulerAngle DEFAULT_LEFT_ARM_ROTATION = new EulerAngle(-10.0F, 0.0F, -10.0F);
-	private static final EulerAngle DEFAULT_RIGHT_ARM_ROTATION = new EulerAngle(-10.0F, 0.0F, 10.0F);
-	private static final EulerAngle DEFAULT_LEFT_LEG_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
-	private static final EulerAngle DEFAULT_RIGHT_LEG_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
+	private static final EulerAngle DEFAULT_LEFT_ARM_ROTATION = new EulerAngle(0.0F, 0.0F, -90.0F);
+	private static final EulerAngle DEFAULT_RIGHT_ARM_ROTATION = new EulerAngle(0.0F, 0.0F, 90.0F);
 	public static final TrackedData<EulerAngle> TRACKER_HEAD_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
 	public static final TrackedData<EulerAngle> TRACKER_BODY_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
 	public static final TrackedData<EulerAngle> TRACKER_LEFT_ARM_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
 	public static final TrackedData<EulerAngle> TRACKER_RIGHT_ARM_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_LEFT_LEG_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_RIGHT_LEG_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
 	private EulerAngle headRotation = DEFAULT_HEAD_ROTATION;
 	private EulerAngle bodyRotation = DEFAULT_BODY_ROTATION;
 	private EulerAngle leftArmRotation = DEFAULT_LEFT_ARM_ROTATION;
 	private EulerAngle rightArmRotation = DEFAULT_RIGHT_ARM_ROTATION;
-	private EulerAngle leftLegRotation = DEFAULT_LEFT_LEG_ROTATION;
-	private EulerAngle rightLegRotation = DEFAULT_RIGHT_LEG_ROTATION;
 
-	public StatueEntity(EntityType<? extends PoseableStandEntity> entityType, World world) {
-		super(entityType, world, StandType.STATUE);
+	public ScarecrowEntity(EntityType<? extends PoseableStandEntity> entityType, World world) {
+		super(entityType, world, StandType.SCARECROW);
 	}
 
 	@Override
@@ -51,8 +46,6 @@ public class StatueEntity extends PoseableStandEntity {
 		this.dataTracker.startTracking(TRACKER_BODY_ROTATION, DEFAULT_BODY_ROTATION);
 		this.dataTracker.startTracking(TRACKER_LEFT_ARM_ROTATION, DEFAULT_LEFT_ARM_ROTATION);
 		this.dataTracker.startTracking(TRACKER_RIGHT_ARM_ROTATION, DEFAULT_RIGHT_ARM_ROTATION);
-		this.dataTracker.startTracking(TRACKER_LEFT_LEG_ROTATION, DEFAULT_LEFT_LEG_ROTATION);
-		this.dataTracker.startTracking(TRACKER_RIGHT_LEG_ROTATION, DEFAULT_RIGHT_LEG_ROTATION);
 	}
 
 	@Override
@@ -77,10 +70,6 @@ public class StatueEntity extends PoseableStandEntity {
 		this.setLeftArmRotation(nbtList3.isEmpty() ? DEFAULT_LEFT_ARM_ROTATION : new EulerAngle(nbtList3));
 		NbtList nbtList4 = nbt.getList("RightArm", NbtElement.FLOAT_TYPE);
 		this.setRightArmRotation(nbtList4.isEmpty() ? DEFAULT_RIGHT_ARM_ROTATION : new EulerAngle(nbtList4));
-		NbtList nbtList5 = nbt.getList("LeftLeg", NbtElement.FLOAT_TYPE);
-		this.setLeftLegRotation(nbtList5.isEmpty() ? DEFAULT_LEFT_LEG_ROTATION : new EulerAngle(nbtList5));
-		NbtList nbtList6 = nbt.getList("RightLeg", NbtElement.FLOAT_TYPE);
-		this.setRightLegRotation(nbtList6.isEmpty() ? DEFAULT_RIGHT_LEG_ROTATION : new EulerAngle(nbtList6));
 	}
 
 	private NbtCompound poseToNbt() {
@@ -101,49 +90,7 @@ public class StatueEntity extends PoseableStandEntity {
 			nbtCompound.put("RightArm", this.rightArmRotation.toNbt());
 		}
 
-		if (!DEFAULT_LEFT_LEG_ROTATION.equals(this.leftLegRotation)) {
-			nbtCompound.put("LeftLeg", this.leftLegRotation.toNbt());
-		}
-
-		if (!DEFAULT_RIGHT_LEG_ROTATION.equals(this.rightLegRotation)) {
-			nbtCompound.put("RightLeg", this.rightLegRotation.toNbt());
-		}
-
 		return nbtCompound;
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		EulerAngle eulerAngle = this.dataTracker.get(TRACKER_HEAD_ROTATION);
-		if (!this.headRotation.equals(eulerAngle)) {
-			this.setHeadRotation(eulerAngle);
-		}
-
-		EulerAngle eulerAngle2 = this.dataTracker.get(TRACKER_BODY_ROTATION);
-		if (!this.bodyRotation.equals(eulerAngle2)) {
-			this.setBodyRotation(eulerAngle2);
-		}
-
-		EulerAngle eulerAngle3 = this.dataTracker.get(TRACKER_LEFT_ARM_ROTATION);
-		if (!this.leftArmRotation.equals(eulerAngle3)) {
-			this.setLeftArmRotation(eulerAngle3);
-		}
-
-		EulerAngle eulerAngle4 = this.dataTracker.get(TRACKER_RIGHT_ARM_ROTATION);
-		if (!this.rightArmRotation.equals(eulerAngle4)) {
-			this.setRightArmRotation(eulerAngle4);
-		}
-
-		EulerAngle eulerAngle5 = this.dataTracker.get(TRACKER_LEFT_LEG_ROTATION);
-		if (!this.leftLegRotation.equals(eulerAngle5)) {
-			this.setLeftLegRotation(eulerAngle5);
-		}
-
-		EulerAngle eulerAngle6 = this.dataTracker.get(TRACKER_RIGHT_LEG_ROTATION);
-		if (!this.rightLegRotation.equals(eulerAngle6)) {
-			this.setRightLegRotation(eulerAngle6);
-		}
 	}
 
 	public EulerAngle getHeadRotation() {
@@ -160,14 +107,6 @@ public class StatueEntity extends PoseableStandEntity {
 
 	public EulerAngle getRightArmRotation() {
 		return this.rightArmRotation;
-	}
-
-	public EulerAngle getLeftLegRotation() {
-		return this.leftLegRotation;
-	}
-
-	public EulerAngle getRightLegRotation() {
-		return this.rightLegRotation;
 	}
 
 	public void setHeadRotation(EulerAngle angle) {
@@ -190,45 +129,35 @@ public class StatueEntity extends PoseableStandEntity {
 		this.dataTracker.set(TRACKER_RIGHT_ARM_ROTATION, angle);
 	}
 
-	public void setLeftLegRotation(EulerAngle angle) {
-		this.leftLegRotation = angle;
-		this.dataTracker.set(TRACKER_LEFT_LEG_ROTATION, angle);
-	}
-
-	public void setRightLegRotation(EulerAngle angle) {
-		this.rightLegRotation = angle;
-		this.dataTracker.set(TRACKER_RIGHT_LEG_ROTATION, angle);
-	}
-
 	@Override
 	public ItemStack getItem() {
-		return new ItemStack(FurnishingsItems.STATUE);
+		return new ItemStack(FurnishingsItems.SCARECROW);
 	}
 
 	@Override
 	public ParticleEffect getParticle() {
-		return new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.STONE.getDefaultState());
+		return new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.HAY_BLOCK.getDefaultState());
 	}
 
 	@Override
 	public SoundEvent getPlaceSound() {
-		return SoundEvents.BLOCK_STONE_PLACE;
+		return SoundEvents.BLOCK_GRASS_PLACE;
 	}
 
 	@Override
 	public FallSounds getFallSounds() {
-		return new FallSounds(SoundEvents.BLOCK_STONE_FALL, SoundEvents.BLOCK_STONE_FALL);
+		return new LivingEntity.FallSounds(SoundEvents.BLOCK_GRASS_FALL, SoundEvents.BLOCK_GRASS_FALL);
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_STONE_HIT;
+		return SoundEvents.BLOCK_GRASS_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.BLOCK_STONE_BREAK;
+		return SoundEvents.BLOCK_GRASS_BREAK;
 	}
 }

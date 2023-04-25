@@ -6,5 +6,5 @@ public interface FurnishingsClientPlayPacketListener {
 
 	void onOpenPoseableStandScreen(OpenPoseableStandScreenS2CPacket packet);
 
-//	void handleAttackMannequin(ClientboundAttackMannequin packet, PollinatedPacketContext ctx);
+//	void handleAttackScarecrow(ClientboundAttackMannequin packet, PollinatedPacketContext ctx);
 }

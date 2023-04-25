@@ -1,21 +1,17 @@
 package aqario.furnishings.common.entity;
 
-import aqario.furnishings.client.gui.screen.PoseableStandScreen;
 import aqario.furnishings.common.network.packet.s2c.OpenPoseableStandScreenS2CPacket;
 import aqario.furnishings.common.screen.PoseableStandScreenHandler;
 import aqario.furnishings.mixin.ServerPlayerEntityAccessor;
 import aqario.furnishings.server.network.FurnishingsServerPlayNetworkHandler;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.inventory.Inventory;
@@ -26,7 +22,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.screen.*;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -42,34 +39,16 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public abstract class PoseableStandEntity extends LivingEntity implements InventoryChangedListener, NamedScreenHandlerFactory {
-	private static final EulerAngle DEFAULT_HEAD_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
-	private static final EulerAngle DEFAULT_BODY_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
-	private static final EulerAngle DEFAULT_LEFT_ARM_ROTATION = new EulerAngle(-10.0F, 0.0F, -10.0F);
-	private static final EulerAngle DEFAULT_RIGHT_ARM_ROTATION = new EulerAngle(-10.0F, 0.0F, 10.0F);
-	private static final EulerAngle DEFAULT_LEFT_LEG_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
-	private static final EulerAngle DEFAULT_RIGHT_LEG_ROTATION = new EulerAngle(0.0F, 0.0F, 0.0F);
-	public static final TrackedData<EulerAngle> TRACKER_HEAD_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_BODY_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_LEFT_ARM_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_RIGHT_ARM_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_LEFT_LEG_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	public static final TrackedData<EulerAngle> TRACKER_RIGHT_LEG_ROTATION = DataTracker.registerData(PoseableStandEntity.class, TrackedDataHandlerRegistry.ROTATION);
-	private EulerAngle headRotation = DEFAULT_HEAD_ROTATION;
-	private EulerAngle bodyRotation = DEFAULT_BODY_ROTATION;
-	private EulerAngle leftArmRotation = DEFAULT_LEFT_ARM_ROTATION;
-	private EulerAngle rightArmRotation = DEFAULT_RIGHT_ARM_ROTATION;
-	private EulerAngle leftLegRotation = DEFAULT_LEFT_LEG_ROTATION;
-	private EulerAngle rightLegRotation = DEFAULT_RIGHT_LEG_ROTATION;
 	private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = entity -> entity instanceof AbstractMinecartEntity
 			&& ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
-	private final Material material;
+	private final StandType standType;
 	private int disabledSlots;
 	protected SimpleInventory inventory;
 
-	public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, Material material) {
+	public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, StandType type) {
 		super(entityType, world);
 		this.stepHeight = 0.0F;
-		this.material = material;
+		this.standType = type;
 		this.inventory = new SimpleInventory(6);
 		this.inventory.addListener(this);
 	}
@@ -89,17 +68,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 				this.dropStack(itemStack);
 			}
 		}
-	}
-
-	@Override
-	protected void initDataTracker() {
-		super.initDataTracker();
-		this.dataTracker.startTracking(TRACKER_HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
-		this.dataTracker.startTracking(TRACKER_BODY_ROTATION, DEFAULT_BODY_ROTATION);
-		this.dataTracker.startTracking(TRACKER_LEFT_ARM_ROTATION, DEFAULT_LEFT_ARM_ROTATION);
-		this.dataTracker.startTracking(TRACKER_RIGHT_ARM_ROTATION, DEFAULT_RIGHT_ARM_ROTATION);
-		this.dataTracker.startTracking(TRACKER_LEFT_LEG_ROTATION, DEFAULT_LEFT_LEG_ROTATION);
-		this.dataTracker.startTracking(TRACKER_RIGHT_LEG_ROTATION, DEFAULT_RIGHT_LEG_ROTATION);
 	}
 
 	@Override
@@ -154,8 +122,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		NbtList nbtList = new NbtList();
 
 		for(int i = 0; i < this.inventory.size(); ++i) {
-			// debug
-			System.out.println("writingNbt");
 			ItemStack itemStack = this.inventory.getStack(i);
 			if (!itemStack.isEmpty()) {
 				NbtCompound nbtCompound = new NbtCompound();
@@ -167,7 +133,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
 		nbt.put("Items", nbtList);
 		nbt.putInt("DisabledSlots", this.disabledSlots);
-		nbt.put("Pose", this.poseToNbt());
 	}
 
 	@Override
@@ -182,53 +147,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 				this.inventory.setStack(j, ItemStack.fromNbt(nbtCompound));
 			}
 		}
-		NbtCompound nbtCompound = nbt.getCompound("Pose");
 		this.disabledSlots = nbt.getInt("DisabledSlots");
-		this.readPoseNbt(nbtCompound);
-	}
-
-	private void readPoseNbt(NbtCompound nbt) {
-		NbtList nbtList = nbt.getList("Head", NbtElement.FLOAT_TYPE);
-		this.setHeadRotation(nbtList.isEmpty() ? DEFAULT_HEAD_ROTATION : new EulerAngle(nbtList));
-		NbtList nbtList2 = nbt.getList("Body", NbtElement.FLOAT_TYPE);
-		this.setBodyRotation(nbtList2.isEmpty() ? DEFAULT_BODY_ROTATION : new EulerAngle(nbtList2));
-		NbtList nbtList3 = nbt.getList("LeftArm", NbtElement.FLOAT_TYPE);
-		this.setLeftArmRotation(nbtList3.isEmpty() ? DEFAULT_LEFT_ARM_ROTATION : new EulerAngle(nbtList3));
-		NbtList nbtList4 = nbt.getList("RightArm", NbtElement.FLOAT_TYPE);
-		this.setRightArmRotation(nbtList4.isEmpty() ? DEFAULT_RIGHT_ARM_ROTATION : new EulerAngle(nbtList4));
-		NbtList nbtList5 = nbt.getList("LeftLeg", NbtElement.FLOAT_TYPE);
-		this.setLeftLegRotation(nbtList5.isEmpty() ? DEFAULT_LEFT_LEG_ROTATION : new EulerAngle(nbtList5));
-		NbtList nbtList6 = nbt.getList("RightLeg", NbtElement.FLOAT_TYPE);
-		this.setRightLegRotation(nbtList6.isEmpty() ? DEFAULT_RIGHT_LEG_ROTATION : new EulerAngle(nbtList6));
-	}
-
-	private NbtCompound poseToNbt() {
-		NbtCompound nbtCompound = new NbtCompound();
-		if (!DEFAULT_HEAD_ROTATION.equals(this.headRotation)) {
-			nbtCompound.put("Head", this.headRotation.toNbt());
-		}
-
-		if (!DEFAULT_BODY_ROTATION.equals(this.bodyRotation)) {
-			nbtCompound.put("Body", this.bodyRotation.toNbt());
-		}
-
-		if (!DEFAULT_LEFT_ARM_ROTATION.equals(this.leftArmRotation)) {
-			nbtCompound.put("LeftArm", this.leftArmRotation.toNbt());
-		}
-
-		if (!DEFAULT_RIGHT_ARM_ROTATION.equals(this.rightArmRotation)) {
-			nbtCompound.put("RightArm", this.rightArmRotation.toNbt());
-		}
-
-		if (!DEFAULT_LEFT_LEG_ROTATION.equals(this.leftLegRotation)) {
-			nbtCompound.put("LeftLeg", this.leftLegRotation.toNbt());
-		}
-
-		if (!DEFAULT_RIGHT_LEG_ROTATION.equals(this.rightLegRotation)) {
-			nbtCompound.put("RightLeg", this.rightLegRotation.toNbt());
-		}
-
-		return nbtCompound;
 	}
 
 	@Override
@@ -245,7 +164,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		ScreenHandler screenHandler = createMenu(playerAccessor.getScreenHandlerSyncId() % 100 + 1, player.getInventory(), player);
 		if (screenHandler != null) {
 			playerAccessor.callIncrementScreenHandlerSyncId();
-			FurnishingsServerPlayNetworkHandler.sendPacket(player, new OpenPoseableStandScreenS2CPacket(playerAccessor.getScreenHandlerSyncId(), this.getId(), this.material == Material.STONE));
+			FurnishingsServerPlayNetworkHandler.sendPacket(player, new OpenPoseableStandScreenS2CPacket(playerAccessor.getScreenHandlerSyncId(), this.getId()));
 			player.currentScreenHandler = screenHandler;
 			playerAccessor.callOnSpawn(player.currentScreenHandler);
 		}
@@ -255,94 +174,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 	@Override
 	public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
 		return new PoseableStandScreenHandler(syncId, playerInventory, this.inventory, this);
-	}
-
-	@Override
-	public void tick() {
-		super.tick();
-		EulerAngle eulerAngle = this.dataTracker.get(TRACKER_HEAD_ROTATION);
-		if (!this.headRotation.equals(eulerAngle)) {
-			this.setHeadRotation(eulerAngle);
-		}
-
-		EulerAngle eulerAngle2 = this.dataTracker.get(TRACKER_BODY_ROTATION);
-		if (!this.bodyRotation.equals(eulerAngle2)) {
-			this.setBodyRotation(eulerAngle2);
-		}
-
-		EulerAngle eulerAngle3 = this.dataTracker.get(TRACKER_LEFT_ARM_ROTATION);
-		if (!this.leftArmRotation.equals(eulerAngle3)) {
-			this.setLeftArmRotation(eulerAngle3);
-		}
-
-		EulerAngle eulerAngle4 = this.dataTracker.get(TRACKER_RIGHT_ARM_ROTATION);
-		if (!this.rightArmRotation.equals(eulerAngle4)) {
-			this.setRightArmRotation(eulerAngle4);
-		}
-
-		EulerAngle eulerAngle5 = this.dataTracker.get(TRACKER_LEFT_LEG_ROTATION);
-		if (!this.leftLegRotation.equals(eulerAngle5)) {
-			this.setLeftLegRotation(eulerAngle5);
-		}
-
-		EulerAngle eulerAngle6 = this.dataTracker.get(TRACKER_RIGHT_LEG_ROTATION);
-		if (!this.rightLegRotation.equals(eulerAngle6)) {
-			this.setRightLegRotation(eulerAngle6);
-		}
-	}
-
-	public void setHeadRotation(EulerAngle angle) {
-		this.headRotation = angle;
-		this.dataTracker.set(TRACKER_HEAD_ROTATION, angle);
-	}
-
-	public void setBodyRotation(EulerAngle angle) {
-		this.bodyRotation = angle;
-		this.dataTracker.set(TRACKER_BODY_ROTATION, angle);
-	}
-
-	public void setLeftArmRotation(EulerAngle angle) {
-		this.leftArmRotation = angle;
-		this.dataTracker.set(TRACKER_LEFT_ARM_ROTATION, angle);
-	}
-
-	public void setRightArmRotation(EulerAngle angle) {
-		this.rightArmRotation = angle;
-		this.dataTracker.set(TRACKER_RIGHT_ARM_ROTATION, angle);
-	}
-
-	public void setLeftLegRotation(EulerAngle angle) {
-		this.leftLegRotation = angle;
-		this.dataTracker.set(TRACKER_LEFT_LEG_ROTATION, angle);
-	}
-
-	public void setRightLegRotation(EulerAngle angle) {
-		this.rightLegRotation = angle;
-		this.dataTracker.set(TRACKER_RIGHT_LEG_ROTATION, angle);
-	}
-
-	public EulerAngle getHeadRotation() {
-		return this.headRotation;
-	}
-
-	public EulerAngle getBodyRotation() {
-		return this.bodyRotation;
-	}
-
-	public EulerAngle getLeftArmRotation() {
-		return this.leftArmRotation;
-	}
-
-	public EulerAngle getRightArmRotation() {
-		return this.rightArmRotation;
-	}
-
-	public EulerAngle getLeftLegRotation() {
-		return this.leftLegRotation;
-	}
-
-	public EulerAngle getRightLegRotation() {
-		return this.rightLegRotation;
 	}
 
 	private boolean isSlotDisabled(EquipmentSlot equipmentSlot) {
@@ -361,11 +192,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
 	@Override
 	protected void pushAway(Entity entity) {
-	}
-
-	@Override
-	public boolean collides() {
-		return !this.isRemoved();
 	}
 
 	@Override
@@ -400,18 +226,21 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 			this.kill();
 			return false;
 		}
-		if (DamageSource.IN_FIRE.equals(source) && material == Material.WOOD) {
+		if (DamageSource.IN_FIRE.equals(source) && !standType.equals(StandType.STATUE)) {
 			if (this.isOnFire()) {
 				this.updateHealth(source, 0.15F);
 			} else {
 				this.setOnFireFor(5);
 			}
 			return false;
-		} else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F && material == Material.WOOD) {
+		} else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F && !standType.equals(StandType.STATUE)) {
 			this.updateHealth(source, 4.0F);
 			return false;
 		} else {
 			if (source.getSource() instanceof PersistentProjectileEntity) {
+				return true;
+			}
+			if (source.getSource() instanceof FireworkRocketEntity) {
 				return false;
 			}
 			if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
@@ -437,7 +266,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource damageSource) {
-		return damageSource.isFromFalling();
+		return this.getStandType().equals(StandType.STATUE) ? damageSource.isFromFalling() || damageSource.isFire() : damageSource.isFromFalling();
 	}
 
 	@Override
@@ -493,9 +322,33 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		this.world.playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
 	}
 
+	public boolean haveLegs() {
+		return false;
+	}
+
+	public abstract EulerAngle getHeadRotation();
+
+	public abstract EulerAngle getBodyRotation();
+
+	public abstract EulerAngle getLeftArmRotation();
+
+	public abstract EulerAngle getRightArmRotation();
+
+	public abstract void setHeadRotation(EulerAngle angle);
+
+	public abstract void setBodyRotation(EulerAngle angle);
+
+	public abstract void setLeftArmRotation(EulerAngle angle);
+
+	public abstract void setRightArmRotation(EulerAngle angle);
+
 	@Override
 	public Arm getMainArm() {
 		return Arm.RIGHT;
+	}
+
+	public StandType getStandType() {
+		return this.standType;
 	}
 
 	public abstract ItemStack getItem();
@@ -515,8 +368,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 	@Override
 	protected abstract SoundEvent getDeathSound();
 
-	public abstract PoseableStandScreen getScreen(PoseableStandScreenHandler screenHandler, PlayerInventory inventory);
-
 	@Override
 	public boolean isAffectedBySplashPotions() {
 		return false;
@@ -531,5 +382,10 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 	@Override
 	public ItemStack getPickBlockStack() {
 		return getItem();
+	}
+
+	public enum StandType {
+		SCARECROW,
+		STATUE
 	}
 }

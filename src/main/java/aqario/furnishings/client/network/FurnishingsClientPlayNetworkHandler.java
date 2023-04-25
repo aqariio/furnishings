@@ -1,8 +1,10 @@
 package aqario.furnishings.client.network;
 
 import aqario.furnishings.client.gui.screen.PoseableStandScreen;
+import aqario.furnishings.client.gui.screen.ScarecrowScreen;
 import aqario.furnishings.client.gui.screen.StatueScreen;
 import aqario.furnishings.common.entity.PoseableStandEntity;
+import aqario.furnishings.common.entity.ScarecrowEntity;
 import aqario.furnishings.common.entity.StatueEntity;
 import aqario.furnishings.common.network.listener.FurnishingsClientPlayPacketListener;
 import aqario.furnishings.common.network.packet.s2c.OpenPoseableStandScreenS2CPacket;
@@ -18,7 +20,10 @@ public class FurnishingsClientPlayNetworkHandler implements FurnishingsClientPla
 			PoseableStandEntity poseableStand = (PoseableStandEntity) client.world.getEntityById(packet.getStandId());
 			if (poseableStand != null) {
 				PoseableStandScreenHandler screenHandler = (PoseableStandScreenHandler)poseableStand.createMenu(packet.getSyncId(), client.player.getInventory(), client.player);
-				PoseableStandScreen screen = new StatueScreen(screenHandler, client.player.getInventory(), (StatueEntity) poseableStand) /* new MannequinScreen(screenHandler, client.player.getInventory(), poseableStand.getDisplayName()) */;
+				PoseableStandScreen screen = switch (poseableStand.getStandType()) {
+					case STATUE -> new StatueScreen(screenHandler, client.player.getInventory(), (StatueEntity) poseableStand);
+					case SCARECROW -> new ScarecrowScreen(screenHandler, client.player.getInventory(), (ScarecrowEntity) poseableStand);
+				};
 				client.player.currentScreenHandler = screen.getScreenHandler();
 				client.setScreen(screen);
 			}

@@ -17,18 +17,17 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScreenHandler> {
-	private static PoseableStandPart selectedPart = PoseableStandPart.HEAD;
+	private static StandPart selectedPart = StandPart.HEAD;
 	private final PoseableStandEntity poseableStand;
-	protected int backgroundWidth = 176;
-	protected int backgroundHeight = 185;
 	private ScrollbarWidget xScroll;
 	private ScrollbarWidget yScroll;
 	private ScrollbarWidget zScroll;
 
 	public PoseableStandScreen(PoseableStandScreenHandler handler, PlayerInventory inventory, PoseableStandEntity poseableStand) {
 		super(handler, inventory, poseableStand.getDisplayName());
-
 		this.poseableStand = poseableStand;
+		this.backgroundHeight = 185;
+		this.playerInventoryTitleY = this.backgroundHeight - 94;
 	}
 
 //	@Override
@@ -63,7 +62,7 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 		float rotationX = MathHelper.wrapDegrees(rotations.getPitch()) + 180;
 		float rotationY = MathHelper.wrapDegrees(rotations.getYaw()) + 180;
 		float rotationZ = MathHelper.wrapDegrees(rotations.getRoll()) + 180;
-		if (selectedPart == PoseableStandPart.LEFT_ARM) {
+		if (selectedPart == StandPart.LEFT_ARM) {
 			rotationZ = 360 - rotationZ;
 		}
 		this.xScroll.setScrollAmount(rotationX % 360 / 360.0F * this.xScroll.getMaxScrollAmount());
@@ -86,11 +85,11 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 //	public boolean mouseReleased(double mouseX, double mouseY, int button) {
 //		return super.mouseReleased(mouseX, mouseY, button);
 //	}
-
-	@Override
-	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
-		this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 4210752);
-	}
+//
+//	@Override
+//	protected void drawForeground(MatrixStack matrices, int mouseX, int mouseY) {
+//		this.textRenderer.draw(matrices, this.title, (float)this.titleX, (float)this.titleY, 4210752);
+//	}
 
 	@Override
 	protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
@@ -124,13 +123,13 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 
 	@Override
 	public void closeScreen() {
-		handler.setPose(PoseableStandPart.HEAD.getRotation(this.poseableStand), PoseableStandPart.BODY.getRotation(this.poseableStand), PoseableStandPart.LEFT_ARM.getRotation(this.poseableStand), PoseableStandPart.RIGHT_ARM.getRotation(this.poseableStand));
+		handler.setPose(StandPart.HEAD.getRotation(this.poseableStand), StandPart.BODY.getRotation(this.poseableStand), StandPart.LEFT_ARM.getRotation(this.poseableStand), StandPart.RIGHT_ARM.getRotation(this.poseableStand));
 		super.closeScreen();
 	}
 
 	public abstract Identifier getTexture();
 
-	enum PoseableStandPart {
+	enum StandPart {
 		HEAD(PoseableStandEntity::setHeadRotation, PoseableStandEntity::getHeadRotation, 98, 21, 176, 59, 16, 16),
 		BODY(PoseableStandEntity::setBodyRotation, PoseableStandEntity::getBodyRotation, 98, 37, 176, 39, 16, 20),
 		LEFT_ARM(PoseableStandEntity::setLeftArmRotation, PoseableStandEntity::getLeftArmRotation, 114, 37, 176, 15, 8, 24),
@@ -145,7 +144,7 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 		private final int buttonWidth;
 		private final int buttonHeight;
 
-		PoseableStandPart(BiConsumer<PoseableStandEntity, EulerAngle> rotationSetter, Function<PoseableStandEntity, EulerAngle> rotationGetter, int xOffset, int yOffset, int buttonU, int buttonV, int buttonWidth, int buttonHeight) {
+		StandPart(BiConsumer<PoseableStandEntity, EulerAngle> rotationSetter, Function<PoseableStandEntity, EulerAngle> rotationGetter, int xOffset, int yOffset, int buttonU, int buttonV, int buttonWidth, int buttonHeight) {
 			this.rotationSetter = rotationSetter;
 			this.rotationGetter = rotationGetter;
 			this.xOffset = xOffset;

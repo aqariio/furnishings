@@ -61,41 +61,43 @@ public class PoseableStandScreenHandler extends ScreenHandler {
 			}
 		});
 
-		// Legs
-		this.addSlot(new Slot(inventory, 2, 8, 54) {
-			@Override
-			public int getMaxItemCount() {
-				return 1;
-			}
+		if (poseableStand.getStandType().equals(PoseableStandEntity.StandType.STATUE)) {
+			// Legs
+			this.addSlot(new Slot(inventory, 2, 8, 54) {
+				@Override
+				public int getMaxItemCount() {
+					return 1;
+				}
 
-			@Override
-			public boolean canInsert(ItemStack stack) {
-				return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.LEGS;
-			}
+				@Override
+				public boolean canInsert(ItemStack stack) {
+					return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.LEGS;
+				}
 
-			@Override
-			public Pair<Identifier, Identifier> getBackgroundSprite() {
-				return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_LEGGINGS_SLOT_TEXTURE);
-			}
-		});
+				@Override
+				public Pair<Identifier, Identifier> getBackgroundSprite() {
+					return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_LEGGINGS_SLOT_TEXTURE);
+				}
+			});
 
-		// Feet
-		this.addSlot(new Slot(inventory, 3, 8, 72) {
-			@Override
-			public int getMaxItemCount() {
-				return 1;
-			}
+			// Feet
+			this.addSlot(new Slot(inventory, 3, 8, 72) {
+				@Override
+				public int getMaxItemCount() {
+					return 1;
+				}
 
-			@Override
-			public boolean canInsert(ItemStack stack) {
-				return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.FEET;
-			}
+				@Override
+				public boolean canInsert(ItemStack stack) {
+					return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.FEET;
+				}
 
-			@Override
-			public Pair<Identifier, Identifier> getBackgroundSprite() {
-				return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_BOOTS_SLOT_TEXTURE);
-			}
-		});
+				@Override
+				public Pair<Identifier, Identifier> getBackgroundSprite() {
+					return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_BOOTS_SLOT_TEXTURE);
+				}
+			});
+		}
 
 		// Hand
 		this.addSlot(new Slot(inventory, 4, 77, 54));
