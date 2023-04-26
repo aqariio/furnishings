@@ -1,6 +1,7 @@
 package aqario.furnishings.client.renderer;
 
-import aqario.furnishings.client.FurnishingsClient;
+import aqario.furnishings.client.model.FurnishingsEntityModelLayers;
+import aqario.furnishings.client.model.ScarecrowArmorEntityModel;
 import aqario.furnishings.client.model.ScarecrowEntityModel;
 import aqario.furnishings.client.renderer.feature.StuckArrowsFeatureRenderer;
 import aqario.furnishings.common.Furnishings;
@@ -8,6 +9,7 @@ import aqario.furnishings.common.entity.ScarecrowEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
+import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
@@ -18,15 +20,14 @@ public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntit
 	public static final Identifier TEXTURE = new Identifier(Furnishings.ID, "textures/entity/scarecrow/scarecrow.png");
 
 	public ScarecrowEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx, new ScarecrowEntityModel(ctx.getPart(FurnishingsClient.SCARECROW)), 0.0F);
-//		this.addFeature(
-//				new ArmorFeatureRenderer<>(
-//						this,
-//						new ScarecrowEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_INNER_ARMOR)),
-//						new ScarecrowEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_OUTER_ARMOR))
-//				)
-//		);
-
+		super(ctx, new ScarecrowEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW)), 0.0F);
+		this.addFeature(
+				new ArmorFeatureRenderer<>(
+						this,
+						new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_INNER_ARMOR)),
+						new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_OUTER_ARMOR))
+				)
+		);
 		this.addFeature(new StuckArrowsFeatureRenderer<>(ctx, this));
 		this.addFeature(new HeldItemFeatureRenderer<>(this, ctx.getHeldItemRenderer()));
 		this.addFeature(new ElytraFeatureRenderer<>(this, ctx.getModelLoader()));

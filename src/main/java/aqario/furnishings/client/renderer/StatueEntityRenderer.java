@@ -1,6 +1,5 @@
 package aqario.furnishings.client.renderer;
 
-import aqario.furnishings.client.FurnishingsClient;
 import aqario.furnishings.client.model.FurnishingsEntityModelLayers;
 import aqario.furnishings.client.model.StatueArmorEntityModel;
 import aqario.furnishings.client.model.StatueEntityModel;
@@ -21,7 +20,7 @@ public class StatueEntityRenderer extends LivingEntityRenderer<StatueEntity, Sta
 	public static final Identifier TEXTURE = new Identifier(Furnishings.ID, "textures/entity/statue/statue.png");
 
 	public StatueEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx, new StatueEntityModel(ctx.getPart(FurnishingsClient.STATUE)), 0.0F);
+		super(ctx, new StatueEntityModel(ctx.getPart(FurnishingsEntityModelLayers.STATUE)), 0.0F);
 		this.addFeature(
 				new ArmorFeatureRenderer<>(
 						this,

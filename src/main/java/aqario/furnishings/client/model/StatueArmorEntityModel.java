@@ -20,6 +20,11 @@ public class StatueArmorEntityModel extends BipedEntityModel<StatueEntity> {
 			ModelPartBuilder.create().uv(32, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, dilation.add(0.5F)),
 			ModelTransform.pivot(0.0F, 1.0F, 0.0F)
 		);
+		ModelPartData body = modelPartData.addChild(
+			EntityModelPartNames.BODY,
+			ModelPartBuilder.create().uv(16, 16).cuboid(-4.0F, -12.0F, -2.0F, 8.0F, 12.0F, 4.0F, dilation.add(0.1F)),
+			ModelTransform.pivot(0.0F, 10.0F, 0.0F)
+		);
 		modelPartData.addChild(
 			EntityModelPartNames.HEAD,
 			ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, dilation),

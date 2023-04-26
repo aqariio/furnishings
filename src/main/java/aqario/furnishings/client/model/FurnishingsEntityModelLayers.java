@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 public class FurnishingsEntityModelLayers {
 	private static final String MAIN = "main";
 	private static final Set<EntityModelLayer> LAYERS = Sets.newHashSet();
+	public static final EntityModelLayer SCARECROW = registerMain("scarecrow");
+	public static final EntityModelLayer STATUE = registerMain("statue");
 	public static final EntityModelLayer SCARECROW_INNER_ARMOR = createInnerArmor("scarecrow");
 	public static final EntityModelLayer SCARECROW_OUTER_ARMOR = createOuterArmor("scarecrow");
 	public static final EntityModelLayer STATUE_INNER_ARMOR = createInnerArmor("statue");
