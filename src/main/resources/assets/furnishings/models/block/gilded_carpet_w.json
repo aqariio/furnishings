@@ -1,0 +1,6 @@
+{
+  "parent": "furnishings:block/gilded_carpet",
+  "textures": {
+    "1": "furnishings:block/gilded_carpet_w"
+  }
+}

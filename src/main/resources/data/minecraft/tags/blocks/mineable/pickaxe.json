@@ -14,6 +14,8 @@
     "furnishings:cracked_cobblestone_bricks",
     "furnishings:cracked_polished_calcite_bricks",
     "furnishings:cracked_polished_tuff_bricks",
+    "furnishings:framed_glass",
+    "furnishings:framed_glass_pane",
     "furnishings:iron_scaffolding",
     "furnishings:lamp",
     "furnishings:mossy_bricks",
@@ -43,6 +45,9 @@
     "furnishings:rocky_dirt",
     "furnishings:soul_brazier",
     "furnishings:soul_lamp",
-    "furnishings:stone_pedestal"
+    "furnishings:stone_pedestal",
+    "furnishings:tuff_slab",
+    "furnishings:tuff_stairs",
+    "furnishings:tuff_wall"
   ]
 }

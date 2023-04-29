@@ -42,5 +42,20 @@ public class FurnishingsLootTableGenerator extends SimpleFabricLootTableProvider
         identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_calcite_brick_stairs"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_CALCITE_BRICK_STAIRS));
         identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_calcite_brick_wall"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL));
         identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/cracked_polished_calcite_bricks"), BlockLootTableGenerator.drops(FurnishingsBlocks.CRACKED_POLISHED_CALCITE_BRICKS));
+
+		/* Tuff */
+
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/tuff_slab"), BlockLootTableGenerator.slabDrops(FurnishingsBlocks.TUFF_SLAB));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/tuff_stairs"), BlockLootTableGenerator.drops(FurnishingsBlocks.TUFF_STAIRS));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/tuff_wall"), BlockLootTableGenerator.drops(FurnishingsBlocks.TUFF_WALL));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_slab"), BlockLootTableGenerator.slabDrops(FurnishingsBlocks.POLISHED_TUFF_SLAB));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_stairs"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_STAIRS));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_wall"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_WALL));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_bricks"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_BRICKS));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_brick_slab"), BlockLootTableGenerator.slabDrops(FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_brick_stairs"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_brick_wall"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/cracked_polished_tuff_bricks"), BlockLootTableGenerator.drops(FurnishingsBlocks.CRACKED_POLISHED_TUFF_BRICKS));
     }
 }

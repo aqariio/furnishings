@@ -60,14 +60,14 @@ public class FurnishingsBlocks {
 
     public static final Block ROCKY_DIRT = register("rocky_dirt", new Block(QuiltBlockSettings.copyOf(Blocks.DIRT).strength(1.0F).sounds(BlockSoundGroup.TUFF).requiresTool()), ItemGroup.BUILDING_BLOCKS);
 
-    /** Embossed Carpet */
-
-    public static final Block EMBOSSED_CARPET = register("embossed_carpet", new EmbossedCarpetBlock(QuiltBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
-
     /** Framed Glass */
 
-    public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(1.0f, 1.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
-    public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(1.0f, 1.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
+    public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(2.0f, 5.0f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
+    public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(2.0f, 5.0f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
+
+	/** Gilded Carpet */
+
+	public static final Block GILDED_CARPET = register("gilded_carpet", new GildedCarpetBlock(QuiltBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
 
     /** Iron Scaffolding */
 
