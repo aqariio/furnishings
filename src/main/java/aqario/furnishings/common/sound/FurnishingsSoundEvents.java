@@ -6,7 +6,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class FurnishingsSoundEvents {
-
     public static final SoundEvent BLOCK_LAMP_LIGHT = register("block.lamp.light");
     public static final SoundEvent BLOCK_LAMP_EXTINGUISH = register("block.lamp.extinguish");
 

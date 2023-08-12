@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "furnishings:block/glass_panel",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "furnishings:block/glass_panel",
+      "x": 90,
+      "y": 90
+    },
+    "facing=south": {
+      "model": "furnishings:block/glass_panel",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "furnishings:block/glass_panel",
+      "x": 90,
+      "y": 270
+    },
+    "facing=up": {
+      "model": "furnishings:block/glass_panel",
+      "y": 180
+    },
+    "facing=down": {
+      "model": "furnishings:block/glass_panel",
+      "x": 180
+    }
+  }
+}

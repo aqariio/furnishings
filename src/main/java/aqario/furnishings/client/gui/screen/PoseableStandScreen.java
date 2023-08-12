@@ -3,15 +3,22 @@ package aqario.furnishings.client.gui.screen;
 import aqario.furnishings.client.gui.widget.ScrollbarWidget;
 import aqario.furnishings.common.entity.PoseableStandEntity;
 import aqario.furnishings.common.screen.PoseableStandScreenHandler;
+import com.mojang.blaze3d.lighting.DiffuseLighting;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Quaternion;
+import net.minecraft.util.math.Vec3f;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -19,6 +26,8 @@ import java.util.function.Function;
 public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScreenHandler> {
 	private static StandPart selectedPart = StandPart.HEAD;
 	private final PoseableStandEntity poseableStand;
+	private float mouseX;
+	private float mouseY;
 	private ScrollbarWidget xScroll;
 	private ScrollbarWidget yScroll;
 	private ScrollbarWidget zScroll;
@@ -101,7 +110,51 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 //		if ((this.handler.getSlot(0).hasStack() || this.handler.getSlot(1).hasStack()) && !this.handler.getSlot(2).hasStack()) {
 //			this.drawTexture(matrices, this.x + 99, this.y + 45, this.backgroundWidth, 0, 28, 21);
 //		}
-		InventoryScreen.drawEntity(this.x + 51, this.y + 84, 30, 0, 0, this.poseableStand);
+		InventoryScreen.drawEntity(this.x + 51, this.y + 84, 20, (float)(this.x + 51) - this.mouseX, (float)(this.y + 75 - 50) - this.mouseY, this.poseableStand);
+	}
+
+	public static void drawPoseableStand(int x, int y, int size, float mouseX, float mouseY, LivingEntity entity) {
+		float f = (float)Math.atan(mouseX / 40.0F);
+		float g = (float)Math.atan(mouseY / 40.0F);
+		MatrixStack matrixStack = RenderSystem.getModelViewStack();
+		matrixStack.push();
+		matrixStack.translate((double)x, (double)y, 1050.0);
+		matrixStack.scale(1.0F, 1.0F, -1.0F);
+		RenderSystem.applyModelViewMatrix();
+		MatrixStack matrixStack2 = new MatrixStack();
+		matrixStack2.translate(0.0, 0.0, 1000.0);
+		matrixStack2.scale((float)size, (float)size, (float)size);
+		Quaternion quaternion = Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F);
+		Quaternion quaternion2 = Vec3f.POSITIVE_X.getDegreesQuaternion(g * 20.0F);
+		quaternion.hamiltonProduct(quaternion2);
+		matrixStack2.multiply(quaternion);
+		float h = entity.bodyYaw;
+		float i = entity.getYaw();
+		float j = entity.getPitch();
+		float k = entity.prevHeadYaw;
+		float l = entity.headYaw;
+		entity.bodyYaw = 180.0F + f * 20.0F;
+		entity.setYaw(180.0F + f * 40.0F);
+		entity.setPitch(-g * 20.0F);
+		entity.headYaw = entity.getYaw();
+		entity.prevHeadYaw = entity.getYaw();
+		DiffuseLighting.setupInventoryEntityLighting();
+		EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
+		quaternion2.conjugate();
+		entityRenderDispatcher.setRotation(quaternion2);
+		entityRenderDispatcher.setRenderShadows(false);
+		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
+		RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, 1.0F, matrixStack2, immediate, 15728880));
+		immediate.draw();
+		entityRenderDispatcher.setRenderShadows(true);
+		entity.bodyYaw = h;
+		entity.setYaw(i);
+		entity.setPitch(j);
+		entity.prevHeadYaw = k;
+		entity.headYaw = l;
+		matrixStack.pop();
+		RenderSystem.applyModelViewMatrix();
+		DiffuseLighting.setup3DGuiLighting();
 	}
 
 	@Override
@@ -119,6 +172,8 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 //			z *= -1;
 //		if (rotations.getPitch() != x || rotations.getRoll() != y || rotations.getYaw() != z)
 //			selectedPart.setRotation(this.poseableStand, new EulerAngle(x, y, z));
+		this.mouseX = (float)mouseX;
+		this.mouseY = (float)mouseY;
 	}
 
 	@Override
