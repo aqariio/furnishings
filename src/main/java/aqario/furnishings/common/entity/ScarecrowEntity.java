@@ -1,6 +1,8 @@
 package aqario.furnishings.common.entity;
 
 import aqario.furnishings.common.item.FurnishingsItems;
+import aqario.furnishings.common.screen.ScarecrowScreenHandler;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -8,6 +10,11 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -15,10 +22,12 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class ScarecrowEntity extends PoseableStandEntity {
@@ -37,6 +46,60 @@ public class ScarecrowEntity extends PoseableStandEntity {
 
 	public ScarecrowEntity(EntityType<? extends PoseableStandEntity> entityType, World world) {
 		super(entityType, world, StandType.SCARECROW);
+	}
+
+	@Override
+	public boolean damage(DamageSource source, float amount) {
+		if (this.world.isClient || this.isRemoved()) {
+			return false;
+		}
+		if (DamageSource.OUT_OF_WORLD.equals(source)) {
+			this.kill();
+			return false;
+		}
+		if (this.isInvulnerableTo(source)) {
+			return false;
+		}
+		if (source.getSource() instanceof FireworkRocketEntity) {
+			return false;
+		}
+		if (source.isExplosive()) {
+			this.onBreak(source);
+			this.kill();
+			return false;
+		}
+		if (source.getSource() instanceof PersistentProjectileEntity) {
+			return true;
+		}
+		if (DamageSource.LAVA.equals(source)) {
+			this.updateHealth(source, 1.0F);
+			return false;
+		}
+		if (source.isFire()) {
+			this.updateHealth(source, 0.05F);
+			return false;
+		}
+		if (source.getAttacker() instanceof PlayerEntity) {
+			if (!((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
+				return false;
+			}
+			if (source.getAttacker().isSneaking()) {
+				if (source.isSourceCreativePlayer() ) {
+					this.onBreak(source);
+					this.spawnBreakParticles();
+					this.kill();
+					return false;
+				}
+				if (source.getAttacker() instanceof PlayerEntity && (((PlayerEntity) source.getAttacker()).getMainHandStack().isIn(ConventionalItemTags.AXES) || ((PlayerEntity) source.getAttacker()).getMainHandStack().getItem() instanceof AxeItem)) {
+					this.breakAndDropThis(source);
+					this.spawnBreakParticles();
+					this.kill();
+				}
+			} else {
+				this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -59,6 +122,11 @@ public class ScarecrowEntity extends PoseableStandEntity {
 		super.readCustomDataFromNbt(nbt);
 		NbtCompound nbtCompound = nbt.getCompound("Pose");
 		this.readPoseNbt(nbtCompound);
+	}
+
+	@Override
+	public @Nullable ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+		return new ScarecrowScreenHandler(syncId, playerInventory, this.inventory, this);
 	}
 
 	private void readPoseNbt(NbtCompound nbt) {
@@ -109,6 +177,16 @@ public class ScarecrowEntity extends PoseableStandEntity {
 		return this.rightArmRotation;
 	}
 
+	@Override
+	public EulerAngle getLeftLegRotation() {
+		return new EulerAngle(0.0F, 0.0F, 0.0F);
+	}
+
+	@Override
+	public EulerAngle getRightLegRotation() {
+		return new EulerAngle(0.0F, 0.0F, 0.0F);
+	}
+
 	public void setHeadRotation(EulerAngle angle) {
 		this.headRotation = angle;
 		this.dataTracker.set(TRACKER_HEAD_ROTATION, angle);
@@ -130,6 +208,14 @@ public class ScarecrowEntity extends PoseableStandEntity {
 	}
 
 	@Override
+	public void setLeftLegRotation(EulerAngle angle) {
+	}
+
+	@Override
+	public void setRightLegRotation(EulerAngle angle) {
+	}
+
+	@Override
 	public ItemStack getItem() {
 		return new ItemStack(FurnishingsItems.SCARECROW);
 	}
@@ -141,23 +227,23 @@ public class ScarecrowEntity extends PoseableStandEntity {
 
 	@Override
 	public SoundEvent getPlaceSound() {
-		return SoundEvents.BLOCK_GRASS_PLACE;
+		return SoundEvents.BLOCK_WOOD_PLACE;
 	}
 
 	@Override
 	public FallSounds getFallSounds() {
-		return new LivingEntity.FallSounds(SoundEvents.BLOCK_GRASS_FALL, SoundEvents.BLOCK_GRASS_FALL);
+		return new LivingEntity.FallSounds(SoundEvents.BLOCK_WOOD_FALL, SoundEvents.BLOCK_WOOD_FALL);
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return SoundEvents.BLOCK_GRASS_HIT;
+		return SoundEvents.BLOCK_WOOD_HIT;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.BLOCK_GRASS_BREAK;
+		return SoundEvents.BLOCK_WOOD_BREAK;
 	}
 }

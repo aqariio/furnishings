@@ -62,6 +62,20 @@ public class PanelBlock extends TransparentBlock implements Waterloggable {
 	}
 
 	@Override
+	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+		if (stateFrom.isOf(this)) {
+			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING)) {
+				return true;
+			}
+			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING).getOpposite()) {
+				return true;
+			}
+		}
+
+		return super.isSideInvisible(state, stateFrom, direction);
+	}
+
+	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPES.get(state.get(FACING));
 	}

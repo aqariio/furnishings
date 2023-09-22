@@ -14,6 +14,7 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.util.math.MathHelper;
@@ -35,43 +36,44 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 	public PoseableStandScreen(PoseableStandScreenHandler handler, PlayerInventory inventory, PoseableStandEntity poseableStand) {
 		super(handler, inventory, poseableStand.getDisplayName());
 		this.poseableStand = poseableStand;
-		this.backgroundHeight = 185;
-		this.playerInventoryTitleY = this.backgroundHeight - 94;
+		++this.backgroundHeight;
+//		this.backgroundHeight = 185;
+//		this.playerInventoryTitleY = this.backgroundHeight - 94;
 	}
 
-//	@Override
-//	protected void init() {
-//		super.init();
-//
-//		this.addDrawable(this.xScroll = new ScrollbarWidget(this.x + 136, this.y + 20, 8, 65, Text.literal("X")) {
-//			@Override
-//			public double getScrollRate() {
-//				return 0;
-//			}
-//		});
-//
-//		this.addDrawable(this.yScroll = new ScrollbarWidget(this.x + 147, this.y + 20, 8, 65, Text.literal("Y")) {
-//			@Override
-//			public double getScrollRate() {
-//				return 0;
-//			}
-//		});
-//
-//		this.addDrawable(this.zScroll = new ScrollbarWidget(this.x + 158, this.y + 20, 8, 65, Text.literal("Z")) {
-//			@Override
-//			public double getScrollRate() {
-//				return 0;
-//			}
-//		});
-//		this.updateScrollbar();
-//	}
+	@Override
+	protected void init() {
+		super.init();
+
+		this.addDrawable(this.xScroll = new ScrollbarWidget(this.x + 80, this.y + 18, 52, 16, Text.literal("X")) {
+			@Override
+			public double getScrollRate() {
+				return 0;
+			}
+		});
+
+		this.addDrawable(this.yScroll = new ScrollbarWidget(this.x + 80, this.y + 36, 52, 16, Text.literal("Y")) {
+			@Override
+			public double getScrollRate() {
+				return 0;
+			}
+		});
+
+		this.addDrawable(this.zScroll = new ScrollbarWidget(this.x + 80, this.y + 54, 52, 16, Text.literal("Z")) {
+			@Override
+			public double getScrollRate() {
+				return 0;
+			}
+		});
+		this.updateScrollbar();
+	}
 
 	private void updateScrollbar() {
 		EulerAngle rotations = selectedPart.getRotation(this.poseableStand);
 		float rotationX = MathHelper.wrapDegrees(rotations.getPitch()) + 180;
 		float rotationY = MathHelper.wrapDegrees(rotations.getYaw()) + 180;
 		float rotationZ = MathHelper.wrapDegrees(rotations.getRoll()) + 180;
-		if (selectedPart == StandPart.LEFT_ARM) {
+		if (selectedPart == StandPart.LEFT_ARM /*|| selectedPart == StandPart.LEFT_LEG*/) {
 			rotationZ = 360 - rotationZ;
 		}
 		this.xScroll.setScrollAmount(rotationX % 360 / 360.0F * this.xScroll.getMaxScrollAmount());
@@ -110,51 +112,7 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 //		if ((this.handler.getSlot(0).hasStack() || this.handler.getSlot(1).hasStack()) && !this.handler.getSlot(2).hasStack()) {
 //			this.drawTexture(matrices, this.x + 99, this.y + 45, this.backgroundWidth, 0, 28, 21);
 //		}
-		InventoryScreen.drawEntity(this.x + 51, this.y + 84, 20, (float)(this.x + 51) - this.mouseX, (float)(this.y + 75 - 50) - this.mouseY, this.poseableStand);
-	}
-
-	public static void drawPoseableStand(int x, int y, int size, float mouseX, float mouseY, LivingEntity entity) {
-		float f = (float)Math.atan(mouseX / 40.0F);
-		float g = (float)Math.atan(mouseY / 40.0F);
-		MatrixStack matrixStack = RenderSystem.getModelViewStack();
-		matrixStack.push();
-		matrixStack.translate((double)x, (double)y, 1050.0);
-		matrixStack.scale(1.0F, 1.0F, -1.0F);
-		RenderSystem.applyModelViewMatrix();
-		MatrixStack matrixStack2 = new MatrixStack();
-		matrixStack2.translate(0.0, 0.0, 1000.0);
-		matrixStack2.scale((float)size, (float)size, (float)size);
-		Quaternion quaternion = Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F);
-		Quaternion quaternion2 = Vec3f.POSITIVE_X.getDegreesQuaternion(g * 20.0F);
-		quaternion.hamiltonProduct(quaternion2);
-		matrixStack2.multiply(quaternion);
-		float h = entity.bodyYaw;
-		float i = entity.getYaw();
-		float j = entity.getPitch();
-		float k = entity.prevHeadYaw;
-		float l = entity.headYaw;
-		entity.bodyYaw = 180.0F + f * 20.0F;
-		entity.setYaw(180.0F + f * 40.0F);
-		entity.setPitch(-g * 20.0F);
-		entity.headYaw = entity.getYaw();
-		entity.prevHeadYaw = entity.getYaw();
-		DiffuseLighting.setupInventoryEntityLighting();
-		EntityRenderDispatcher entityRenderDispatcher = MinecraftClient.getInstance().getEntityRenderDispatcher();
-		quaternion2.conjugate();
-		entityRenderDispatcher.setRotation(quaternion2);
-		entityRenderDispatcher.setRenderShadows(false);
-		VertexConsumerProvider.Immediate immediate = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-		RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0F, 1.0F, matrixStack2, immediate, 15728880));
-		immediate.draw();
-		entityRenderDispatcher.setRenderShadows(true);
-		entity.bodyYaw = h;
-		entity.setYaw(i);
-		entity.setPitch(j);
-		entity.prevHeadYaw = k;
-		entity.headYaw = l;
-		matrixStack.pop();
-		RenderSystem.applyModelViewMatrix();
-		DiffuseLighting.setup3DGuiLighting();
+		InventoryScreen.drawEntity(this.x + 25, this.y + 64, 20, (float)(this.x + 51) - this.mouseX, (float)(this.y + 75 - 50) - this.mouseY, this.poseableStand);
 	}
 
 	@Override
@@ -178,7 +136,7 @@ public abstract class PoseableStandScreen extends HandledScreen<PoseableStandScr
 
 	@Override
 	public void closeScreen() {
-		handler.setPose(StandPart.HEAD.getRotation(this.poseableStand), StandPart.BODY.getRotation(this.poseableStand), StandPart.LEFT_ARM.getRotation(this.poseableStand), StandPart.RIGHT_ARM.getRotation(this.poseableStand));
+//		handler.setPose(StandPart.HEAD.getRotation(this.poseableStand), StandPart.BODY.getRotation(this.poseableStand), StandPart.LEFT_ARM.getRotation(this.poseableStand), StandPart.RIGHT_ARM.getRotation(this.poseableStand));
 		super.closeScreen();
 	}
 

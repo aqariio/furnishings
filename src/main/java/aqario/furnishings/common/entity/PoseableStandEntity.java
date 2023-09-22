@@ -1,7 +1,6 @@
 package aqario.furnishings.common.entity;
 
 import aqario.furnishings.common.network.packet.s2c.OpenPoseableStandScreenS2CPacket;
-import aqario.furnishings.common.screen.PoseableStandScreenHandler;
 import aqario.furnishings.mixin.ServerPlayerEntityAccessor;
 import aqario.furnishings.server.network.FurnishingsServerPlayNetworkHandler;
 import com.google.common.collect.ImmutableList;
@@ -172,9 +171,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
 	@Nullable
 	@Override
-	public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new PoseableStandScreenHandler(syncId, playerInventory, this.inventory, this);
-	}
+	public abstract ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity);
 
 	private boolean isSlotDisabled(EquipmentSlot equipmentSlot) {
 		return false;
@@ -205,11 +202,6 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 	}
 
 	@Override
-	public boolean handleAttack(Entity attacker) {
-		return super.handleAttack(attacker);
-	}
-
-	@Override
 	public boolean damage(DamageSource source, float amount) {
 		if (this.world.isClient || this.isRemoved()) {
 			return false;
@@ -221,37 +213,36 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		if (this.isInvulnerableTo(source)) {
 			return false;
 		}
+		if (source.getSource() instanceof FireworkRocketEntity) {
+			return false;
+		}
 		if (source.isExplosive()) {
 			this.onBreak(source);
 			this.kill();
 			return false;
 		}
-		if (DamageSource.IN_FIRE.equals(source) && !standType.equals(StandType.STATUE)) {
+		if (DamageSource.IN_FIRE.equals(source)) {
 			if (this.isOnFire()) {
 				this.updateHealth(source, 0.15F);
 			} else {
 				this.setOnFireFor(5);
 			}
 			return false;
-		} else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F && !standType.equals(StandType.STATUE)) {
+		} else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F) {
 			this.updateHealth(source, 4.0F);
 			return false;
 		} else {
 			if (source.getSource() instanceof PersistentProjectileEntity) {
 				return true;
 			}
-			if (source.getSource() instanceof FireworkRocketEntity) {
-				return false;
-			}
 			if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
 				return false;
 			}
 			if (source.getAttacker() instanceof PlayerEntity && !source.getAttacker().isSneaking()) {
-				this.world.sendEntityStatus(this, EntityStatuses.HIT_ARMOR_STAND);
 				this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
 			} else {
 				if (source.isSourceCreativePlayer()) {
-					this.playBreakSound();
+					this.breakAndDropThis(source);
 					this.spawnBreakParticles();
 					this.kill();
 					return false;
@@ -279,7 +270,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		this.emitGameEvent(GameEvent.ENTITY_DIE);
 	}
 
-	private void spawnBreakParticles() {
+	void spawnBreakParticles() {
 		if (this.world instanceof ServerWorld) {
 			((ServerWorld)this.world)
 				.spawnParticles(
@@ -296,7 +287,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		}
 	}
 
-	private void updateHealth(DamageSource damageSource, float amount) {
+	void updateHealth(DamageSource damageSource, float amount) {
 		float f = this.getHealth();
 		f -= amount;
 		if (f <= 0.5F) {
@@ -308,22 +299,18 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 		}
 	}
 
-	private void breakAndDropThis(DamageSource damageSource) {
+	void breakAndDropThis(DamageSource damageSource) {
 		Block.dropStack(this.world, this.getBlockPos(), this.getItem());
 		this.onBreak(damageSource);
 	}
 
-	private void onBreak(DamageSource damageSource) {
+	void onBreak(DamageSource damageSource) {
 		this.playBreakSound();
 		this.drop(damageSource);
 	}
 
-	private void playBreakSound() {
+	void playBreakSound() {
 		this.world.playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
-	}
-
-	public boolean haveLegs() {
-		return false;
 	}
 
 	public abstract EulerAngle getHeadRotation();
@@ -334,6 +321,10 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
 	public abstract EulerAngle getRightArmRotation();
 
+	public abstract EulerAngle getLeftLegRotation();
+
+	public abstract EulerAngle getRightLegRotation();
+
 	public abstract void setHeadRotation(EulerAngle angle);
 
 	public abstract void setBodyRotation(EulerAngle angle);
@@ -341,6 +332,10 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 	public abstract void setLeftArmRotation(EulerAngle angle);
 
 	public abstract void setRightArmRotation(EulerAngle angle);
+
+	public abstract void setLeftLegRotation(EulerAngle angle);
+
+	public abstract void setRightLegRotation(EulerAngle angle);
 
 	@Override
 	public Arm getMainArm() {

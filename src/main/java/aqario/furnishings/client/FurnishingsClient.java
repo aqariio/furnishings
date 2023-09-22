@@ -30,6 +30,7 @@ public class FurnishingsClient implements ClientModInitializer {
 		BlockRenderLayerMap.put(RenderLayer.getTranslucent(), FurnishingsBlocks.GLASS_PANEL);
         BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.BRAZIER);
         BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.SOUL_BRAZIER);
+		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.IRON_GRATE);
         BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.IRON_SCAFFOLDING);
 		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.SCONCE);
 		BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.SOUL_SCONCE);

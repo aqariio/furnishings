@@ -70,9 +70,10 @@ public class FurnishingsBlocks {
 	public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(2.0f, 5.0f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
 	public static final Block GLASS_PANEL = register("glass_panel", new PanelBlock(QuiltBlockSettings.of(Material.GLASS).strength(0.3f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.BUILDING_BLOCKS);
 
-	/** Iron Scaffolding */
+	/** Iron */
 
     public static final Block IRON_SCAFFOLDING = registerScaffolding("iron_scaffolding", new IronScaffoldingBlock(QuiltBlockSettings.of(Material.METAL).mapColor(MapColor.IRON_GRAY).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN).noCollision().dynamicBounds()));
+	public static final Block IRON_GRATE = registerScaffolding("iron_grate", new GrateBlock(QuiltBlockSettings.of(Material.METAL).mapColor(MapColor.CLEAR).requiresTool().strength(5.0F, 6.0F).sounds(BlockSoundGroup.COPPER).nonOpaque()));
 
     /** Lamps */
 
