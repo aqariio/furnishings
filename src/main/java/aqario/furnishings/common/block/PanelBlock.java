@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class PanelBlock extends TransparentBlock implements Waterloggable {
 	protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(
@@ -64,10 +65,10 @@ public class PanelBlock extends TransparentBlock implements Waterloggable {
 	@Override
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
 		if (stateFrom.isOf(this)) {
-			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING)) {
+			if (direction.getAxis().isHorizontal() && state.get(FACING).getOpposite() == stateFrom.get(FACING).getOpposite()) {
 				return true;
 			}
-			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING).getOpposite()) {
+			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING)) {
 				return true;
 			}
 		}
@@ -91,10 +92,16 @@ public class PanelBlock extends TransparentBlock implements Waterloggable {
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		World worldAccess = ctx.getWorld();
-		if (worldAccess.getBlockState(ctx.getBlockPos()).isOf(this)) {
-			return worldAccess.getBlockState(ctx.getBlockPos()).getBlock().getDefaultState();
+		boolean waterlogged = worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
+		if (Objects.requireNonNull(ctx.getPlayer()).isSneaking()) {
+			if (ctx.getSide().getAxis().isHorizontal()) {
+				return this.getDefaultState().with(FACING, ctx.getHitPos().y - (double)ctx.getBlockPos().getY() > 0.5 ? Direction.DOWN : Direction.UP).with(WATERLOGGED, waterlogged);
+			}
+
+			return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite()).with(WATERLOGGED, waterlogged);
 		}
-		return this.getDefaultState().with(FACING, ctx.getSide()).with(WATERLOGGED, worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
+
+		return this.getDefaultState().with(FACING, ctx.getSide()).with(WATERLOGGED, waterlogged);
 	}
 
 	@Override
