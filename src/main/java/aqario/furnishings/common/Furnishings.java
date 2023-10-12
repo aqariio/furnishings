@@ -1,10 +1,12 @@
 package aqario.furnishings.common;
 
+import aqario.furnishings.common.block.BookBlock;
 import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.entity.FurnishingsEntityType;
 import aqario.furnishings.common.item.FurnishingsItems;
 import aqario.furnishings.common.network.FurnishingsMessages;
 import aqario.furnishings.common.sound.FurnishingsSoundEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
@@ -22,5 +24,6 @@ public class Furnishings implements ModInitializer {
 		FurnishingsItems.init();
 		FurnishingsMessages.init();
 		FurnishingsSoundEvents.init();
+		UseBlockCallback.EVENT.register(BookBlock::placeBookStack);
 	}
 }

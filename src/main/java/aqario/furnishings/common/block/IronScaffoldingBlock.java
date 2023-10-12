@@ -143,18 +143,19 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     }
 
     static {
-        COLLISION_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
+        COLLISION_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
         OUTLINE_SHAPE = VoxelShapes.fullCube().offset(0.0, -1.0, 0.0);
-        VoxelShape voxelShape = Block.createCuboidShape(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
+        VoxelShape voxelShape = Block.createCuboidShape(0.0, 13.0, 0.0, 16.0, 16.0, 16.0);
         VoxelShape voxelShape2 = Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 16.0, 2.0);
         VoxelShape voxelShape3 = Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 2.0);
         VoxelShape voxelShape4 = Block.createCuboidShape(0.0, 0.0, 14.0, 2.0, 16.0, 16.0);
         VoxelShape voxelShape5 = Block.createCuboidShape(14.0, 0.0, 14.0, 16.0, 16.0, 16.0);
-        NORMAL_OUTLINE_SHAPE = VoxelShapes.union(voxelShape, voxelShape2, voxelShape3, voxelShape4, voxelShape5);
-        VoxelShape voxelShape6 = Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 2.0, 16.0);
-        VoxelShape voxelShape7 = Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 2.0, 16.0);
-        VoxelShape voxelShape8 = Block.createCuboidShape(0.0, 0.0, 14.0, 16.0, 2.0, 16.0);
-        VoxelShape voxelShape9 = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 2.0);
-        BOTTOM_OUTLINE_SHAPE = VoxelShapes.union(COLLISION_SHAPE, NORMAL_OUTLINE_SHAPE, voxelShape7, voxelShape6, voxelShape9, voxelShape8);
+		VoxelShape voxelShape6 = Block.createCuboidShape(1.0, 1.0, 1.0, 15.0, 13.0, 15.0);
+        NORMAL_OUTLINE_SHAPE = VoxelShapes.union(voxelShape, voxelShape2, voxelShape3, voxelShape4, voxelShape5, voxelShape6);
+        VoxelShape voxelShape7 = Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 2.0, 16.0);
+        VoxelShape voxelShape8 = Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 2.0, 16.0);
+        VoxelShape voxelShape9 = Block.createCuboidShape(0.0, 0.0, 14.0, 16.0, 2.0, 16.0);
+        VoxelShape voxelShape10 = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 3.0, 2.0);
+        BOTTOM_OUTLINE_SHAPE = VoxelShapes.union(COLLISION_SHAPE, NORMAL_OUTLINE_SHAPE, voxelShape7, voxelShape8, voxelShape9, voxelShape10);
     }
 }

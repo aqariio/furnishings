@@ -1,0 +1,8 @@
+{
+  "parent": "furnishings:block/template_cushion",
+  "textures": {
+    "bottom": "furnishings:block/cushion_bottom",
+    "side": "furnishings:block/blue_cushion_side",
+    "top": "furnishings:block/blue_cushion_top"
+  }
+}

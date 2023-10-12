@@ -28,11 +28,8 @@ public class GrateBlock extends HorizontalFacingBlock implements Waterloggable {
 
 	@Override
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-		System.out.println(state.get(HALF) == stateFrom.get(HALF));
-		if (stateFrom.isOf(this) && direction.getAxis().isHorizontal()) {
-			if (state.get(HALF) == stateFrom.get(HALF)) {
-				return true;
-			}
+		if (stateFrom.isOf(this) && direction.getAxis().isHorizontal() && state.get(HALF) == stateFrom.get(HALF)) {
+			return true;
 		}
 		return super.isSideInvisible(state, stateFrom, direction);
 	}
@@ -47,7 +44,7 @@ public class GrateBlock extends HorizontalFacingBlock implements Waterloggable {
 		} else {
 			blockState = blockState.with(FACING, ctx.getPlayerFacing().getOpposite()).with(HALF, direction == Direction.UP ? BlockHalf.BOTTOM : BlockHalf.TOP);
 		}
-		return blockState.with(WATERLOGGED, Boolean.valueOf(fluidState.getFluid() == Fluids.WATER));
+		return blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 	}
 
 	@Override

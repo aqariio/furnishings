@@ -1,0 +1,17 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "builtin/entity",
+	"textures": {
+		"layer0": "furnishings:item/models/book"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, -20, 0],
+			"translation": [5, 31.5, 11]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, -20, 0],
+			"translation": [-10, 31.5, 5.5]
+		}
+	}
+}

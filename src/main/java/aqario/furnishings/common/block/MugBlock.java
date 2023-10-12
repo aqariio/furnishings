@@ -22,15 +22,15 @@ import net.minecraft.world.WorldView;
 
 import java.util.stream.Stream;
 
-public class MugBlock extends HorizontalFacingBlock implements Waterloggable {
+public class MugBlock extends FluidContainerBlock {
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Stream.of(
-			Block.createCuboidShape(4, 0, 4, 12, 10, 5),
-			Block.createCuboidShape(11, 0, 5, 12, 10, 11),
-			Block.createCuboidShape(4, 0, 11, 12, 10, 12),
-			Block.createCuboidShape(4, 0, 5, 5, 10, 11),
-			Block.createCuboidShape(5, 0, 5, 11, 1, 11)
+		Block.createCuboidShape(5, 0, 5, 11, 9, 6),
+		Block.createCuboidShape(10, 0, 6, 11, 9, 10),
+		Block.createCuboidShape(5, 0, 10, 11, 9, 11),
+		Block.createCuboidShape(5, 0, 6, 6, 9, 10),
+		Block.createCuboidShape(6, 0, 6, 10, 1, 10)
 	).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
 
 	public MugBlock(Settings settings) {

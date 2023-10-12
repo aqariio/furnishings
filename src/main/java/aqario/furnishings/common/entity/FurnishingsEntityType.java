@@ -10,6 +10,14 @@ import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.entity.api.QuiltEntityTypeBuilder;
 
 public class FurnishingsEntityType {
+	public static final EntityType<SeatEntity> SEAT = Registry.register(
+		Registry.ENTITY_TYPE, new Identifier(Furnishings.ID, "seat"),
+		QuiltEntityTypeBuilder.create()
+			.entityFactory(SeatEntity::new)
+			.spawnGroup(SpawnGroup.MISC)
+			.setDimensions(EntityDimensions.fixed(0.0F, 0.0F))
+			.build());
+
 	public static final EntityType<ScarecrowEntity> SCARECROW = Registry.register(
 			Registry.ENTITY_TYPE, new Identifier(Furnishings.ID, "scarecrow"),
 			QuiltEntityTypeBuilder.createLiving()
