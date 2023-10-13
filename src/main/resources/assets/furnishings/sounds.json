@@ -1,4 +1,101 @@
 {
+  "block.book.break": {
+    "sounds": [
+      "dig/wood1",
+      "dig/wood2",
+      "dig/wood3",
+      "dig/wood4"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.book.step": {
+    "sounds": [
+      "step/wood1",
+      "step/wood2",
+      "step/wood3",
+      "step/wood4",
+      "step/wood5",
+      "step/wood6"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.book.place": {
+    "sounds": [
+      "dig/wood1",
+      "dig/wood2",
+      "dig/wood3",
+      "dig/wood4"
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.book.hit": {
+    "sounds": [
+      "step/wood1",
+      "step/wood2",
+      "step/wood3",
+      "step/wood4",
+      "step/wood5",
+      "step/wood6"
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.book.fall": {
+    "sounds": [
+      "step/wood1",
+      "step/wood2",
+      "step/wood3",
+      "step/wood4",
+      "step/wood5",
+      "step/wood6"
+    ]
+  },
+  "block.cushion.break": {
+    "sounds": [
+      "furnishings:block/cushion/break1",
+      "furnishings:block/cushion/break2",
+      "furnishings:block/cushion/break3"
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "block.cushion.step": {
+    "sounds": [
+      "furnishings:block/cushion/step1",
+      "furnishings:block/cushion/step2",
+      "furnishings:block/cushion/step3"
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "block.cushion.place": {
+    "sounds": [
+      "furnishings:block/cushion/break1",
+      "furnishings:block/cushion/break2",
+      "furnishings:block/cushion/break3"
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "block.cushion.hit": {
+    "sounds": [
+      "furnishings:block/cushion/step1",
+      "furnishings:block/cushion/step2",
+      "furnishings:block/cushion/step3"
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "block.cushion.fall": {
+    "sounds": [
+      "furnishings:block/cushion/step1",
+      "furnishings:block/cushion/step2",
+      "furnishings:block/cushion/step3"
+    ]
+  },
+  "block.cushion.sit": {
+    "sounds": [
+      "furnishings:block/cushion/sit1",
+      "furnishings:block/cushion/sit2",
+      "furnishings:block/cushion/sit3"
+    ],
+    "subtitle": "subtitles.furnishings.block.cushion.sit"
+  },
   "block.lamp.light": {
     "subtitle": "subtitles.furnishings.block.lamp.light",
     "sounds": [

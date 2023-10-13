@@ -2,6 +2,7 @@ package aqario.furnishings.common.block;
 
 import aqario.furnishings.common.entity.FurnishingsEntityType;
 import aqario.furnishings.common.entity.SeatEntity;
+import aqario.furnishings.common.sound.FurnishingsSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
@@ -16,7 +17,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -55,7 +55,7 @@ public class CushionBlock extends Block implements Waterloggable {
 			}
 		}
 		if (!hit.getSide().equals(Direction.DOWN)) {
-			if (unseat(state, world, pos, player)) {
+			if (unseat(state, world, pos)) {
 				return ActionResult.success(world.isClient);
 			}
 			if (seat(player, world, pos)) {
@@ -67,8 +67,8 @@ public class CushionBlock extends Block implements Waterloggable {
 
 
 
-	public boolean unseat(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-		if (/*player.isSneaking() && */ state.get(OCCUPIED)) {
+	public boolean unseat(BlockState state, World world, BlockPos pos) {
+		if (state.get(OCCUPIED)) {
 			List<SeatEntity> list = world.getEntitiesByClass(SeatEntity.class, new Box(pos), entity -> true);
 			boolean unseated = false;
 			for (SeatEntity entity : list) {
@@ -122,7 +122,7 @@ public class CushionBlock extends Block implements Waterloggable {
 					return false;
 				}
 			}
-			world.playSound(null, pos, SoundEvents.BLOCK_WOOL_STEP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			world.playSound(null, pos, FurnishingsSoundEvents.BLOCK_CUSHION_SIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
 			return true;
 		}
 		return false;

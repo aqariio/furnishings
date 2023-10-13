@@ -1,6 +1,7 @@
 package aqario.furnishings.common.entity;
 
 import aqario.furnishings.common.block.CushionBlock;
+import aqario.furnishings.common.sound.FurnishingsSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
@@ -14,7 +15,6 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -33,7 +33,7 @@ public class SeatEntity extends Entity {
 	protected void removePassenger(Entity passenger) {
 		super.removePassenger(passenger);
 		this.discard();
-		this.getWorld().playSound(null, this.getBlockPos(), SoundEvents.BLOCK_WOOL_STEP, SoundCategory.BLOCKS, 1.0F, 0.9F);
+		this.getWorld().playSound(null, this.getBlockPos(), FurnishingsSoundEvents.BLOCK_CUSHION_SIT, SoundCategory.BLOCKS, 1.0F, 0.9F);
 		BlockPos cushionPos = getCushionPos();
 		if (cushionPos != null) {
 			BlockState cushionState = this.getWorld().getBlockState(cushionPos);

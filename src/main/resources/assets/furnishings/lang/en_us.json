@@ -109,5 +109,7 @@
 
   "entity.furnishings.seat": "Seat",
   "entity.furnishings.scarecrow": "Scarecrow",
-  "entity.furnishings.statue": "Statue"
+  "entity.furnishings.statue": "Statue",
+
+  "subtitles.furnishings.block.cushion.sit": "Cushion fluffs"
 }

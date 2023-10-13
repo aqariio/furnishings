@@ -2,9 +2,9 @@ package aqario.furnishings.common.block;
 
 import aqario.furnishings.common.Furnishings;
 import aqario.furnishings.common.item.IronScaffoldingItem;
+import aqario.furnishings.common.sound.FurnishingsSoundEvents;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
@@ -47,39 +47,56 @@ public class FurnishingsBlocks {
 	/* Candelabras */
 
 	public static final Block CANDELABRA = register("candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PALE_YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PALE_YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block WHITE_CANDELABRA = register("white_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.WHITE_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.WHITE_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block ORANGE_CANDELABRA = register("orange_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.ORANGE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.ORANGE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block MAGENTA_CANDELABRA = register("magenta_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.MAGENTA).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.MAGENTA).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block LIGHT_BLUE_CANDELABRA = register("light_blue_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block YELLOW_CANDELABRA = register("yellow_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block LIME_CANDELABRA = register("lime_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIME).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIME).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block PINK_CANDELABRA = register("pink_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PINK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PINK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block GRAY_CANDELABRA = register("gray_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block LIGHT_GRAY_CANDELABRA = register("light_gray_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block CYAN_CANDELABRA = register("cyan_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.CYAN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.CYAN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block PURPLE_CANDELABRA = register("purple_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PURPLE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PURPLE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block BLUE_CANDELABRA = register("blue_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block BROWN_CANDELABRA = register("brown_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BROWN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BROWN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block GREEN_CANDELABRA = register("green_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GREEN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GREEN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block RED_CANDELABRA = register("red_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.RED).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.RED).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 	public static final Block BLACK_CANDELABRA = register("black_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLACK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS);
+		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLACK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+	);
 
     /** Cobblestone Bricks */
 
@@ -93,55 +110,55 @@ public class FurnishingsBlocks {
     public static final Block MOSSY_COBBLESTONE_BRICK_STAIRS = register("mossy_cobblestone_brick_stairs", new PublicStairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICK_WALL = register("mossy_cobblestone_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 
-	/* Cushions */
+	/** Cushions */
 
 	public static final Block WHITE_CUSHION = register(
-		"white_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.WHITE).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"white_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.WHITE).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block ORANGE_CUSHION = register(
-		"orange_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.ORANGE).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"orange_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.ORANGE).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block MAGENTA_CUSHION = register(
-		"magenta_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.MAGENTA).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"magenta_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.MAGENTA).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block LIGHT_BLUE_CUSHION = register(
-		"light_blue_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.LIGHT_BLUE).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"light_blue_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.LIGHT_BLUE).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block YELLOW_CUSHION = register(
-		"yellow_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.YELLOW).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"yellow_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.YELLOW).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block LIME_CUSHION = register(
-		"lime_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.LIME).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"lime_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.LIME).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block PINK_CUSHION = register(
-		"pink_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.PINK).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"pink_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.PINK).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block GRAY_CUSHION = register(
-		"gray_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.GRAY).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"gray_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.GRAY).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block LIGHT_GRAY_CUSHION = register(
-		"light_gray_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.LIGHT_GRAY).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"light_gray_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.LIGHT_GRAY).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block CYAN_CUSHION = register(
-		"cyan_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.CYAN).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"cyan_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.CYAN).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block PURPLE_CUSHION = register(
-		"purple_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.PURPLE).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"purple_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.PURPLE).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block BLUE_CUSHION = register(
-		"blue_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.BLUE).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"blue_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.BLUE).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block BROWN_CUSHION = register(
-		"brown_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.BROWN).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"brown_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.BROWN).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block GREEN_CUSHION = register(
-		"green_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.GREEN).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"green_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.GREEN).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block RED_CUSHION = register(
-		"red_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.RED).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"red_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.RED).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 	public static final Block BLACK_CUSHION = register(
-		"black_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOD, MapColor.BLACK).strength(0.4F).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS
+		"black_cushion", new CushionBlock(QuiltBlockSettings.of(Material.WOOL, MapColor.BLACK).strength(0.2F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.CUSHION)), ItemGroup.DECORATIONS
 	);
 
 	/** Dinnerware */
@@ -175,7 +192,7 @@ public class FurnishingsBlocks {
 	/* Misc */
 
 	public static final Block MOSS = register("moss", new GlowLichenBlock(QuiltBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).noCollision().strength(0.1F).sounds(BlockSoundGroup.MOSS_CARPET)), ItemGroup.DECORATIONS);
-	public static final Block BOOK = registerWithoutItem("book", new BookBlock(QuiltBlockSettings.of(Material.DECORATION).mapColor(MapColor.BROWN).nonOpaque().strength(0.1F).sounds(BlockSoundGroup.WOOD)));
+	public static final Block BOOK = registerWithoutItem("book", new BookBlock(QuiltBlockSettings.of(Material.DECORATION).mapColor(MapColor.BROWN).nonOpaque().strength(0.1F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.BOOK)));
 
 
 	/** Paper Lanterns */
@@ -229,13 +246,13 @@ public class FurnishingsBlocks {
         return Registry.register(Registry.BLOCK, new Identifier(Furnishings.ID, id), block);
     }
 
-    private static Item registerBlockItem(String id, Block block, ItemGroup group) {
-        return Registry.register(Registry.ITEM, new Identifier(Furnishings.ID, id), new BlockItem(block, new QuiltItemSettings().group(group)));
-    }
+    private static void registerBlockItem(String id, Block block, ItemGroup group) {
+		Registry.register(Registry.ITEM, new Identifier(Furnishings.ID, id), new BlockItem(block, new QuiltItemSettings().group(group)));
+	}
 
-    private static Item registerScaffoldingBlockItem(String id, Block block) {
-        return Registry.register(Registry.ITEM, new Identifier(Furnishings.ID, id), new IronScaffoldingItem(block, new QuiltItemSettings().group(ItemGroup.DECORATIONS)));
-    }
+    private static void registerScaffoldingBlockItem(String id, Block block) {
+		Registry.register(Registry.ITEM, new Identifier(Furnishings.ID, id), new IronScaffoldingItem(block, new QuiltItemSettings().group(ItemGroup.DECORATIONS)));
+	}
 
     public static void init() {
     }

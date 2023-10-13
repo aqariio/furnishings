@@ -8,6 +8,7 @@ import net.minecraft.util.registry.Registry;
 
 public final class FurnishingsBlockTags {
     public static final TagKey<Block> COBBLESTONE_BRICKS = FurnishingsBlockTags.of("cobblestone_bricks");
+	public static final TagKey<Block> CUSHIONS = FurnishingsBlockTags.of("cushions");
 
     private FurnishingsBlockTags() {
     }

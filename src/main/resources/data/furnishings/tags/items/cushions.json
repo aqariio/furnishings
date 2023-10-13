@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "furnishings:white_cushion",
+    "furnishings:orange_cushion",
+    "furnishings:magenta_cushion",
+    "furnishings:light_blue_cushion",
+    "furnishings:yellow_cushion",
+    "furnishings:lime_cushion",
+    "furnishings:pink_cushion",
+    "furnishings:gray_cushion",
+    "furnishings:light_gray_cushion",
+    "furnishings:cyan_cushion",
+    "furnishings:purple_cushion",
+    "furnishings:blue_cushion",
+    "furnishings:brown_cushion",
+    "furnishings:green_cushion",
+    "furnishings:red_cushion",
+    "furnishings:black_cushion"
+  ]
+}

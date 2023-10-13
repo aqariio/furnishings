@@ -79,11 +79,10 @@ public class BookItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
             VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, this.itemModel.getLayer(this.texture), false, false);
             this.itemModel.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
             matrices.pop();
-		}/* else {
+		} else {
 			matrices.pop();
             matrices.push();
-			matrices.scale(1.0F, 1.0F, 1.0F);
             itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryModel);
-		}*/
+		}
     }
 }
