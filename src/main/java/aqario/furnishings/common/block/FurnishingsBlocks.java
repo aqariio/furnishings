@@ -47,55 +47,55 @@ public class FurnishingsBlocks {
 	/* Candelabras */
 
 	public static final Block CANDELABRA = register("candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PALE_YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PALE_YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block WHITE_CANDELABRA = register("white_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.WHITE_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.WHITE_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block ORANGE_CANDELABRA = register("orange_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.ORANGE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.ORANGE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block MAGENTA_CANDELABRA = register("magenta_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.MAGENTA).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.MAGENTA).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block LIGHT_BLUE_CANDELABRA = register("light_blue_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block YELLOW_CANDELABRA = register("yellow_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.YELLOW).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block LIME_CANDELABRA = register("lime_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIME).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIME).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block PINK_CANDELABRA = register("pink_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PINK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PINK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block GRAY_CANDELABRA = register("gray_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block LIGHT_GRAY_CANDELABRA = register("light_gray_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.LIGHT_GRAY).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block CYAN_CANDELABRA = register("cyan_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.CYAN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.CYAN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block PURPLE_CANDELABRA = register("purple_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PURPLE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.PURPLE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block BLUE_CANDELABRA = register("blue_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLUE).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block BROWN_CANDELABRA = register("brown_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BROWN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BROWN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block GREEN_CANDELABRA = register("green_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GREEN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.GREEN).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block RED_CANDELABRA = register("red_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.RED).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.RED).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 	public static final Block BLACK_CANDELABRA = register("black_candelabra",
-		new CandleBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLACK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandleBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
+		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLACK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 
     /** Cobblestone Bricks */
@@ -163,7 +163,8 @@ public class FurnishingsBlocks {
 
 	/** Dinnerware */
 
-	public static final Block MUG = register("mug", new MugBlock(QuiltBlockSettings.of(Material.WOOD).breakInstantly().sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);
+	public static final Block MUG = register("mug", new MugBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);
+	public static final Block CHALICE = register("chalice", new ChaliceBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 
     /** Dirt */
 

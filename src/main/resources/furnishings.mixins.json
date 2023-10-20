@@ -4,6 +4,7 @@
   "package": "aqario.furnishings.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "LivingEntityMixin",
     "ServerPlayerEntityAccessor"
   ],
   "client": [

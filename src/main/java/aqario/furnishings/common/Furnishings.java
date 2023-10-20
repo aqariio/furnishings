@@ -2,6 +2,7 @@ package aqario.furnishings.common;
 
 import aqario.furnishings.common.block.BookBlock;
 import aqario.furnishings.common.block.FurnishingsBlocks;
+import aqario.furnishings.common.block.entity.FurnishingsBlockEntityType;
 import aqario.furnishings.common.entity.FurnishingsEntityType;
 import aqario.furnishings.common.item.FurnishingsItems;
 import aqario.furnishings.common.network.FurnishingsMessages;
@@ -20,6 +21,7 @@ public class Furnishings implements ModInitializer {
 	public void onInitialize(ModContainer mod) {
 		LOGGER.info("Loading {}", mod.metadata().name());
 		FurnishingsBlocks.init();
+		FurnishingsBlockEntityType.init();
 		FurnishingsEntityType.init();
 		FurnishingsItems.init();
 		FurnishingsMessages.init();

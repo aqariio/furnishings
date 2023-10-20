@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "furnishings:block/template_candelabra_floor_2_lit",
+	"parent": "furnishings:block/template_candelabra_floor_2",
 	"textures": {
 		"1": "furnishings:block/candle_holder",
 		"particle": "furnishings:block/candle_holder",

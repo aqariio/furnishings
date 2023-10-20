@@ -98,7 +98,7 @@ public class BrazierBlock extends Block implements Waterloggable {
                 return ActionResult.SUCCESS;
             }
         }
-        return ActionResult.FAIL;
+        return ActionResult.PASS;
     }
 
     @Override
