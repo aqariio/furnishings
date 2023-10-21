@@ -1,5 +1,6 @@
 package aqario.furnishings.common.block;
 
+import aqario.furnishings.common.block.enums.NoCeilingWallMountLocation;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -7,7 +8,6 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.*;
-import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.FluidState;
@@ -20,6 +20,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
+import net.minecraft.state.property.Properties;
 import net.minecraft.state.property.*;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -36,13 +37,10 @@ import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.ToIntFunction;
 
-public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
+public class CandelabraBlock extends HorizontalFacingBlock implements Waterloggable {
 	protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(5.0, 0.0, 5.0, 11.0, 14.0, 11.0);
 	protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(
 		ImmutableMap.of(
@@ -56,26 +54,24 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 			Block.createCuboidShape(0.0, 0.0, 5.0, 5.0, 14.0, 11.0)
 		)
 	);
-
-	private static final VoxelShape SHAPE = Block.createCuboidShape(5.0, 0.0, 5.0, 11.0, 14.0, 11.0);
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-	public static final EnumProperty<WallMountLocation> FACE = Properties.WALL_MOUNT_LOCATION;
+	public static final EnumProperty<NoCeilingWallMountLocation> FACE = EnumProperty.of("face", NoCeilingWallMountLocation.class);
 	public static final IntProperty CANDLES = Properties.CANDLES;
 	public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final ToIntFunction<BlockState> STATE_TO_LUMINANCE = state -> state.get(LIT) ? 3 * state.get(CANDLES) : 0;
-	private static final EnumMap<Direction, EnumMap<WallMountLocation, Int2ObjectMap<List<Vec3d>>>> PARTICLE_OFFSETS;
+	private static final EnumMap<Direction, EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>>> PARTICLE_OFFSETS;
 
 	static {
 		PARTICLE_OFFSETS = new EnumMap<>(Direction.class);
-		EnumMap<WallMountLocation, Int2ObjectMap<List<Vec3d>>> temp = new EnumMap<>(WallMountLocation.class);
+		EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> temp = new EnumMap<>(NoCeilingWallMountLocation.class);
 		{
 			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
 			int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.6875, 0.5)));
 			int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.875, 0.5), new Vec3d(0.6875, 0.875, 0.5)));
 			int2ObjectMap.put(3, List.of(new Vec3d(0.1875, 0.9375, 0.5), new Vec3d(0.5, 0.9375, 0.5), new Vec3d(0.8125, 0.9375, 0.5)));
 			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.5), new Vec3d(0.8125, 1, 0.5), new Vec3d(0.5, 0.9375, 0.25), new Vec3d(0.5, 0.9375, 0.75)));
-			temp.put(WallMountLocation.FLOOR, Int2ObjectMaps.unmodifiable(int2ObjectMap));
+			temp.put(NoCeilingWallMountLocation.FLOOR, Int2ObjectMaps.unmodifiable(int2ObjectMap));
 		}
 		{
 			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
@@ -83,18 +79,10 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 			int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.9375, 0.1875), new Vec3d(0.6875, 0.9375, 0.1875)));
 			int2ObjectMap.put(3, List.of(new Vec3d(0.8125, 0.9375, 0.1875), new Vec3d(0.1875, 0.9375, 0.1875), new Vec3d(0.5, 0.9375, 0.25)));
 			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.1875), new Vec3d(0.8125, 1, 0.1875), new Vec3d(0.3125, 0.875, 0.3125), new Vec3d(0.6875, 0.875, 0.3125)));
-			temp.put(WallMountLocation.WALL, Int2ObjectMaps.unmodifiable(int2ObjectMap));
-		}
-		{
-			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
-			int2ObjectMap.put(1, List.of(new Vec3d(0.5, 9 / 16f, 0.5)));
-			int2ObjectMap.put(2, List.of(new Vec3d(0.25f, 0.875, 0.5), new Vec3d(0.75, 0.875, 0.5)));
-			int2ObjectMap.put(3, List.of(new Vec3d(0.5f, 0.875, 0.75), new Vec3d(0.75, 0.875, 0.375), new Vec3d(0.25, 0.875, 0.375)));
-			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 0.8125, 0.1875), new Vec3d(0.8125, 0.8125, 0.1875), new Vec3d(0.8125, 0.8125, 0.8125), new Vec3d(0.1875, 0.8125, 0.8125)));
-			temp.put(WallMountLocation.CEILING, Int2ObjectMaps.unmodifiable(int2ObjectMap));
+			temp.put(NoCeilingWallMountLocation.WALL, Int2ObjectMaps.unmodifiable(int2ObjectMap));
 		}
 		for (Direction direction : Direction.values()) {
-			EnumMap<WallMountLocation, Int2ObjectMap<List<Vec3d>>> newFaceMap = new EnumMap<>(WallMountLocation.class);
+			EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> newFaceMap = new EnumMap<>(NoCeilingWallMountLocation.class);
 			for (var faceList : temp.entrySet()) {
 				Int2ObjectMap<List<Vec3d>> newCandleList = new Int2ObjectOpenHashMap<>();
 				newCandleList.defaultReturnValue(List.of());
@@ -139,7 +127,7 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 
 	public CandelabraBlock(Settings settings) {
 		super(settings);
-		this.setDefaultState(this.stateManager.getDefaultState().with(LIT, false).with(CANDLES, 1).with(FACING, Direction.NORTH).with(FACE, WallMountLocation.FLOOR).with(WATERLOGGED, false));
+		this.setDefaultState(this.stateManager.getDefaultState().with(LIT, false).with(CANDLES, 1).with(FACING, Direction.NORTH).with(FACE, NoCeilingWallMountLocation.FLOOR).with(WATERLOGGED, false));
 	}
 
 	@Override
@@ -180,7 +168,7 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		return SHAPE;
+		return state.get(FACE).equals(NoCeilingWallMountLocation.FLOOR) ? STANDING_SHAPE : SHAPES.get(state.get(FACING));
 	}
 
 	@Override
@@ -242,7 +230,7 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 
 	private Iterable<Vec3d> getParticleOffsets(BlockState state) {
 		Direction direction = state.get(FACING);
-		WallMountLocation face = state.get(FACE);
+		NoCeilingWallMountLocation face = state.get(FACE);
 		int candles = state.get(CANDLES);
         return PARTICLE_OFFSETS.get(direction).get(face).get(candles);
 	}
@@ -261,12 +249,13 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 		}
 		for (Direction direction : ctx.getPlacementDirections()) {
 			BlockState blockState;
-			if (direction.getAxis() == Direction.Axis.Y) {
-				blockState = this.getDefaultState()
-					.with(FACE, direction == Direction.UP ? WallMountLocation.CEILING : WallMountLocation.FLOOR)
-					.with(FACING, ctx.getPlayerFacing());
+			if (direction == Direction.UP) {
+				continue;
+			}
+			if (direction.getAxis().isHorizontal()) {
+				blockState = this.getDefaultState().with(FACE, NoCeilingWallMountLocation.WALL).with(FACING, direction.getOpposite());
 			} else {
-				blockState = this.getDefaultState().with(FACE, WallMountLocation.WALL).with(FACING, direction.getOpposite());
+				blockState = this.getDefaultState().with(FACE, NoCeilingWallMountLocation.FLOOR).with(FACING, ctx.getPlayerFacing());
 			}
 
 			if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
@@ -290,7 +279,9 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 			world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
 		}
 
-		return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+		return getDirection(state).getOpposite() == direction && !state.canPlaceAt(world, pos)
+			? Blocks.AIR.getDefaultState()
+			: super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
 	}
 
 	@Override
@@ -317,6 +308,14 @@ public class CandelabraBlock extends WallMountedBlock implements Waterloggable {
 
 	@Override
 	public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		return state.get(FACE).equals(WallMountLocation.FLOOR) ? sideCoversSmallSquare(world, pos.down(), Direction.UP) : super.canPlaceAt(state, world, pos);
+		BlockPos blockPos = pos.offset(getDirection(state).getOpposite());
+		return state.get(FACE).equals(NoCeilingWallMountLocation.FLOOR) ? sideCoversSmallSquare(world, pos.down(), Direction.UP) : world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, getDirection(state));
 	}
+
+	protected static Direction getDirection(BlockState state) {
+        if (Objects.requireNonNull(state.get(FACE)) == NoCeilingWallMountLocation.FLOOR) {
+            return Direction.UP;
+        }
+        return state.get(FACING);
+    }
 }
