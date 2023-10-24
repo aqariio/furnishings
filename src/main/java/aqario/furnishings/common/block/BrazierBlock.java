@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
-public class BrazierBlock extends Block implements Waterloggable {
+public class BrazierBlock extends Block implements Waterloggable, Extinguishable {
     protected static final VoxelShape CHAIN_SHAPE = Block.createCuboidShape(6.5, 7, 6.5, 9.5, 16, 9.5);
     protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 15, 14);
     protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(3, 5, 3, 13, 7, 13);
@@ -48,8 +48,7 @@ public class BrazierBlock extends Block implements Waterloggable {
             ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(TOP_SHAPE, BASE_SHAPE, LEG_SHAPE);
     protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(CHAIN_SHAPE, TOP_SHAPE, BASE_SHAPE);
-    protected static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 16, 14);
-    private static final VoxelShape SMOKEY_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 16.0, 10.0);
+    protected static final VoxelShape FIRE_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 16, 14);
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty HANGING = Properties.HANGING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -72,9 +71,8 @@ public class BrazierBlock extends Block implements Waterloggable {
                 if (!world.isClient()) {
                     world.syncWorldEvent(null, WorldEvents.FIRE_EXTINGUISHED, pos, 0);
                 }
-                BrazierBlock.extinguish(context.getPlayer(), world, pos, state);
+                this.extinguish(context.getPlayer(), state, world, pos);
                 context.getStack().damage(1, player, p -> p.sendToolBreakStatus(context.getHand()));
-                world.setBlockState(pos, state.with(LIT, false), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
                 return ActionResult.SUCCESS;
             }
 
@@ -83,7 +81,7 @@ public class BrazierBlock extends Block implements Waterloggable {
             if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
                 world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                 world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
-                world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+				setLit(world, state, pos, true);
                 context.getStack().damage(1, player, p -> p.sendToolBreakStatus(context.getHand()));
                 return ActionResult.SUCCESS;
             }
@@ -91,7 +89,7 @@ public class BrazierBlock extends Block implements Waterloggable {
                 RandomGenerator random = world.getRandom();
                 world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
                 world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
-                world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+				setLit(world, state, pos, true);
                 if (!player.isCreative()) {
                     context.getStack().decrement(1);
                 }
@@ -103,20 +101,12 @@ public class BrazierBlock extends Block implements Waterloggable {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (!entity.isFireImmune() && state.get(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity)entity)) {
-            if (entity.getY() >= state.getCollisionShape(world, pos).getMax(Direction.Axis.Y) + pos.getY() - 0.1f) {
+        if (!entity.isFireImmune() && state.get(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+            if (entity.getY() >= FIRE_SHAPE.getMax(Direction.Axis.Y) + pos.getY() - 0.1f) {
                 entity.damage(DamageSource.IN_FIRE, this.fireDamage);
             }
         }
         super.onEntityCollision(state, world, pos, entity);
-    }
-
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.isOf(newState.getBlock())) {
-            return;
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
     }
 
     @Override
@@ -159,11 +149,6 @@ public class BrazierBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, RandomGenerator random) {
         if (!state.get(LIT)) {
             return;
@@ -178,7 +163,18 @@ public class BrazierBlock extends Block implements Waterloggable {
         }
     }
 
-    public static void extinguish(@Nullable Entity entity, WorldAccess world, BlockPos pos, BlockState state) {
+	@Override
+	public boolean isLit(BlockState state) {
+		return !state.get(WATERLOGGED) && state.get(LIT);
+	}
+
+	private static void setLit(WorldAccess world, BlockState state, BlockPos pos, boolean lit) {
+		world.setBlockState(pos, state.with(LIT, lit), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+	}
+
+	@Override
+    public void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos) {
+		setLit(world, state, pos, false);
         world.emitGameEvent(entity, GameEvent.BLOCK_CHANGE, pos);
     }
 
@@ -190,7 +186,7 @@ public class BrazierBlock extends Block implements Waterloggable {
                 if (!world.isClient()) {
                     world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0f, 1.0f);
                 }
-                BrazierBlock.extinguish(null, world, pos, state);
+                extinguish(null, state, world, pos);
             }
             world.setBlockState(pos, state.with(WATERLOGGED, true).with(LIT, false), Block.NOTIFY_ALL);
             world.scheduleFluidTick(pos, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));

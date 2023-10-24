@@ -3,10 +3,15 @@ package aqario.furnishings.common.block;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -15,6 +20,8 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -24,11 +31,12 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class SconceBlock extends Block implements Waterloggable {
+public class SconceBlock extends Block implements Waterloggable, Extinguishable {
 	protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 11.0, 10.0);
 	protected static final Map<Direction, VoxelShape> WALL_SHAPES = Maps.newEnumMap(
 			ImmutableMap.of(
@@ -51,6 +59,32 @@ public class SconceBlock extends Block implements Waterloggable {
 		super(settings);
 		this.particle = particle;
 		this.setDefaultState(this.stateManager.getDefaultState().with(LIT, true).with(FACING, Direction.UP).with(WATERLOGGED, false));
+	}
+
+	@Override
+	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		ItemStack itemStack = player.getStackInHand(hand);
+		ItemUsageContext context = new ItemUsageContext(player, hand, hit);
+		if (!state.get(WATERLOGGED) && !state.get(LIT)) {
+			if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
+				world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
+				world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
+				setLit(world, state, pos, true);
+				context.getStack().damage(1, player, p -> p.sendToolBreakStatus(context.getHand()));
+				return ActionResult.SUCCESS;
+			}
+			if (itemStack.getItem() == Items.FIRE_CHARGE) {
+				RandomGenerator random = world.getRandom();
+				world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
+				world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
+				setLit(world, state, pos, true);
+				if (!player.isCreative()) {
+					context.getStack().decrement(1);
+				}
+				return ActionResult.SUCCESS;
+			}
+		}
+		return ActionResult.PASS;
 	}
 
 	@Override
@@ -113,8 +147,6 @@ public class SconceBlock extends Block implements Waterloggable {
 			double d = (double)pos.getX() + 0.5;
 			double e = (double)pos.getY() + 0.7;
 			double f = (double)pos.getZ() + 0.5;
-			double g = 0.22;
-			double h = 0.27;
 			Direction direction2 = direction.getOpposite();
 			world.addParticle(ParticleTypes.SMOKE, d + 0.27 * (double)direction2.getOffsetX(), e + 0.22, f + 0.27 * (double)direction2.getOffsetZ(), 0.0, 0.0, 0.0);
 			world.addParticle(this.particle, d + 0.27 * (double)direction2.getOffsetX(), e + 0.22, f + 0.27 * (double)direction2.getOffsetZ(), 0.0, 0.0, 0.0);
@@ -129,13 +161,28 @@ public class SconceBlock extends Block implements Waterloggable {
 				if (!world.isClient()) {
 					world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 				}
-				BrazierBlock.extinguish(null, world, pos, state);
+				extinguish(null, state, world, pos);
 			}
 			world.setBlockState(pos, state.with(WATERLOGGED, true).with(LIT, false), Block.NOTIFY_ALL);
 			world.scheduleFluidTick(pos, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isLit(BlockState state) {
+		return !state.get(WATERLOGGED) && state.get(LIT);
+	}
+
+	private static void setLit(WorldAccess world, BlockState state, BlockPos pos, boolean lit) {
+		world.setBlockState(pos, state.with(LIT, lit), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+	}
+
+	@Override
+	public void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos) {
+		setLit(world, state, pos, false);
+		world.emitGameEvent(entity, GameEvent.BLOCK_CHANGE, pos);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.FluidState;
@@ -40,7 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.ToIntFunction;
 
-public class CandelabraBlock extends HorizontalFacingBlock implements Waterloggable {
+public class CandelabraBlock extends HorizontalFacingBlock implements Waterloggable, Extinguishable {
 	protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(5.0, 0.0, 5.0, 11.0, 14.0, 11.0);
 	protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(
 		ImmutableMap.of(
@@ -132,7 +133,7 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 
 	@Override
 	public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
-		if (!world.isClient && projectile.isOnFire() && this.isNotLit(state)) {
+		if (!world.isClient && projectile.isOnFire() && !this.isLit(state)) {
 			setLit(world, state, hit.getBlockPos(), true);
 		}
 	}
@@ -186,7 +187,7 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 			if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
 				world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
 				world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
-				world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+				setLit(world, state, pos, true);
 				context.getStack().damage(1, player, p -> p.sendToolBreakStatus(context.getHand()));
 				return ActionResult.SUCCESS;
 			}
@@ -194,7 +195,7 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 				RandomGenerator random = world.getRandom();
 				world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
 				world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
-				world.setBlockState(pos, state.with(LIT, true), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+				setLit(world, state, pos, true);
 				if (!player.isCreative()) {
 					context.getStack().decrement(1);
 				}
@@ -204,7 +205,8 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 		return ActionResult.FAIL;
 	}
 
-	public static void extinguish(@Nullable PlayerEntity player, BlockState state, WorldAccess world, BlockPos pos) {
+	@Override
+	public void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos) {
 		setLit(world, state, pos, false);
 		if (state.getBlock() instanceof CandelabraBlock) {
 			((CandelabraBlock)state.getBlock())
@@ -217,11 +219,12 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 		}
 
 		world.playSound(null, pos, SoundEvents.BLOCK_CANDLE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, 1.0F);
-		world.emitGameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+		world.emitGameEvent(entity, GameEvent.BLOCK_CHANGE, pos);
 	}
 
-	protected boolean isNotLit(BlockState state) {
-		return !state.get(WATERLOGGED) && !state.get(LIT);
+	@Override
+	public boolean isLit(BlockState state) {
+		return !state.get(WATERLOGGED) && state.get(LIT);
 	}
 
 	private static void setLit(WorldAccess world, BlockState state, BlockPos pos, boolean lit) {
