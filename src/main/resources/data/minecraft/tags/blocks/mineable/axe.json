@@ -1,9 +1,5 @@
 {
   "replace": false,
   "values": [
-    {
-      "id": "#furnishings:cushions",
-      "required": false
-    }
   ]
 }

@@ -57,5 +57,25 @@ public class FurnishingsLootTableGenerator extends SimpleFabricLootTableProvider
 		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_brick_stairs"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS));
 		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/polished_tuff_brick_wall"), BlockLootTableGenerator.drops(FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL));
 		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/cracked_polished_tuff_bricks"), BlockLootTableGenerator.drops(FurnishingsBlocks.CRACKED_POLISHED_TUFF_BRICKS));
+
+		/* Candelabra */
+
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/white_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.WHITE_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/orange_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.ORANGE_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/magenta_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.MAGENTA_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/light_blue_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.LIGHT_BLUE_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/yellow_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.YELLOW_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/lime_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.LIME_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/pink_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.PINK_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/gray_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.GRAY_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/light_gray_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.LIGHT_GRAY_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/cyan_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.CYAN_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/purple_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.PURPLE_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/blue_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.BLUE_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/brown_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.BROWN_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/green_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.GREEN_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/red_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.RED_CANDELABRA));
+		identifierBuilderBiConsumer.accept(new Identifier(Furnishings.ID, "blocks/black_candelabra"), BlockLootTableGenerator.candleDrops(FurnishingsBlocks.BLACK_CANDELABRA));
     }
 }

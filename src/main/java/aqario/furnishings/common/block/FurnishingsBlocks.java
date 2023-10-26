@@ -243,10 +243,22 @@ public class FurnishingsBlocks {
 
 	/** Sconce */
 
-	public static final Block SCONCE = register("sconce", new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.DECORATIONS);
-	public static final Block SOUL_SCONCE = register("soul_sconce", new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.DECORATIONS);
-	public static final Block LEVER_SCONCE = register("lever_sconce", new LeverSconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.REDSTONE);
-	public static final Block LEVER_SOUL_SCONCE = register("lever_soul_sconce", new LeverSconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.REDSTONE);
+	public static final Block SCONCE = register(
+		"sconce",
+		new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.DECORATIONS
+	);
+	public static final Block SOUL_SCONCE = register(
+		"soul_sconce",
+		new SconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.DECORATIONS
+	);
+	public static final Block LEVER_SCONCE = register(
+		"lever_sconce",
+		new LeverSconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 15 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.FLAME), ItemGroup.REDSTONE
+	);
+	public static final Block LEVER_SOUL_SCONCE = register(
+		"lever_soul_sconce",
+		new LeverSconceBlock(QuiltBlockSettings.of(Material.DECORATION).strength(2.0F).requiresTool().luminance((state) -> state.get(SconceBlock.LIT) ? 10 : 0).sounds(BlockSoundGroup.LANTERN), ParticleTypes.SOUL_FIRE_FLAME), ItemGroup.REDSTONE
+	);
 
     /** Tuff */
 

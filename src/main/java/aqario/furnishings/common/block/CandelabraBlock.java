@@ -181,7 +181,6 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 				extinguish(player, state, world, pos);
 				return ActionResult.success(world.isClient);
 			}
-
 		}
 		if (!state.get(WATERLOGGED) && !state.get(LIT)) {
 			if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
@@ -202,7 +201,7 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 				return ActionResult.SUCCESS;
 			}
 		}
-		return ActionResult.FAIL;
+		return ActionResult.PASS;
 	}
 
 	@Override

@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
+    {
+      "id": "#furnishings:candelabras",
+      "required": false
+    },
+    {
+      "id": "#furnishings:sconces",
+      "required": false
+    },
     "furnishings:brazier",
     "furnishings:calcite_slab",
     "furnishings:calcite_stairs",
