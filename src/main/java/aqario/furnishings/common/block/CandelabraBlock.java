@@ -63,69 +63,6 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 	public static final ToIntFunction<BlockState> STATE_TO_LUMINANCE = state -> state.get(LIT) ? 3 * state.get(CANDLES) : 0;
 	private static final EnumMap<Direction, EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>>> PARTICLE_OFFSETS;
 
-	static {
-		PARTICLE_OFFSETS = new EnumMap<>(Direction.class);
-		EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> temp = new EnumMap<>(NoCeilingWallMountLocation.class);
-		{
-			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
-			int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.6875, 0.5)));
-			int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.875, 0.5), new Vec3d(0.6875, 0.875, 0.5)));
-			int2ObjectMap.put(3, List.of(new Vec3d(0.1875, 0.9375, 0.5), new Vec3d(0.5, 0.9375, 0.5), new Vec3d(0.8125, 0.9375, 0.5)));
-			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.5), new Vec3d(0.8125, 1, 0.5), new Vec3d(0.5, 0.9375, 0.25), new Vec3d(0.5, 0.9375, 0.75)));
-			temp.put(NoCeilingWallMountLocation.FLOOR, Int2ObjectMaps.unmodifiable(int2ObjectMap));
-		}
-		{
-			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
-			int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.9375, 0.1875)));
-			int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.9375, 0.1875), new Vec3d(0.6875, 0.9375, 0.1875)));
-			int2ObjectMap.put(3, List.of(new Vec3d(0.8125, 0.9375, 0.1875), new Vec3d(0.1875, 0.9375, 0.1875), new Vec3d(0.5, 0.9375, 0.25)));
-			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.1875), new Vec3d(0.8125, 1, 0.1875), new Vec3d(0.3125, 0.875, 0.3125), new Vec3d(0.6875, 0.875, 0.3125)));
-			temp.put(NoCeilingWallMountLocation.WALL, Int2ObjectMaps.unmodifiable(int2ObjectMap));
-		}
-		for (Direction direction : Direction.values()) {
-			EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> newFaceMap = new EnumMap<>(NoCeilingWallMountLocation.class);
-			for (var faceList : temp.entrySet()) {
-				Int2ObjectMap<List<Vec3d>> newCandleList = new Int2ObjectOpenHashMap<>();
-				newCandleList.defaultReturnValue(List.of());
-				int c = 1;
-				var oldVec = faceList.getValue();
-				for (int i = 1; i < 5; i++) {
-					ArrayList<Vec3d> vectorsList = new ArrayList<>();
-					for (var vec : oldVec.get(i)) {
-						vectorsList.add(rotateVec3d(vec.subtract(0.5, 0.5, 0.5), direction.getOpposite())
-							.add(0.5, 0.5, 0.5));
-					}
-					newCandleList.put(c++, ImmutableList.copyOf(vectorsList));
-				}
-				newFaceMap.put(faceList.getKey(), Int2ObjectMaps.unmodifiable(newCandleList));
-			}
-			PARTICLE_OFFSETS.put(direction, newFaceMap);
-		}
-	}
-
-	public static Vec3d rotateVec3d(Vec3d vec, Direction dir) {
-		double cos = 1;
-		double sin = 0;
-		switch (dir) {
-			case SOUTH -> {
-				cos = -1;
-				sin = 0;
-			}
-			case WEST -> {
-				cos = 0;
-				sin = 1;
-			}
-			case EAST -> {
-				cos = 0;
-				sin = -1;
-			}
-		}
-		double d0 = vec.x * cos + vec.z * sin;
-		double d1 = vec.y;
-		double d2 = vec.z * cos - vec.x * sin;
-		return new Vec3d(d0, d1, d2);
-	}
-
 	public CandelabraBlock(Settings settings) {
 		super(settings);
 		this.setDefaultState(this.stateManager.getDefaultState().with(LIT, false).with(CANDLES, 1).with(FACING, Direction.NORTH).with(FACE, NoCeilingWallMountLocation.FLOOR).with(WATERLOGGED, false));
@@ -320,4 +257,67 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
         }
         return state.get(FACING);
     }
+
+	public static Vec3d rotateVec3d(Vec3d vec, Direction dir) {
+		double cos = 1;
+		double sin = 0;
+		switch (dir) {
+			case SOUTH -> {
+				cos = -1;
+				sin = 0;
+			}
+			case WEST -> {
+				cos = 0;
+				sin = 1;
+			}
+			case EAST -> {
+				cos = 0;
+				sin = -1;
+			}
+		}
+		double d0 = vec.x * cos + vec.z * sin;
+		double d1 = vec.y;
+		double d2 = vec.z * cos - vec.x * sin;
+		return new Vec3d(d0, d1, d2);
+	}
+
+	static {
+		PARTICLE_OFFSETS = new EnumMap<>(Direction.class);
+		EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> temp = new EnumMap<>(NoCeilingWallMountLocation.class);
+		{
+			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
+			int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.6875, 0.5)));
+			int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.875, 0.5), new Vec3d(0.6875, 0.875, 0.5)));
+			int2ObjectMap.put(3, List.of(new Vec3d(0.1875, 0.9375, 0.5), new Vec3d(0.5, 0.9375, 0.5), new Vec3d(0.8125, 0.9375, 0.5)));
+			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.5), new Vec3d(0.8125, 1, 0.5), new Vec3d(0.5, 0.9375, 0.25), new Vec3d(0.5, 0.9375, 0.75)));
+			temp.put(NoCeilingWallMountLocation.FLOOR, Int2ObjectMaps.unmodifiable(int2ObjectMap));
+		}
+		{
+			Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
+			int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.9375, 0.1875)));
+			int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.9375, 0.1875), new Vec3d(0.6875, 0.9375, 0.1875)));
+			int2ObjectMap.put(3, List.of(new Vec3d(0.8125, 0.9375, 0.1875), new Vec3d(0.1875, 0.9375, 0.1875), new Vec3d(0.5, 0.9375, 0.25)));
+			int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.1875), new Vec3d(0.8125, 1, 0.1875), new Vec3d(0.3125, 0.875, 0.3125), new Vec3d(0.6875, 0.875, 0.3125)));
+			temp.put(NoCeilingWallMountLocation.WALL, Int2ObjectMaps.unmodifiable(int2ObjectMap));
+		}
+		for (Direction direction : Direction.values()) {
+			EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> newFaceMap = new EnumMap<>(NoCeilingWallMountLocation.class);
+			for (var faceList : temp.entrySet()) {
+				Int2ObjectMap<List<Vec3d>> newCandleList = new Int2ObjectOpenHashMap<>();
+				newCandleList.defaultReturnValue(List.of());
+				int c = 1;
+				var oldVec = faceList.getValue();
+				for (int i = 1; i < 5; i++) {
+					ArrayList<Vec3d> vectorsList = new ArrayList<>();
+					for (var vec : oldVec.get(i)) {
+						vectorsList.add(rotateVec3d(vec.subtract(0.5, 0.5, 0.5), direction.getOpposite())
+							.add(0.5, 0.5, 0.5));
+					}
+					newCandleList.put(c++, ImmutableList.copyOf(vectorsList));
+				}
+				newFaceMap.put(faceList.getKey(), Int2ObjectMaps.unmodifiable(newCandleList));
+			}
+			PARTICLE_OFFSETS.put(direction, newFaceMap);
+		}
+	}
 }

@@ -36,7 +36,6 @@ public class PanelBlock extends TransparentBlock implements Waterloggable {
 			Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0),
 			Direction.DOWN,
 			Block.createCuboidShape(0.0, 15.0, 0.0, 16.0, 16.0, 16.0)
-
 		)
 	);
 	public static final DirectionProperty FACING = Properties.FACING;

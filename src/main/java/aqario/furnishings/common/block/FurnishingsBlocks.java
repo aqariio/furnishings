@@ -206,7 +206,7 @@ public class FurnishingsBlocks {
 
     /** Gilded Carpet */
 
-	public static final Block GILDED_CARPET = register("gilded_carpet", new GildedCarpetBlock(QuiltBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
+	public static final Block GILDED_CARPET = register("gilded_carpet", new ConnectingCarpetBlock(QuiltBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
 
 	/** Glass */
 
@@ -237,8 +237,9 @@ public class FurnishingsBlocks {
     public static final Block DANDELION_PAPER_LANTERN = register("dandelion_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
     public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new RedPaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
 
-	/** Pedestal */
+	/** Pedestals */
 
+	public static final Block QUARTZ_PEDESTAL = register("quartz_pedestal", new PedestalBlock(QuiltBlockSettings.of(Material.STONE).mapColor(MapColor.OFF_WHITE).requiresTool().strength(0.8F)), ItemGroup.DECORATIONS);
 	public static final Block STONE_PEDESTAL = register("stone_pedestal", new PedestalBlock(QuiltBlockSettings.of(Material.STONE).mapColor(MapColor.STONE_GRAY).requiresTool().strength(1.5F, 6.0F)), ItemGroup.DECORATIONS);
 
 	/** Sconce */

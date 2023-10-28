@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class GildedCarpetBlock extends Block {
+public class ConnectingCarpetBlock extends Block {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
     public static final BooleanProperty EAST = Properties.EAST;
     public static final BooleanProperty NORTH = Properties.NORTH;
@@ -25,10 +25,9 @@ public class GildedCarpetBlock extends Block {
     public static final BooleanProperty WEST = Properties.WEST;
     protected static final Map<Direction, BooleanProperty> FACING_PROPERTIES = ConnectingBlock.FACING_PROPERTIES.entrySet().stream().filter(entry -> entry.getKey().getAxis().isHorizontal()).collect(Util.toMap());
 
-    public GildedCarpetBlock(Settings settings) {
+    public ConnectingCarpetBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
-
     }
 
     @Nullable
@@ -54,7 +53,7 @@ public class GildedCarpetBlock extends Block {
     }
 
     public boolean canConnect(BlockState state) {
-        return !GildedCarpetBlock.cannotConnect(state) && state.getBlock() instanceof GildedCarpetBlock;
+        return !ConnectingCarpetBlock.cannotConnect(state) && state.getBlock() instanceof ConnectingCarpetBlock;
     }
 
 	@SuppressWarnings("deprecation")

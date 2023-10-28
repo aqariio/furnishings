@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "up=false,down=false": {
+      "model": "furnishings:block/quartz_pedestal"
+    },
+    "up=true,down=false": {
+      "model": "furnishings:block/quartz_pedestal_bottom"
+    },
+    "up=false,down=true": {
+      "model": "furnishings:block/quartz_pedestal_top"
+    },
+    "up=true,down=true": {
+      "model": "furnishings:block/quartz_pedestal_middle"
+    }
+  }
+}

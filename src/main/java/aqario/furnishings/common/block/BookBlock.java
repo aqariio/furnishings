@@ -81,8 +81,9 @@ public class BookBlock extends Block implements Waterloggable {
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		BlockState state = ctx.getWorld().getBlockState(ctx.getBlockPos());
-		if (state.isOf(this))
+		if (state.isOf(this)) {
 			return state.cycle(BOOKS);
+		}
 		return this.getDefaultState().with(WATERLOGGED, state.getFluidState().getFluid() == Fluids.WATER);
 	}
 
