@@ -75,38 +75,39 @@ public class SeatEntity extends Entity {
 
 	@Override
 	protected boolean canAddPassenger(Entity passenger) {
-		return this.getPassengerList().isEmpty();
+		return this.getPassengerList().size() < this.getMaxPassengers();
+	}
+
+	protected int getMaxPassengers() {
+		return 1;
 	}
 
 	@Override
 	public void tick() {
 		if (this.getFirstPassenger() != null && !(this.getWorld()).isClient) {
 			Entity entity = this.getFirstPassenger();
-			if (entity instanceof MobEntity mobEntity) {
-				if (mobEntity.getTarget() != null) {
-					delete();
-					return;
-				}
-			}
+			if (entity instanceof MobEntity mobEntity && mobEntity.getTarget() != null) {
+                delete();
+                return;
+            }
 		}
 		BlockPos cushionPos = this.getCushionPos();
-		if (cushionPos != null) {
-			BlockState cushionState = this.getWorld().getBlockState(cushionPos);
-			if (!(cushionState.getBlock() instanceof CushionBlock)) {
-				delete();
-			} else if (!((Boolean)cushionState.get(Properties.OCCUPIED))) {
-				this.getWorld().setBlockState(cushionPos, cushionState.with(Properties.OCCUPIED, true), 2);
-			}
-		} else {
+		if (cushionPos == null) {
 			delete();
 		}
-	}
+        BlockState cushionState = this.getWorld().getBlockState(cushionPos);
+        if (!(cushionState.getBlock() instanceof CushionBlock)) {
+            delete();
+        } else if (!((Boolean)cushionState.get(Properties.OCCUPIED))) {
+            this.getWorld().setBlockState(cushionPos, cushionState.with(Properties.OCCUPIED, true), 2);
+        }
+    }
 
 	public void delete() {
-		this.discard();
 		if (!(this.getWorld()).isClient) {
 			this.removeAllPassengers();
 		}
+		this.discard();
 	}
 
 	@Nullable

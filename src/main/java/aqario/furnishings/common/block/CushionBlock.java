@@ -7,9 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.Waterloggable;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -49,10 +51,8 @@ public class CushionBlock extends Block implements Waterloggable {
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		Item item = player.getStackInHand(hand).getItem();
-		if (item instanceof BlockItem blockItem) {
-            if (blockItem.getBlock() instanceof CushionBlock) {
-				return ActionResult.PASS;
-			}
+		if (item instanceof BlockItem blockItem && blockItem.getBlock() instanceof CushionBlock) {
+			return ActionResult.PASS;
 		}
 		if (!hit.getSide().equals(Direction.DOWN)) {
 			if (unseat(state, world, pos)) {
@@ -65,15 +65,15 @@ public class CushionBlock extends Block implements Waterloggable {
 		return ActionResult.PASS;
 	}
 
-
-
 	public boolean unseat(BlockState state, World world, BlockPos pos) {
 		if (state.get(OCCUPIED)) {
 			List<SeatEntity> list = world.getEntitiesByClass(SeatEntity.class, new Box(pos), entity -> true);
 			boolean unseated = false;
 			for (SeatEntity entity : list) {
-				if (!(entity.getFirstPassenger() instanceof PlayerEntity) &&
-					entity.getFirstPassenger() != null) {
+				if (entity.getFirstPassenger() instanceof PlayerEntity) {
+					continue;
+				}
+				if (entity.getFirstPassenger() != null) {
 					entity.delete();
 					unseated = true;
 				}
@@ -129,8 +129,19 @@ public class CushionBlock extends Block implements Waterloggable {
 	}
 
 	@Override
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+		if (state.get(OCCUPIED) || entity instanceof PlayerEntity || !(entity instanceof LivingEntity livingEntity)) {
+			return;
+		}
+        if (entity instanceof MobEntity mobEntity && mobEntity.getTarget() != null) {
+			return;
+		}
+		seat(livingEntity, world, pos);
+    }
+
+	@Override
 	public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -158,6 +169,11 @@ public class CushionBlock extends Block implements Waterloggable {
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
 		return SHAPE;
+	}
+
+	@Override
+	public PistonBehavior getPistonBehavior(BlockState state) {
+		return PistonBehavior.DESTROY;
 	}
 
 	@Override
