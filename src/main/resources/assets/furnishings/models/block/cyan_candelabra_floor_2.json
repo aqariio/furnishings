@@ -1,0 +1,6 @@
+{
+  "parent": "furnishings:block/template_candelabra_floor_2",
+  "textures": {
+    "candle": "minecraft:block/cyan_candle"
+  }
+}

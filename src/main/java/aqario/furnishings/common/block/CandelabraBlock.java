@@ -187,21 +187,19 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 			return replacedState.cycle(CANDLES);
 		}
 		for (Direction direction : ctx.getPlacementDirections()) {
-			BlockState blockState;
+			BlockState blockState = this.getDefaultState();
 			if (direction == Direction.UP) {
 				continue;
 			}
 			if (direction.getAxis().isHorizontal()) {
-				blockState = this.getDefaultState().with(FACE, NoCeilingWallMountLocation.WALL).with(FACING, direction.getOpposite());
+				blockState = blockState.with(FACE, NoCeilingWallMountLocation.WALL).with(FACING, direction.getOpposite());
 			} else {
-				blockState = this.getDefaultState().with(FACE, NoCeilingWallMountLocation.FLOOR).with(FACING, ctx.getPlayerFacing());
+				blockState = blockState.with(FACE, NoCeilingWallMountLocation.FLOOR).with(FACING, ctx.getPlayerFacing());
 			}
-
 			if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
 				return blockState.with(WATERLOGGED, ctx.getWorld().getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER);
 			}
 		}
-
 		return null;
 	}
 

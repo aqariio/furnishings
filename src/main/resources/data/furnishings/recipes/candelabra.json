@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "candelabra",
+  "key": {
+    "#": {
+      "item": "minecraft:candle"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "#",
+    "I"
+  ],
+  "result": {
+    "item": "furnishings:candelabra"
+  }
+}

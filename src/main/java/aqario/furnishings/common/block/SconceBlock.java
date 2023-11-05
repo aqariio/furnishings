@@ -12,7 +12,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -53,11 +52,9 @@ public class SconceBlock extends Block implements Waterloggable, Extinguishable 
 	public static final BooleanProperty LIT = Properties.LIT;
 	public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP);
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-	protected final ParticleEffect particle;
 
-	public SconceBlock(Settings settings, ParticleEffect particle) {
+	public SconceBlock(Settings settings) {
 		super(settings);
-		this.particle = particle;
 		this.setDefaultState(this.stateManager.getDefaultState().with(LIT, true).with(FACING, Direction.UP).with(WATERLOGGED, false));
 	}
 
@@ -96,21 +93,21 @@ public class SconceBlock extends Block implements Waterloggable, Extinguishable 
 	@Nullable
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
 		World worldAccess = ctx.getWorld();
-		boolean bl = worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
+		boolean isInWater = worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
 		BlockState blockState = this.getDefaultState();
-		WorldView worldView = ctx.getWorld();
-		BlockPos blockPos = ctx.getBlockPos();
-		Direction[] directions = ctx.getPlacementDirections();
 
-		for(Direction direction : directions) {
-			if (direction.getAxis().isHorizontal()) {
-				Direction direction2 = direction.getOpposite();
-				blockState = blockState.with(FACING, direction2).with(WATERLOGGED, bl).with(LIT, !bl);
-				if (blockState.canPlaceAt(worldView, blockPos)) {
-					return blockState;
-				}
+		for(Direction direction : ctx.getPlacementDirections()) {
+			if (direction == Direction.UP) {
+				continue;
 			}
-			return blockState.with(FACING, Direction.UP).with(WATERLOGGED, bl).with(LIT, !bl);
+			if (direction.getAxis().isHorizontal()) {
+				blockState = blockState.with(FACING, direction.getOpposite());
+			} else {
+				blockState = blockState.with(FACING, Direction.UP);
+			}
+			if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
+				return blockState.with(WATERLOGGED, isInWater).with(LIT, !isInWater);
+			}
 		}
 		return null;
 	}
@@ -141,7 +138,6 @@ public class SconceBlock extends Block implements Waterloggable, Extinguishable 
 			double e = (double)pos.getY() + 0.7;
 			double f = (double)pos.getZ() + 0.5;
 			world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
-			world.addParticle(this.particle, d, e, f, 0.0, 0.0, 0.0);
 		} else {
 			Direction direction = state.get(FACING);
 			double d = (double)pos.getX() + 0.5;
@@ -149,7 +145,6 @@ public class SconceBlock extends Block implements Waterloggable, Extinguishable 
 			double f = (double)pos.getZ() + 0.5;
 			Direction direction2 = direction.getOpposite();
 			world.addParticle(ParticleTypes.SMOKE, d + 0.27 * (double)direction2.getOffsetX(), e + 0.22, f + 0.27 * (double)direction2.getOffsetZ(), 0.0, 0.0, 0.0);
-			world.addParticle(this.particle, d + 0.27 * (double)direction2.getOffsetX(), e + 0.22, f + 0.27 * (double)direction2.getOffsetZ(), 0.0, 0.0, 0.0);
 		}
 	}
 

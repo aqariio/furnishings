@@ -20,7 +20,7 @@
 		"entrypoints": {
 			"init": "aqario.furnishings.common.Furnishings",
 			"client_init": "aqario.furnishings.client.FurnishingsClient",
-			"fabric-datagen": "aqario.furnishings.common.datagen.FurnishingsDataGeneration"
+			"fabric-datagen": "aqario.furnishings.common.data.FurnishingsDataGeneration"
 		},
 		"depends": [
 			{

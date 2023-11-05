@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.particle.DustParticleEffect;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -54,11 +53,9 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
 	public static final BooleanProperty LIT = Properties.LIT;
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-	protected final ParticleEffect particle;
 
-	public LeverSconceBlock(Settings settings, ParticleEffect particle) {
+	public LeverSconceBlock(Settings settings) {
 		super(settings);
-		this.particle = particle;
 		this.setDefaultState(this.stateManager.getDefaultState().with(POWERED, false).with(FACING, Direction.NORTH).with(LIT, true).with(WATERLOGGED, false));
 	}
 
@@ -172,7 +169,6 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
 			double z = pos.getZ() + 0.5D;
 			Direction direction1 = direction.getOpposite();
 			world.addParticle(ParticleTypes.SMOKE, x + 0.125D * direction1.getOffsetX(), y + 0.15D, z + 0.125D * direction1.getOffsetZ(), 0.0D, 0.0D, 0.0D);
-			world.addParticle(this.particle, x + 0.125D * direction1.getOffsetX(), y + 0.15D, z + 0.125D * direction1.getOffsetZ(), 0.0D, 0.0D, 0.0D);
 		} else {
 			Direction direction = state.get(FACING);
 			double x = (double)pos.getX() + 0.5;
@@ -180,7 +176,6 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
 			double z = (double)pos.getZ() + 0.5;
 			Direction direction2 = direction.getOpposite();
 			world.addParticle(ParticleTypes.SMOKE, x + 0.27 * direction2.getOffsetX(), y + 0.22, z + 0.27 * direction2.getOffsetZ(), 0.0, 0.0, 0.0);
-			world.addParticle(this.particle, x + 0.27 * direction2.getOffsetX(), y + 0.22, z + 0.27 * direction2.getOffsetZ(), 0.0, 0.0, 0.0);
 		}
 
 //		if (state.get(POWERED) && random.nextFloat() < 0.25F) {
