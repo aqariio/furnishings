@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "furnishings:block/white_cushion"
+      "model": "furnishings:block/white_seat"
     }
   }
 }

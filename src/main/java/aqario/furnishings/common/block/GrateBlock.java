@@ -1,22 +1,32 @@
 package aqario.furnishings.common.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 
-public class GrateBlock extends HorizontalFacingBlock implements Waterloggable {
+import java.util.Objects;
+
+public class GrateBlock extends Block implements Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final EnumProperty<BlockHalf> HALF = Properties.BLOCK_HALF;
 	protected static final VoxelShape BOTTOM_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
 	protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
@@ -27,24 +37,49 @@ public class GrateBlock extends HorizontalFacingBlock implements Waterloggable {
 	}
 
 	@Override
+	public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+		return VoxelShapes.empty();
+	}
+
+	@Override
+	public boolean hasSidedTransparency(BlockState state) {
+		return true;
+	}
+
+	@Override
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
-		if (stateFrom.isOf(this) && direction.getAxis().isHorizontal() && state.get(HALF) == stateFrom.get(HALF)) {
-			return true;
+//		if (stateFrom.isOf(this)) {
+//			System.out.println("isOf(this)");
+//			if (state.get(HALF) == BlockHalf.TOP) {
+//				System.out.println("get(HALF) == stateFrom.get(HALF)");
+//				return true;
+//			}
+//		}
+//		return super.isSideInvisible(state, stateFrom, direction);
+		if (stateFrom.isOf(this)) {
+			if (direction.getAxis().isHorizontal() && state.get(FACING).getOpposite() == stateFrom.get(FACING).getOpposite()) {
+				return true;
+			}
+			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING)) {
+				return true;
+			}
 		}
+
 		return super.isSideInvisible(state, stateFrom, direction);
 	}
 
 	@Override
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
-		BlockState blockState = this.getDefaultState();
 		FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
 		Direction direction = ctx.getSide();
+		BlockState blockState = this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		if (!ctx.canReplaceExisting() && direction.getAxis().isHorizontal()) {
-			blockState = blockState.with(FACING, direction).with(HALF, ctx.getHitPos().y - (double)ctx.getBlockPos().getY() > 0.5 ? BlockHalf.TOP : BlockHalf.BOTTOM);
-		} else {
-			blockState = blockState.with(FACING, ctx.getPlayerFacing().getOpposite()).with(HALF, direction == Direction.UP ? BlockHalf.BOTTOM : BlockHalf.TOP);
+			return blockState.with(FACING, direction.getOpposite()).with(HALF, ctx.getHitPos().y - (double)ctx.getBlockPos().getY() > 0.5 ? BlockHalf.TOP : BlockHalf.BOTTOM);
 		}
-		return blockState.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+		if (Objects.requireNonNull(ctx.getPlayer()).isSneaking()) {
+			return blockState.with(FACING, ctx.getPlayerFacing()).with(HALF, direction == Direction.UP ? BlockHalf.TOP : BlockHalf.BOTTOM);
+		}
+		return blockState.with(FACING, ctx.getPlayerFacing()).with(HALF, direction == Direction.UP ? BlockHalf.BOTTOM : BlockHalf.TOP);
 	}
 
 	@Override
@@ -63,6 +98,16 @@ public class GrateBlock extends HorizontalFacingBlock implements Waterloggable {
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return state.get(HALF) == BlockHalf.TOP ? TOP_SHAPE : BOTTOM_SHAPE;
+	}
+
+	@Override
+	public BlockState rotate(BlockState state, BlockRotation rotation) {
+		return state.with(FACING, rotation.rotate(state.get(FACING)));
+	}
+
+	@Override
+	public BlockState mirror(BlockState state, BlockMirror mirror) {
+		return state.rotate(mirror.getRotation(state.get(FACING)));
 	}
 
 	@Override

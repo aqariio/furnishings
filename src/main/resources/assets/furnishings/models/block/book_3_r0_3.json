@@ -1,0 +1,6 @@
+{
+  "parent": "furnishings:block/template_book_3_r0",
+  "textures": {
+    "book": "furnishings:block/book_3"
+  }
+}

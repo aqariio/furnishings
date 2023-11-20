@@ -19,7 +19,7 @@ public abstract class LivingEntityMixin extends Entity {
 	}
 
 	@Inject(method = "applyClimbingSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;isHoldingOntoLadder()Z", shift = At.Shift.AFTER), cancellable = true)
-	private void furnishings$removeHoldingOntoScaffolding(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
+	private void furnishings$stopHoldingOntoScaffolding(Vec3d motion, CallbackInfoReturnable<Vec3d> cir) {
 		if (this.getBlockStateAtPos().isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
 			double x = MathHelper.clamp(motion.x, -0.15F, 0.15F);
 			double z = MathHelper.clamp(motion.z, -0.15F, 0.15F);

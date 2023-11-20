@@ -1,13 +1,21 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "furnishings:paper_lantern"
-    },
-    {
-      "item": "minecraft:red_dye"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " P ",
+    "P#P",
+    "RPR"
   ],
+  "key": {
+    "#": {
+      "item": "minecraft:torch"
+    },
+    "R": {
+      "item": "minecraft:red_dye"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
   "result": {
     "item": "furnishings:red_paper_lantern"
   }
