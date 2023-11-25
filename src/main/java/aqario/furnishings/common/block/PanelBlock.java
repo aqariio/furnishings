@@ -21,7 +21,7 @@ import net.minecraft.world.WorldAccess;
 import java.util.Map;
 import java.util.Objects;
 
-public class PanelBlock extends TransparentBlock implements Waterloggable {
+public class PanelBlock extends Block implements Waterloggable {
 	protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(
 		ImmutableMap.of(
 			Direction.NORTH,
@@ -64,10 +64,10 @@ public class PanelBlock extends TransparentBlock implements Waterloggable {
 	@Override
 	public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
 		if (stateFrom.isOf(this)) {
-			if (direction.getAxis().isHorizontal() && state.get(FACING).getOpposite() == stateFrom.get(FACING).getOpposite()) {
+			if (state.get(FACING) == stateFrom.get(FACING)) {
 				return true;
 			}
-			if (direction.getAxis().isHorizontal() && state.get(FACING) == stateFrom.get(FACING)) {
+			if (direction == stateFrom.get(FACING)) {
 				return true;
 			}
 		}
