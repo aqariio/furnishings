@@ -21,12 +21,12 @@ public class FurnishingsBlocks {
 
     /** Bricks */
 
+	public static final Block MOSSY_BRICKS = register("mossy_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
+	public static final Block MOSSY_BRICK_SLAB = register("mossy_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+	public static final Block MOSSY_BRICK_STAIRS = register("mossy_brick_stairs", new PublicStairsBlock(MOSSY_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+	public static final Block MOSSY_BRICK_WALL = register("mossy_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CRACKED_BRICKS = register("cracked_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CHISELED_BRICKS = register("chiseled_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block MOSSY_BRICKS = register("mossy_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block MOSSY_BRICK_SLAB = register("mossy_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block MOSSY_BRICK_STAIRS = register("mossy_brick_stairs", new PublicStairsBlock(MOSSY_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block MOSSY_BRICK_WALL = register("mossy_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 
     /** Calcite */
 
@@ -120,11 +120,11 @@ public class FurnishingsBlocks {
     public static final Block COBBLESTONE_BRICK_SLAB = register("cobblestone_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block COBBLESTONE_BRICK_STAIRS = register("cobblestone_brick_stairs", new PublicStairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block COBBLESTONE_BRICK_WALL = register("cobblestone_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block CRACKED_COBBLESTONE_BRICKS = register("cracked_cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS).sounds(BlockSoundGroup.DEEPSLATE_TILES)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICKS = register("mossy_cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICK_SLAB = register("mossy_cobblestone_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICK_STAIRS = register("mossy_cobblestone_brick_stairs", new PublicStairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICK_WALL = register("mossy_cobblestone_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+	public static final Block CRACKED_COBBLESTONE_BRICKS = register("cracked_cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS).sounds(BlockSoundGroup.DEEPSLATE_TILES)), ItemGroup.BUILDING_BLOCKS);
 
 	/** Cushions */
 
@@ -229,11 +229,6 @@ public class FurnishingsBlocks {
 
 	/** Paper Lanterns */
 
-//    public static final Block PAPER_LANTERN = register("paper_lantern", new PaperLanternBlock(QuiltBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.DECORATIONS);
-//    public static final Block ALLIUM_PAPER_LANTERN = register("allium_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
-//    public static final Block BLUE_ORCHID_PAPER_LANTERN = register("blue_orchid_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
-//    public static final Block CRIMSON_ROOTS_PAPER_LANTERN = register("crimson_roots_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
-//    public static final Block DANDELION_PAPER_LANTERN = register("dandelion_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.copyOf(PAPER_LANTERN)), ItemGroup.DECORATIONS);
     public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new RedPaperLanternBlock(QuiltBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.DECORATIONS);
 
 	/** Pedestals */

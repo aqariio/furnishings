@@ -1,8 +1,0 @@
-{
-  "parent": "furnishings:block/template_cushion",
-  "textures": {
-    "bottom": "furnishings:block/seat_bottom",
-    "side": "furnishings:block/white_seat_side",
-    "top": "furnishings:block/white_seat_top"
-  }
-}

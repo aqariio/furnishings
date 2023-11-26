@@ -32,7 +32,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_BRICKS, Blocks.BRICKS);
         offerChiseledBlockRecipe(exporter, FurnishingsBlocks.CHISELED_BRICKS, Blocks.BRICK_SLAB);
         ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Blocks.MOSS_BLOCK)
-                .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.VINE))
+                .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
                 .group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_moss_block");
 		ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Items.VINE)
                 .criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
@@ -104,6 +104,29 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 		offerCandelabraDyeingRecipe(exporter, FurnishingsBlocks.PURPLE_CANDELABRA, Items.PURPLE_DYE);
 		offerCandelabraDyeingRecipe(exporter, FurnishingsBlocks.MAGENTA_CANDELABRA, Items.MAGENTA_DYE);
 		offerCandelabraDyeingRecipe(exporter, FurnishingsBlocks.PINK_CANDELABRA, Items.PINK_DYE);
+
+		/* Cobblestone Bricks */
+
+		offerPolishedBricksRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICKS, Blocks.COBBLESTONE);
+		offerSlabRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS);
+		offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS, 2);
+		offerStairsRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.COBBLESTONE_BRICKS);
+		offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.COBBLESTONE_BRICKS);
+		offerWallRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
+		offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
+		ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS).input(FurnishingsBlocks.COBBLESTONE_BRICKS).input(Blocks.MOSS_BLOCK)
+			.criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
+			.group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_moss_block");
+		ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS).input(FurnishingsBlocks.COBBLESTONE_BRICKS).input(Items.VINE)
+			.criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
+			.group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_vine");
+		offerSlabRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+		offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS, 2);
+		offerStairsRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+		offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+		offerWallRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+		offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+		offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_COBBLESTONE_BRICKS, FurnishingsBlocks.COBBLESTONE_BRICKS);
 
 		/* Tuff */
 
