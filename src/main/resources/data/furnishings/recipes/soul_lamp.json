@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "III",
-    "I#I",
-    "ISI"
+    "###",
+    "III"
   ],
   "key": {
     "#": {
@@ -11,9 +11,6 @@
     },
     "I": {
       "item": "minecraft:iron_ingot"
-    },
-    "S": {
-      "tag": "minecraft:soul_fire_base_blocks"
     }
   },
   "result": {

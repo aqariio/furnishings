@@ -3,11 +3,14 @@
   "group": "braziers",
   "pattern": [
     "B#B",
-    " B "
+    "III"
   ],
   "key": {
     "B": {
       "item": "minecraft:iron_bars"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
     },
     "#": {
       "tag": "minecraft:soul_fire_base_blocks"

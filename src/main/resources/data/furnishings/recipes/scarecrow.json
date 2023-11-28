@@ -2,14 +2,11 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " # ",
-    "SHS",
+    "S#S",
     " S "
   ],
   "key": {
     "#": {
-      "tag": "minecraft:planks"
-    },
-    "H": {
       "item": "minecraft:hay_block"
     },
     "S": {

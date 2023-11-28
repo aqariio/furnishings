@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "item": "furnishings:cobblestone_bricks"
+  },
+  "result": "furnishings:cobblestone_brick_slab"
+}

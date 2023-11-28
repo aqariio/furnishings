@@ -2,8 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "III",
-    "I#I",
-    "IXI"
+    "###",
+    "III"
   ],
   "key": {
     "#": {
@@ -11,15 +11,7 @@
     },
     "I": {
       "item": "minecraft:iron_ingot"
-    },
-    "X": [
-      {
-        "item": "minecraft:coal"
-      },
-      {
-        "item": "minecraft:charcoal"
-      }
-    ]
+    }
   },
   "result": {
     "item": "furnishings:lamp"

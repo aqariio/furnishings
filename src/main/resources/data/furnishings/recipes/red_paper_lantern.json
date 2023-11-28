@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " P ",
+    "PGP",
     "P#P",
-    "RPR"
+    "PGP"
   ],
   "key": {
     "#": {
       "item": "minecraft:torch"
     },
-    "R": {
-      "item": "minecraft:red_dye"
-    },
     "P": {
       "item": "minecraft:paper"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
     }
   },
   "result": {

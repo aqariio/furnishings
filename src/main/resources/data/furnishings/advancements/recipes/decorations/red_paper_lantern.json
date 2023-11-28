@@ -6,13 +6,13 @@
     ]
   },
   "criteria": {
-    "has_paper_lantern": {
+    "has_paper": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "furnishings:paper_lantern"
+              "minecraft:paper"
             ]
           }
         ]
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_paper_lantern",
+      "has_paper",
       "has_the_recipe"
     ]
   ]

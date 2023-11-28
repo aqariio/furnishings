@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "cushion",
+  "ingredients": [
+    {
+      "tag": "furnishings:cushions"
+    },
+    {
+      "item": "minecraft:light_blue_dye"
+    }
+  ],
+  "result": {
+    "item": "furnishings:light_blue_cushion"
+  }
+}

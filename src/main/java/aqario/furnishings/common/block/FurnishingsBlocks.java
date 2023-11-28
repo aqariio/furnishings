@@ -114,6 +114,10 @@ public class FurnishingsBlocks {
 		new CandelabraBlock(QuiltBlockSettings.of(Material.DECORATION, MapColor.BLACK).nonOpaque().strength(2.0F).sounds(BlockSoundGroup.LANTERN).luminance(CandelabraBlock.STATE_TO_LUMINANCE)), ItemGroup.DECORATIONS
 	);
 
+	/** Carpets */
+
+	public static final Block GILDED_CARPET = register("gilded_carpet", new ConnectingCarpetBlock(QuiltBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
+
     /** Cobblestone Bricks */
 
     public static final Block COBBLESTONE_BRICKS = register("cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.COBBLESTONE).sounds(BlockSoundGroup.DEEPSLATE)), ItemGroup.BUILDING_BLOCKS);
@@ -199,18 +203,10 @@ public class FurnishingsBlocks {
 	public static final Block CHALICE = register("chalice", new ChaliceBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 	public static final Block BOOK = registerWithoutItem("book", new BookBlock(QuiltBlockSettings.of(Material.DECORATION).mapColor(MapColor.BROWN).nonOpaque().strength(0.1F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.BOOK)));
 
-    /** Dirt */
-
-    public static final Block ROCKY_DIRT = register("rocky_dirt", new Block(QuiltBlockSettings.copyOf(Blocks.DIRT).strength(1.0F).sounds(BlockSoundGroup.TUFF).requiresTool()), ItemGroup.BUILDING_BLOCKS);
-
-    /** Gilded Carpet */
-
-	public static final Block GILDED_CARPET = register("gilded_carpet", new ConnectingCarpetBlock(QuiltBlockSettings.copyOf(Blocks.RED_CARPET)), ItemGroup.DECORATIONS);
-
 	/** Glass */
 
-	public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(2.0f, 5.0f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.DECORATIONS);
-	public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(2.0f, 5.0f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.DECORATIONS);
+	public static final Block FRAMED_GLASS = register("framed_glass", new GlassBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(3.0f, 6.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.DECORATIONS);
+	public static final Block FRAMED_GLASS_PANE = register("framed_glass_pane", new PaneBlock(QuiltBlockSettings.of(Material.GLASS).mapColor(MapColor.LIGHT_GRAY).strength(3.0f, 6.0f).requiresTool().sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.DECORATIONS);
 	public static final Block GLASS_PANEL = register("glass_panel", new PanelBlock(QuiltBlockSettings.of(Material.GLASS).strength(0.3f).sounds(BlockSoundGroup.GLASS).nonOpaque()), ItemGroup.DECORATIONS);
 
 	/** Iron */
@@ -223,8 +219,9 @@ public class FurnishingsBlocks {
     public static final Block LAMP = register("lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 15).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
     public static final Block SOUL_LAMP = register("soul_lamp", new Block(QuiltBlockSettings.of(Material.METAL).luminance(state -> 10).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
 
-	/* Misc */
+	/* Nature */
 
+	public static final Block ROCKY_DIRT = register("rocky_dirt", new Block(QuiltBlockSettings.copyOf(Blocks.DIRT).strength(1.0F).sounds(BlockSoundGroup.TUFF).requiresTool()), ItemGroup.BUILDING_BLOCKS);
 	public static final Block MOSS = register("moss", new GlowLichenBlock(QuiltBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.GREEN).noCollision().strength(0.1F).sounds(BlockSoundGroup.MOSS_CARPET)), ItemGroup.DECORATIONS);
 
 	/** Paper Lanterns */

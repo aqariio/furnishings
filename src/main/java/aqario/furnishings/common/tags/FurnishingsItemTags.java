@@ -7,11 +7,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public final class FurnishingsItemTags {
-    public static final TagKey<Item> COBBLESTONE_BRICKS = of("cobblestone_bricks");
-	public static final TagKey<Item> CUSHIONS = of("cushions");
-	public static final TagKey<Item> CANDELABRAS = of("candelabras");
+	public static final TagKey<Item> CANDELABRAS = register("candelabras");
+    public static final TagKey<Item> COBBLESTONE_BRICKS = register("cobblestone_bricks");
+	public static final TagKey<Item> CUSHIONS = register("cushions");
 
-    private static TagKey<Item> of(String id) {
+    private static TagKey<Item> register(String id) {
         return TagKey.of(Registry.ITEM_KEY, new Identifier(Furnishings.ID, id));
     }
 }

@@ -1,21 +1,23 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_tuff": {
-      "conditions": {
-        "items": [
-          {
-            "tag": "minecraft:tuff"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "has_the_recipe": {
       "conditions": {
         "recipe": "furnishings:tuff_wall"
       },
       "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_tuff": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:tuff"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "requirements": [

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "furnishings:candelabra"
-            ]
+            "tag": "furnishings:candelabras"
           }
         ]
       },

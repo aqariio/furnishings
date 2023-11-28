@@ -4,7 +4,6 @@ import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.tags.FurnishingsItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.advancement.criterion.InventoryChangedCriterion;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.RecipesProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
@@ -13,8 +12,8 @@ import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
-import net.minecraft.predicate.item.ItemPredicate;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.tag.ItemTags;
 import net.minecraft.tag.TagKey;
 
 import java.util.function.Consumer;
@@ -68,7 +67,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_POLISHED_CALCITE_BRICKS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
 
-		/* Candelabra */
+		/* Candelabras */
 
 		offerCandelabraRecipe(exporter, FurnishingsBlocks.CANDELABRA, Blocks.CANDLE);
 		offerCandelabraRecipe(exporter, FurnishingsBlocks.WHITE_CANDELABRA, Blocks.WHITE_CANDLE);
@@ -116,10 +115,10 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 		offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
 		ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS).input(FurnishingsBlocks.COBBLESTONE_BRICKS).input(Blocks.MOSS_BLOCK)
 			.criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
-			.group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_moss_block");
+			.group("mossy_cobblestone_bricks").offerTo(exporter, "mossy_cobblestone_bricks_from_moss_block");
 		ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS).input(FurnishingsBlocks.COBBLESTONE_BRICKS).input(Items.VINE)
 			.criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
-			.group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_vine");
+			.group("mossy_cobblestone_bricks").offerTo(exporter, "mossy_cobblestone_bricks_from_vine");
 		offerSlabRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
 		offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS, 2);
 		offerStairsRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
@@ -127,6 +126,42 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 		offerWallRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
 		offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
 		offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_COBBLESTONE_BRICKS, FurnishingsBlocks.COBBLESTONE_BRICKS);
+
+		/* Cushions */
+
+		offerCushionRecipe(exporter, FurnishingsBlocks.WHITE_CUSHION, Blocks.WHITE_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.LIGHT_GRAY_CUSHION, Blocks.LIGHT_GRAY_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.GRAY_CUSHION, Blocks.GRAY_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.BLACK_CUSHION, Blocks.BLACK_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.BROWN_CUSHION, Blocks.BROWN_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.RED_CUSHION, Blocks.RED_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.ORANGE_CUSHION, Blocks.ORANGE_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.YELLOW_CUSHION, Blocks.YELLOW_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.LIME_CUSHION, Blocks.LIME_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.GREEN_CUSHION, Blocks.GREEN_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.CYAN_CUSHION, Blocks.CYAN_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.LIGHT_BLUE_CUSHION, Blocks.LIGHT_BLUE_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.BLUE_CUSHION, Blocks.BLUE_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.PURPLE_CUSHION, Blocks.PURPLE_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.MAGENTA_CUSHION, Blocks.MAGENTA_WOOL);
+		offerCushionRecipe(exporter, FurnishingsBlocks.PINK_CUSHION, Blocks.PINK_WOOL);
+		// Dyeing
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.WHITE_CUSHION, Items.WHITE_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.LIGHT_GRAY_CUSHION, Items.LIGHT_GRAY_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.GRAY_CUSHION, Items.GRAY_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.BLACK_CUSHION, Items.BLACK_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.BROWN_CUSHION, Items.BROWN_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.RED_CUSHION, Items.RED_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.ORANGE_CUSHION, Items.ORANGE_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.YELLOW_CUSHION, Items.YELLOW_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.LIME_CUSHION, Items.LIME_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.GREEN_CUSHION, Items.GREEN_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.CYAN_CUSHION, Items.CYAN_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.LIGHT_BLUE_CUSHION, Items.LIGHT_BLUE_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.BLUE_CUSHION, Items.BLUE_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.PURPLE_CUSHION, Items.PURPLE_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.MAGENTA_CUSHION, Items.MAGENTA_DYE);
+		offerCushionDyeingRecipe(exporter, FurnishingsBlocks.PINK_CUSHION, Items.PINK_DYE);
 
 		/* Tuff */
 
@@ -162,7 +197,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 			.m_jrksubfg(FurnishingsItemTags.CANDELABRAS)
 			.input(dye)
 			.group("candelabra")
-			.criterion("has_candelabra", RecipesProvider.conditionsFromItem(FurnishingsBlocks.CANDELABRA))
+			.criterion("has_candelabra", RecipesProvider.m_zztygoth(FurnishingsItemTags.CANDELABRAS))
 			.offerTo(exporter, dye(output));
 	}
 
@@ -177,6 +212,26 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 			.offerTo(exporter);
 	}
 
+	public static void offerCushionDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
+		ShapelessRecipeJsonFactory.create(output)
+			.m_jrksubfg(FurnishingsItemTags.CUSHIONS)
+			.input(dye)
+			.group("cushion")
+			.criterion("has_cushion", RecipesProvider.m_zztygoth(FurnishingsItemTags.CUSHIONS))
+			.offerTo(exporter, dye(output));
+	}
+
+	public static void offerCushionRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+		ShapedRecipeJsonFactory.create(output)
+			.input('#', input)
+			.input('X', Ingredient.ofTag(ItemTags.PLANKS))
+			.pattern("##")
+			.pattern("XX")
+			.group("cushion")
+			.criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input))
+			.offerTo(exporter);
+	}
+
     public static void offerPolishedBricksRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
 		ShapedRecipeJsonFactory.create(output, 4)
 			.input('#', input)
@@ -185,10 +240,6 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 			.criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input))
 			.offerTo(exporter);
     }
-
-	public static InventoryChangedCriterion.Conditions conditionsFromItemTag(TagKey<Item> tagKey) {
-		return conditionsFromItemPredicates(ItemPredicate.Builder.create().m_nknvndsh(tagKey).build());
-	}
 
 	public static String dye(ItemConvertible item) {
 		return "dye_" + getItemPath(item);
