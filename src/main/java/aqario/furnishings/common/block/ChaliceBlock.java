@@ -21,6 +21,7 @@ import net.minecraft.world.WorldView;
 
 import java.util.stream.Stream;
 
+@SuppressWarnings("deprecation")
 public class ChaliceBlock extends FluidContainerBlock {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Stream.of(

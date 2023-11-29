@@ -22,6 +22,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
+@SuppressWarnings("deprecation")
 public class IronScaffoldingBlock extends Block implements Waterloggable {
     private static final VoxelShape NORMAL_OUTLINE_SHAPE;
     private static final VoxelShape BOTTOM_OUTLINE_SHAPE;

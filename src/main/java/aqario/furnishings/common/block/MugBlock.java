@@ -24,6 +24,7 @@ import net.minecraft.world.WorldView;
 
 import java.util.stream.Stream;
 
+@SuppressWarnings("deprecation")
 public class MugBlock extends FluidContainerBlock {
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;

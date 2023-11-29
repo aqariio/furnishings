@@ -35,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class SconceBlock extends Block implements Waterloggable, Extinguishable {
 	protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 11.0, 10.0);
 	protected static final Map<Direction, VoxelShape> WALL_SHAPES = Maps.newEnumMap(

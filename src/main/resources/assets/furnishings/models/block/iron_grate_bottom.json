@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Model by aqario",
 	"parent": "block/thin_block",
 	"textures": {
 		"0": "furnishings:block/iron_grate",

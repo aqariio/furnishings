@@ -23,7 +23,7 @@ public class FurnishingsBlocks {
 
 	public static final Block MOSSY_BRICKS = register("mossy_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
 	public static final Block MOSSY_BRICK_SLAB = register("mossy_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-	public static final Block MOSSY_BRICK_STAIRS = register("mossy_brick_stairs", new PublicStairsBlock(MOSSY_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+	public static final Block MOSSY_BRICK_STAIRS = register("mossy_brick_stairs", new StairsBlock(MOSSY_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 	public static final Block MOSSY_BRICK_WALL = register("mossy_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(MOSSY_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CRACKED_BRICKS = register("cracked_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CHISELED_BRICKS = register("chiseled_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.BRICKS)), ItemGroup.BUILDING_BLOCKS);
@@ -31,15 +31,15 @@ public class FurnishingsBlocks {
     /** Calcite */
 
     public static final Block CALCITE_SLAB = register("calcite_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block CALCITE_STAIRS = register("calcite_stairs", new PublicStairsBlock(Blocks.CALCITE.getDefaultState(), QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block CALCITE_STAIRS = register("calcite_stairs", new StairsBlock(Blocks.CALCITE.getDefaultState(), QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CALCITE_WALL = register("calcite_wall", new WallBlock(QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE = register("polished_calcite", new Block(QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_SLAB = register("polished_calcite_slab", new SlabBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block POLISHED_CALCITE_STAIRS = register("polished_calcite_stairs", new PublicStairsBlock(POLISHED_CALCITE.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block POLISHED_CALCITE_STAIRS = register("polished_calcite_stairs", new StairsBlock(POLISHED_CALCITE.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_WALL = register("polished_calcite_wall", new WallBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_BRICKS = register("polished_calcite_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_BRICK_SLAB = register("polished_calcite_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block POLISHED_CALCITE_BRICK_STAIRS = register("polished_calcite_brick_stairs", new PublicStairsBlock(POLISHED_CALCITE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block POLISHED_CALCITE_BRICK_STAIRS = register("polished_calcite_brick_stairs", new StairsBlock(POLISHED_CALCITE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_BRICK_WALL = register("polished_calcite_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CRACKED_POLISHED_CALCITE_BRICKS = register("cracked_polished_calcite_bricks", new Block(QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 
@@ -122,11 +122,11 @@ public class FurnishingsBlocks {
 
     public static final Block COBBLESTONE_BRICKS = register("cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.COBBLESTONE).sounds(BlockSoundGroup.DEEPSLATE)), ItemGroup.BUILDING_BLOCKS);
     public static final Block COBBLESTONE_BRICK_SLAB = register("cobblestone_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block COBBLESTONE_BRICK_STAIRS = register("cobblestone_brick_stairs", new PublicStairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block COBBLESTONE_BRICK_STAIRS = register("cobblestone_brick_stairs", new StairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block COBBLESTONE_BRICK_WALL = register("cobblestone_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICKS = register("mossy_cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICK_SLAB = register("mossy_cobblestone_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block MOSSY_COBBLESTONE_BRICK_STAIRS = register("mossy_cobblestone_brick_stairs", new PublicStairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block MOSSY_COBBLESTONE_BRICK_STAIRS = register("mossy_cobblestone_brick_stairs", new StairsBlock(COBBLESTONE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block MOSSY_COBBLESTONE_BRICK_WALL = register("mossy_cobblestone_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 	public static final Block CRACKED_COBBLESTONE_BRICKS = register("cracked_cobblestone_bricks", new Block(QuiltBlockSettings.copyOf(COBBLESTONE_BRICKS).sounds(BlockSoundGroup.DEEPSLATE_TILES)), ItemGroup.BUILDING_BLOCKS);
 
@@ -226,7 +226,7 @@ public class FurnishingsBlocks {
 
 	/** Paper Lanterns */
 
-    public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new RedPaperLanternBlock(QuiltBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.DECORATIONS);
+    public static final Block RED_PAPER_LANTERN = register("red_paper_lantern", new PaperLanternBlock(QuiltBlockSettings.of(Material.WOOL).breakInstantly().sounds(BlockSoundGroup.BAMBOO).blockVision(AbstractBlock.AbstractBlockState::hasEmissiveLighting).luminance(10).nonOpaque()), ItemGroup.DECORATIONS);
 
 	/** Pedestals */
 
@@ -255,15 +255,15 @@ public class FurnishingsBlocks {
     /** Tuff */
 
     public static final Block TUFF_SLAB = register("tuff_slab", new SlabBlock(QuiltBlockSettings.copyOf(Blocks.TUFF)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block TUFF_STAIRS = register("tuff_stairs", new PublicStairsBlock(Blocks.TUFF.getDefaultState(), QuiltBlockSettings.copyOf(Blocks.TUFF)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block TUFF_STAIRS = register("tuff_stairs", new StairsBlock(Blocks.TUFF.getDefaultState(), QuiltBlockSettings.copyOf(Blocks.TUFF)), ItemGroup.BUILDING_BLOCKS);
     public static final Block TUFF_WALL = register("tuff_wall", new WallBlock(QuiltBlockSettings.copyOf(Blocks.TUFF)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_TUFF = register("polished_tuff", new Block(QuiltBlockSettings.copyOf(Blocks.TUFF)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_TUFF_SLAB = register("polished_tuff_slab", new SlabBlock(QuiltBlockSettings.copyOf(POLISHED_TUFF)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block POLISHED_TUFF_STAIRS = register("polished_tuff_stairs", new PublicStairsBlock(POLISHED_TUFF.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_TUFF)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block POLISHED_TUFF_STAIRS = register("polished_tuff_stairs", new StairsBlock(POLISHED_TUFF.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_TUFF)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_TUFF_WALL = register("polished_tuff_wall", new WallBlock(QuiltBlockSettings.copyOf(POLISHED_TUFF)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_TUFF_BRICKS = register("polished_tuff_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.TUFF)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_TUFF_BRICK_SLAB = register("polished_tuff_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
-    public static final Block POLISHED_TUFF_BRICK_STAIRS = register("polished_tuff_brick_stairs", new PublicStairsBlock(POLISHED_TUFF_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
+    public static final Block POLISHED_TUFF_BRICK_STAIRS = register("polished_tuff_brick_stairs", new StairsBlock(POLISHED_TUFF_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block POLISHED_TUFF_BRICK_WALL = register("polished_tuff_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
     public static final Block CRACKED_POLISHED_TUFF_BRICKS = register("cracked_polished_tuff_bricks", new Block(QuiltBlockSettings.copyOf(POLISHED_TUFF_BRICKS)), ItemGroup.BUILDING_BLOCKS);
 

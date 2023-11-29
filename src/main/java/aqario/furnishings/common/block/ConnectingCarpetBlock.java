@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class ConnectingCarpetBlock extends Block {
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
     public static final BooleanProperty EAST = Properties.EAST;

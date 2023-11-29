@@ -194,10 +194,10 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
 	public static void offerCandelabraDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
 		ShapelessRecipeJsonFactory.create(output)
-			.m_jrksubfg(FurnishingsItemTags.CANDELABRAS)
+			.method_10446(FurnishingsItemTags.CANDELABRAS)
 			.input(dye)
 			.group("candelabra")
-			.criterion("has_candelabra", RecipesProvider.m_zztygoth(FurnishingsItemTags.CANDELABRAS))
+			.criterion("has_candelabra", RecipesProvider.method_10420(FurnishingsItemTags.CANDELABRAS))
 			.offerTo(exporter, dye(output));
 	}
 
@@ -214,10 +214,10 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
 	public static void offerCushionDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
 		ShapelessRecipeJsonFactory.create(output)
-			.m_jrksubfg(FurnishingsItemTags.CUSHIONS)
+			.method_10446(FurnishingsItemTags.CUSHIONS)
 			.input(dye)
 			.group("cushion")
-			.criterion("has_cushion", RecipesProvider.m_zztygoth(FurnishingsItemTags.CUSHIONS))
+			.criterion("has_cushion", RecipesProvider.method_10420(FurnishingsItemTags.CUSHIONS))
 			.offerTo(exporter, dye(output));
 	}
 

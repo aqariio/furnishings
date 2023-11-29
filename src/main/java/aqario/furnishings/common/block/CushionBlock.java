@@ -38,6 +38,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class CushionBlock extends Block implements Waterloggable {
 	public static final BooleanProperty OCCUPIED = Properties.OCCUPIED;
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;

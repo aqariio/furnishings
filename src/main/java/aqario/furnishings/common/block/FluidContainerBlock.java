@@ -10,6 +10,7 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public abstract class FluidContainerBlock extends BlockWithEntity implements Waterloggable {
 	public FluidContainerBlock(Settings settings) {
 		super(settings);

@@ -36,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class BookBlock extends Block implements Waterloggable {
 	protected static final Map<Integer, VoxelShape> SHAPES = Maps.newHashMap(
 		ImmutableMap.of(

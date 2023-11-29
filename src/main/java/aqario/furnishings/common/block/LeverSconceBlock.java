@@ -36,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class LeverSconceBlock extends Block implements Waterloggable, Extinguishable {
 	protected static final Map<Direction, VoxelShape> WALL_SHAPES = Maps.newEnumMap(
 			ImmutableMap.of(
@@ -177,27 +178,6 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
 			Direction direction2 = direction.getOpposite();
 			world.addParticle(ParticleTypes.SMOKE, x + 0.27 * direction2.getOffsetX(), y + 0.22, z + 0.27 * direction2.getOffsetZ(), 0.0, 0.0, 0.0);
 		}
-
-//		if (state.get(POWERED) && random.nextFloat() < 0.25F) {
-//			spawnRedstoneParticles(state, world, pos, 0.5F);
-//		}
-//		if (!state.get(POWERED) && state.get(LIT)) {
-//			Direction direction = state.get(FACING);
-//			double x = (double)pos.getX() + 0.5;
-//			double y = (double)pos.getY() + 0.7;
-//			double z = (double)pos.getZ() + 0.5;
-//			Direction direction2 = direction.getOpposite();
-//			world.addParticle(ParticleTypes.SMOKE, x + 0.27 * direction2.getOffsetX(), y + 0.22, z + 0.27 * direction2.getOffsetZ(), 0.0, 0.0, 0.0);
-//			world.addParticle(this.particle, x + 0.27 * direction2.getOffsetX(), y + 0.22, z + 0.27 * direction2.getOffsetZ(), 0.0, 0.0, 0.0);
-//		} else if (state.get(LIT)) {
-//			Direction direction = state.get(FACING);
-//			double x = pos.getX() + 0.5D;
-//			double y = pos.getY() + 0.65D;
-//			double z = pos.getZ() + 0.5D;
-//			Direction direction1 = direction.getOpposite();
-//			world.addParticle(ParticleTypes.SMOKE, x + 0.125D * direction1.getOffsetX(), y + 0.15D, z + 0.125D * direction1.getOffsetZ(), 0.0D, 0.0D, 0.0D);
-//			world.addParticle(this.particle, x + 0.125D * direction1.getOffsetX(), y + 0.15D, z + 0.125D * direction1.getOffsetZ(), 0.0D, 0.0D, 0.0D);
-//		}
 	}
 
 	@Override

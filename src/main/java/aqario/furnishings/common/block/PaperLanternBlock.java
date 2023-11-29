@@ -21,11 +21,20 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public class PaperLanternBlock extends Block {
     public static final BooleanProperty HANGING = Properties.HANGING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(createCuboidShape(5.0, 9.0, 5.0, 11.0, 11.0, 11.0), createCuboidShape(3.0, 0.0, 3.0, 13.0, 9.0, 13.0));
-    protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(createCuboidShape(5, 9, 5, 11, 11, 11), createCuboidShape(7, 11, 7, 9, 16, 9), createCuboidShape(3, 0, 3, 13, 9, 13));
+	protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(
+		createCuboidShape(4, 1, 4, 12, 8, 12),
+		createCuboidShape(6, 8, 6, 10, 9, 10),
+		createCuboidShape(6, 0, 6, 10, 1, 10)
+	);
+	protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(
+		createCuboidShape(4, 6, 4, 12, 13, 12),
+		createCuboidShape(6, 13, 6, 10, 14, 10),
+		createCuboidShape(6, 5, 6, 10, 6, 10)
+	);
 
     public PaperLanternBlock(Settings settings) {
         super(settings);

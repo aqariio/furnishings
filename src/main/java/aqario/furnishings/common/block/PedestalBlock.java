@@ -19,6 +19,7 @@ import net.minecraft.world.WorldAccess;
 import java.util.Map;
 import java.util.stream.Stream;
 
+@SuppressWarnings("deprecation")
 public class PedestalBlock extends Block implements Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final BooleanProperty UP = Properties.UP;

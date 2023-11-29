@@ -1,5 +1,4 @@
 {
-  "credit": "Made with Blockbench",
   "parent": "furnishings:block/template_lever_sconce_wall",
   "textures": {
     "base": "furnishings:block/soul_sconce",

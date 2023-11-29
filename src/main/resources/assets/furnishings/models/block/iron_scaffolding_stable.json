@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Model by aqario",
 	"parent": "block/block",
 	"textures": {
 		"particle": "furnishings:block/iron_scaffolding_top",

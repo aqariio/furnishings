@@ -33,6 +33,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
+@SuppressWarnings("deprecation")
 public class BrazierBlock extends Block implements Waterloggable, Extinguishable {
     protected static final VoxelShape CHAIN_SHAPE = Block.createCuboidShape(6.5, 7, 6.5, 9.5, 16, 9.5);
     protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 15, 14);
@@ -104,7 +105,7 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (!entity.isFireImmune() && state.get(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
 			Box fire = FIRE_SHAPE.offset(pos);
-			if (world.getNonSpectatingEntities(LivingEntity.class, fire).contains((LivingEntity) entity)) {
+			if (fire.intersects(entity.getBoundingBox())) {
 				entity.damage(DamageSource.IN_FIRE, this.fireDamage);
 			}
         }

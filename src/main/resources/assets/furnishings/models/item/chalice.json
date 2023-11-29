@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench",
+	"credit": "Model by aqario",
 	"parent": "minecraft:item/generated",
 	"textures": {
 		"layer0": "furnishings:item/chalice"

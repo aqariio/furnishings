@@ -15,6 +15,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class LampBlock extends Block {
     public static final BooleanProperty LIT = Properties.LIT;
 

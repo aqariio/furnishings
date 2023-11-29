@@ -21,6 +21,7 @@ import net.minecraft.world.WorldAccess;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("deprecation")
 public class PanelBlock extends Block implements Waterloggable {
 	protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(
 		ImmutableMap.of(

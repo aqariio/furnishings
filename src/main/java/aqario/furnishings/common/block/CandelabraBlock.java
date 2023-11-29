@@ -41,6 +41,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.ToIntFunction;
 
+@SuppressWarnings("deprecation")
 public class CandelabraBlock extends HorizontalFacingBlock implements Waterloggable, Extinguishable {
 	protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(5.0, 0.0, 5.0, 11.0, 14.0, 11.0);
 	protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(

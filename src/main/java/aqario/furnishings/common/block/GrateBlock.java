@@ -24,6 +24,7 @@ import net.minecraft.world.WorldAccess;
 
 import java.util.Objects;
 
+@SuppressWarnings("deprecation")
 public class GrateBlock extends Block implements Waterloggable {
 	public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 	public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
