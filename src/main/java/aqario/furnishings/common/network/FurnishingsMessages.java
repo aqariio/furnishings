@@ -5,7 +5,7 @@ import aqario.furnishings.server.network.FurnishingsServerPlayNetworkHandler;
 
 public class FurnishingsMessages {
 
-	public static void init() {
-		FurnishingsServerPlayNetworkHandler.registerMessage(OpenPoseableStandScreenS2CPacket.class, "open_stand");
-	}
+    public static void init() {
+        FurnishingsServerPlayNetworkHandler.registerMessage(OpenPoseableStandScreenS2CPacket.class, "open_stand");
+    }
 }

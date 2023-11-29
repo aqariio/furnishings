@@ -62,13 +62,13 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-		BlockPos blockPos = ctx.getBlockPos();
-		World world = ctx.getWorld();
-		int distance = calculateDistance(world, blockPos);
-		return this.getDefaultState()
-			.with(WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER)
-			.with(DISTANCE, distance)
-			.with(BOTTOM, this.shouldBeBottom(world, blockPos, distance));
+        BlockPos blockPos = ctx.getBlockPos();
+        World world = ctx.getWorld();
+        int distance = calculateDistance(world, blockPos);
+        return this.getDefaultState()
+            .with(WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER)
+            .with(DISTANCE, distance)
+            .with(BOTTOM, this.shouldBeBottom(world, blockPos, distance));
     }
 
     @Override
@@ -106,16 +106,16 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-		if (context.isAbove(VoxelShapes.fullCube(), pos, true) && !context.isDescending()) {
-			return NORMAL_OUTLINE_SHAPE;
-		} else {
-			return state.get(DISTANCE) != 0 && state.get(BOTTOM) && context.isAbove(OUTLINE_SHAPE, pos, true) ? BOTTOM_COLLISION_SHAPE : VoxelShapes.empty();
-		}
+        if (context.isAbove(VoxelShapes.fullCube(), pos, true) && !context.isDescending()) {
+            return NORMAL_OUTLINE_SHAPE;
+        } else {
+            return state.get(DISTANCE) != 0 && state.get(BOTTOM) && context.isAbove(OUTLINE_SHAPE, pos, true) ? BOTTOM_COLLISION_SHAPE : VoxelShapes.empty();
+        }
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
     }
 
     private boolean shouldBeBottom(BlockView world, BlockPos pos, int distance) {
@@ -123,26 +123,26 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     }
 
     public static int calculateDistance(BlockView world, BlockPos pos) {
-		BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
-		BlockState blockState = world.getBlockState(mutable);
-		int distance = 32;
-		if (blockState.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
-			distance = blockState.get(DISTANCE);
-		} else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
-			return 0;
-		}
+        BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
+        BlockState blockState = world.getBlockState(mutable);
+        int distance = 32;
+        if (blockState.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
+            distance = blockState.get(DISTANCE);
+        } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
+            return 0;
+        }
 
-		for(Direction direction : Direction.Type.HORIZONTAL) {
-			BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
-			if (blockState2.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
-				distance = Math.min(distance, blockState2.get(DISTANCE) + 1);
-				if (distance == 1) {
-					break;
-				}
-			}
-		}
+        for(Direction direction : Direction.Type.HORIZONTAL) {
+            BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
+            if (blockState2.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
+                distance = Math.min(distance, blockState2.get(DISTANCE) + 1);
+                if (distance == 1) {
+                    break;
+                }
+            }
+        }
 
-		return distance;
+        return distance;
     }
 
     static {
@@ -153,7 +153,7 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
         VoxelShape voxelShape3 = Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 16.0, 2.0);
         VoxelShape voxelShape4 = Block.createCuboidShape(0.0, 0.0, 14.0, 2.0, 16.0, 16.0);
         VoxelShape voxelShape5 = Block.createCuboidShape(14.0, 0.0, 14.0, 16.0, 16.0, 16.0);
-		VoxelShape voxelShape6 = Block.createCuboidShape(1.0, 1.0, 1.0, 15.0, 13.0, 15.0);
+        VoxelShape voxelShape6 = Block.createCuboidShape(1.0, 1.0, 1.0, 15.0, 13.0, 15.0);
         NORMAL_OUTLINE_SHAPE = VoxelShapes.union(voxelShape, voxelShape2, voxelShape3, voxelShape4, voxelShape5, voxelShape6);
         VoxelShape voxelShape7 = Block.createCuboidShape(0.0, 0.0, 0.0, 2.0, 2.0, 16.0);
         VoxelShape voxelShape8 = Block.createCuboidShape(14.0, 0.0, 0.0, 16.0, 2.0, 16.0);

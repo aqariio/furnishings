@@ -14,18 +14,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Furnishings implements ModInitializer {
-	public static final Logger LOGGER = LoggerFactory.getLogger("Furnishings");
-	public static final String ID = "furnishings";
+    public static final Logger LOGGER = LoggerFactory.getLogger("Furnishings");
+    public static final String ID = "furnishings";
 
-	@Override
-	public void onInitialize(ModContainer mod) {
-		LOGGER.info("Loading {}", mod.metadata().name());
-		FurnishingsBlocks.init();
-		FurnishingsBlockEntityType.init();
-		FurnishingsEntityType.init();
-		FurnishingsItems.init();
-		FurnishingsMessages.init();
-		FurnishingsSoundEvents.init();
-		UseBlockCallback.EVENT.register(BookBlock::placeBookStack);
-	}
+    @Override
+    public void onInitialize(ModContainer mod) {
+        LOGGER.info("Loading {}", mod.metadata().name());
+        FurnishingsBlockEntityType.init();
+        FurnishingsBlocks.init();
+        FurnishingsEntityType.init();
+        FurnishingsItems.init();
+        FurnishingsMessages.init();
+        FurnishingsSoundEvents.init();
+        UseBlockCallback.EVENT.register(BookBlock::placeBookStack);
+    }
 }

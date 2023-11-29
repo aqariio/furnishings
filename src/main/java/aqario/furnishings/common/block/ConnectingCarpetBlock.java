@@ -47,7 +47,7 @@ public class ConnectingCarpetBlock extends Block {
         return this.getDefaultState().with(NORTH, this.canConnect(blockState)).with(SOUTH, this.canConnect(blockState2)).with(WEST, this.canConnect(blockState3)).with(EAST, this.canConnect(blockState4));
     }
 
-	@SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
@@ -57,7 +57,7 @@ public class ConnectingCarpetBlock extends Block {
         return !ConnectingCarpetBlock.cannotConnect(state) && state.getBlock() instanceof ConnectingCarpetBlock;
     }
 
-	@SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (!state.canPlaceAt(world, pos)) {
@@ -69,7 +69,7 @@ public class ConnectingCarpetBlock extends Block {
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
-	@SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return !world.isAir(pos.down());

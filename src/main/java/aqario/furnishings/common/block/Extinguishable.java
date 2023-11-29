@@ -7,7 +7,7 @@ import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
 
 public interface Extinguishable {
-	boolean isLit(BlockState state);
+    boolean isLit(BlockState state);
 
-	void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos);
+    void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos);
 }

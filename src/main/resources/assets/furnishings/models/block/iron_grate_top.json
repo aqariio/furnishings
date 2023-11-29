@@ -1,22 +1,22 @@
 {
-	"credit": "Model by aqario",
-	"parent": "block/thin_block",
-	"textures": {
-		"0": "furnishings:block/iron_grate",
-		"particle": "furnishings:block/iron_grate"
-	},
-	"elements": [
-		{
-			"from": [0, 14, 0],
-			"to": [16, 16, 16],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "north"},
-				"east": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "east"},
-				"south": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "south"},
-				"west": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "west"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"down": {"uv": [0, 16, 16, 0], "texture": "#0"}
-			}
-		}
-	]
+  "credit": "Model by aqario",
+  "parent": "block/thin_block",
+  "textures": {
+    "0": "furnishings:block/iron_grate",
+    "particle": "furnishings:block/iron_grate"
+  },
+  "elements": [
+    {
+      "from": [0, 14, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "north"},
+        "east": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "east"},
+        "south": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "south"},
+        "west": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "west"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#0"},
+        "down": {"uv": [0, 16, 16, 0], "texture": "#0"}
+      }
+    }
+  ]
 }

@@ -6,12 +6,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 
 public class EmptyRenderer extends EntityRenderer<Entity> {
-	public EmptyRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx);
-	}
+    public EmptyRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx);
+    }
 
-	@Override
-	public Identifier getTexture(Entity entity) {
-		return null;
-	}
+    @Override
+    public Identifier getTexture(Entity entity) {
+        return null;
+    }
 }

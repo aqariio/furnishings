@@ -25,16 +25,16 @@ import org.jetbrains.annotations.Nullable;
 public class PaperLanternBlock extends Block {
     public static final BooleanProperty HANGING = Properties.HANGING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-	protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(
-		createCuboidShape(4, 1, 4, 12, 8, 12),
-		createCuboidShape(6, 8, 6, 10, 9, 10),
-		createCuboidShape(6, 0, 6, 10, 1, 10)
-	);
-	protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(
-		createCuboidShape(4, 6, 4, 12, 13, 12),
-		createCuboidShape(6, 13, 6, 10, 14, 10),
-		createCuboidShape(6, 5, 6, 10, 6, 10)
-	);
+    protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(
+        createCuboidShape(4, 1, 4, 12, 8, 12),
+        createCuboidShape(6, 8, 6, 10, 9, 10),
+        createCuboidShape(6, 0, 6, 10, 1, 10)
+    );
+    protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(
+        createCuboidShape(4, 6, 4, 12, 13, 12),
+        createCuboidShape(6, 13, 6, 10, 14, 10),
+        createCuboidShape(6, 5, 6, 10, 6, 10)
+    );
 
     public PaperLanternBlock(Settings settings) {
         super(settings);

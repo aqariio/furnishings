@@ -38,349 +38,349 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public abstract class PoseableStandEntity extends LivingEntity implements InventoryChangedListener, NamedScreenHandlerFactory {
-	private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = entity -> entity instanceof AbstractMinecartEntity
-			&& ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
-	private final StandType standType;
-	private int disabledSlots;
-	protected SimpleInventory inventory;
+    private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = entity -> entity instanceof AbstractMinecartEntity
+            && ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
+    private final StandType standType;
+    private int disabledSlots;
+    protected SimpleInventory inventory;
 
-	public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, StandType type) {
-		super(entityType, world);
-		this.stepHeight = 0.0F;
-		this.standType = type;
-		this.inventory = new SimpleInventory(6);
-		this.inventory.addListener(this);
-	}
+    public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, StandType type) {
+        super(entityType, world);
+        this.stepHeight = 0.0F;
+        this.standType = type;
+        this.inventory = new SimpleInventory(6);
+        this.inventory.addListener(this);
+    }
 
-	@Override
-	public void onInventoryChanged(Inventory sender) {
-	}
+    @Override
+    public void onInventoryChanged(Inventory sender) {
+    }
 
-	@Override
-	protected void dropInventory() {
-		super.dropInventory();
+    @Override
+    protected void dropInventory() {
+        super.dropInventory();
 
-		if (this.inventory != null) {
-			for (int i = 0; i < this.inventory.size(); ++i) {
-				ItemStack itemStack = this.inventory.getStack(i);
-				if (itemStack.isEmpty()) continue;
-				this.dropStack(itemStack);
-			}
-		}
-	}
+        if (this.inventory != null) {
+            for (int i = 0; i < this.inventory.size(); ++i) {
+                ItemStack itemStack = this.inventory.getStack(i);
+                if (itemStack.isEmpty()) continue;
+                this.dropStack(itemStack);
+            }
+        }
+    }
 
-	@Override
-	protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
-		return 1.72F;
-	}
+    @Override
+    protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
+        return 1.72F;
+    }
 
-	@Override
-	public Iterable<ItemStack> getItemsHand() {
-		return ImmutableList.of(this.inventory.getStack(4), this.inventory.getStack(5));
-	}
+    @Override
+    public Iterable<ItemStack> getItemsHand() {
+        return ImmutableList.of(this.inventory.getStack(4), this.inventory.getStack(5));
+    }
 
-	@Override
-	public Iterable<ItemStack> getArmorItems() {
-		return ImmutableList.of(this.inventory.getStack(0), this.inventory.getStack(1), this.inventory.getStack(2), this.inventory.getStack(3));
-	}
+    @Override
+    public Iterable<ItemStack> getArmorItems() {
+        return ImmutableList.of(this.inventory.getStack(0), this.inventory.getStack(1), this.inventory.getStack(2), this.inventory.getStack(3));
+    }
 
-	@Override
-	public ItemStack getEquippedStack(EquipmentSlot slot) {
-		return switch (slot) {
-			case HEAD -> this.inventory.getStack(0);
-			case CHEST -> this.inventory.getStack(1);
-			case LEGS -> this.inventory.getStack(2);
-			case FEET -> this.inventory.getStack(3);
-			case MAINHAND -> this.inventory.getStack(4);
-			case OFFHAND -> this.inventory.getStack(5);
-		};
-	}
+    @Override
+    public ItemStack getEquippedStack(EquipmentSlot slot) {
+        return switch (slot) {
+            case HEAD -> this.inventory.getStack(0);
+            case CHEST -> this.inventory.getStack(1);
+            case LEGS -> this.inventory.getStack(2);
+            case FEET -> this.inventory.getStack(3);
+            case MAINHAND -> this.inventory.getStack(4);
+            case OFFHAND -> this.inventory.getStack(5);
+        };
+    }
 
-	@Override
-	public void equipStack(EquipmentSlot slot, ItemStack stack) {
-		this.processEquippedStack(stack);
-		switch (slot) {
-			case HEAD -> this.inventory.setStack(0, stack);
-			case CHEST -> this.inventory.setStack(1, stack);
-			case LEGS -> this.inventory.setStack(2, stack);
-			case FEET -> this.inventory.setStack(3, stack);
-			case MAINHAND -> this.inventory.setStack(4, stack);
-			case OFFHAND -> this.inventory.setStack(5, stack);
-		}
-	}
+    @Override
+    public void equipStack(EquipmentSlot slot, ItemStack stack) {
+        this.processEquippedStack(stack);
+        switch (slot) {
+            case HEAD -> this.inventory.setStack(0, stack);
+            case CHEST -> this.inventory.setStack(1, stack);
+            case LEGS -> this.inventory.setStack(2, stack);
+            case FEET -> this.inventory.setStack(3, stack);
+            case MAINHAND -> this.inventory.setStack(4, stack);
+            case OFFHAND -> this.inventory.setStack(5, stack);
+        }
+    }
 
-	@Override
-	public boolean canEquip(ItemStack stack) {
-		EquipmentSlot equipmentSlot = MobEntity.getPreferredEquipmentSlot(stack);
-		return this.getEquippedStack(equipmentSlot).isEmpty() && !this.isSlotDisabled(equipmentSlot);
-	}
+    @Override
+    public boolean canEquip(ItemStack stack) {
+        EquipmentSlot equipmentSlot = MobEntity.getPreferredEquipmentSlot(stack);
+        return this.getEquippedStack(equipmentSlot).isEmpty() && !this.isSlotDisabled(equipmentSlot);
+    }
 
-	@Override
-	public void writeCustomDataToNbt(NbtCompound nbt) {
-		super.writeCustomDataToNbt(nbt);
-		NbtList nbtList = new NbtList();
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        NbtList nbtList = new NbtList();
 
-		for(int i = 0; i < this.inventory.size(); ++i) {
-			ItemStack itemStack = this.inventory.getStack(i);
-			if (!itemStack.isEmpty()) {
-				NbtCompound nbtCompound = new NbtCompound();
-				nbtCompound.putByte("Slot", (byte)i);
-				itemStack.writeNbt(nbtCompound);
-				nbtList.add(nbtCompound);
-			}
-		}
+        for(int i = 0; i < this.inventory.size(); ++i) {
+            ItemStack itemStack = this.inventory.getStack(i);
+            if (!itemStack.isEmpty()) {
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putByte("Slot", (byte)i);
+                itemStack.writeNbt(nbtCompound);
+                nbtList.add(nbtCompound);
+            }
+        }
 
-		nbt.put("Items", nbtList);
-		nbt.putInt("DisabledSlots", this.disabledSlots);
-	}
+        nbt.put("Items", nbtList);
+        nbt.putInt("DisabledSlots", this.disabledSlots);
+    }
 
-	@Override
-	public void readCustomDataFromNbt(NbtCompound nbt) {
-		super.readCustomDataFromNbt(nbt);
-		NbtList nbtList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        NbtList nbtList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
 
-		for(int i = 0; i < nbtList.size(); ++i) {
-			NbtCompound nbtCompound = nbtList.getCompound(i);
-			int j = nbtCompound.getByte("Slot") & 255;
-			if (j < this.inventory.size()) {
-				this.inventory.setStack(j, ItemStack.fromNbt(nbtCompound));
-			}
-		}
-		this.disabledSlots = nbt.getInt("DisabledSlots");
-	}
+        for(int i = 0; i < nbtList.size(); ++i) {
+            NbtCompound nbtCompound = nbtList.getCompound(i);
+            int j = nbtCompound.getByte("Slot") & 255;
+            if (j < this.inventory.size()) {
+                this.inventory.setStack(j, ItemStack.fromNbt(nbtCompound));
+            }
+        }
+        this.disabledSlots = nbt.getInt("DisabledSlots");
+    }
 
-	@Override
-	public ActionResult interact(PlayerEntity player, Hand hand) {
-		if (!player.world.isClient && player.getStackInHand(hand).isEmpty() && !player.shouldCancelInteraction()) {
-			openInventory((ServerPlayerEntity)player);
-			return ActionResult.CONSUME;
-		}
-		return super.interact(player, hand);
-	}
+    @Override
+    public ActionResult interact(PlayerEntity player, Hand hand) {
+        if (!player.world.isClient && player.getStackInHand(hand).isEmpty() && !player.shouldCancelInteraction()) {
+            openInventory((ServerPlayerEntity)player);
+            return ActionResult.CONSUME;
+        }
+        return super.interact(player, hand);
+    }
 
-	public void openInventory(ServerPlayerEntity player) {
-		ServerPlayerEntityAccessor playerAccessor = (ServerPlayerEntityAccessor) player;
-		ScreenHandler screenHandler = createMenu(playerAccessor.getScreenHandlerSyncId() % 100 + 1, player.getInventory(), player);
-		if (screenHandler != null) {
-			playerAccessor.callIncrementScreenHandlerSyncId();
-			FurnishingsServerPlayNetworkHandler.sendPacket(player, new OpenPoseableStandScreenS2CPacket(playerAccessor.getScreenHandlerSyncId(), this.getId()));
-			player.currentScreenHandler = screenHandler;
-			playerAccessor.callOnSpawn(player.currentScreenHandler);
-		}
-	}
+    public void openInventory(ServerPlayerEntity player) {
+        ServerPlayerEntityAccessor playerAccessor = (ServerPlayerEntityAccessor) player;
+        ScreenHandler screenHandler = createMenu(playerAccessor.getScreenHandlerSyncId() % 100 + 1, player.getInventory(), player);
+        if (screenHandler != null) {
+            playerAccessor.callIncrementScreenHandlerSyncId();
+            FurnishingsServerPlayNetworkHandler.sendPacket(player, new OpenPoseableStandScreenS2CPacket(playerAccessor.getScreenHandlerSyncId(), this.getId()));
+            player.currentScreenHandler = screenHandler;
+            playerAccessor.callOnSpawn(player.currentScreenHandler);
+        }
+    }
 
-	@Nullable
-	@Override
-	public abstract ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity);
+    @Nullable
+    @Override
+    public abstract ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity playerEntity);
 
-	private boolean isSlotDisabled(EquipmentSlot equipmentSlot) {
-		return false;
-	}
+    private boolean isSlotDisabled(EquipmentSlot equipmentSlot) {
+        return false;
+    }
 
-	@Override
-	public boolean isCollidable() {
-		return true;
-	}
+    @Override
+    public boolean isCollidable() {
+        return true;
+    }
 
-	@Override
-	public boolean isPushable() {
-		return false;
-	}
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
 
-	@Override
-	protected void pushAway(Entity entity) {
-	}
+    @Override
+    protected void pushAway(Entity entity) {
+    }
 
-	@Override
-	protected void tickCramming() {
-		List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox(), RIDEABLE_MINECART_PREDICATE);
-		for (Entity entity : list) {
-			if (this.squaredDistanceTo(entity) <= 0.2) {
-				entity.pushAwayFrom(this);
-			}
-		}
-	}
+    @Override
+    protected void tickCramming() {
+        List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox(), RIDEABLE_MINECART_PREDICATE);
+        for (Entity entity : list) {
+            if (this.squaredDistanceTo(entity) <= 0.2) {
+                entity.pushAwayFrom(this);
+            }
+        }
+    }
 
-	@Override
-	public boolean damage(DamageSource source, float amount) {
-		if (this.world.isClient || this.isRemoved()) {
-			return false;
-		}
-		if (DamageSource.OUT_OF_WORLD.equals(source)) {
-			this.kill();
-			return false;
-		}
-		if (this.isInvulnerableTo(source)) {
-			return false;
-		}
-		if (source.getSource() instanceof FireworkRocketEntity) {
-			return false;
-		}
-		if (source.isExplosive()) {
-			this.onBreak(source);
-			this.kill();
-			return false;
-		}
-		if (DamageSource.IN_FIRE.equals(source)) {
-			if (this.isOnFire()) {
-				this.updateHealth(source, 0.15F);
-			} else {
-				this.setOnFireFor(5);
-			}
-			return false;
-		} else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F) {
-			this.updateHealth(source, 4.0F);
-			return false;
-		} else {
-			if (source.getSource() instanceof PersistentProjectileEntity) {
-				return true;
-			}
-			if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
-				return false;
-			}
-			if (source.getAttacker() instanceof PlayerEntity && !source.getAttacker().isSneaking()) {
-				this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
-			} else {
-				if (source.isSourceCreativePlayer()) {
-					this.breakAndDropThis(source);
-					this.spawnBreakParticles();
-					this.kill();
-					return false;
-				}
-				this.breakAndDropThis(source);
-				this.spawnBreakParticles();
-				this.kill();
-			}
-			return true;
-		}
-	}
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (this.world.isClient || this.isRemoved()) {
+            return false;
+        }
+        if (DamageSource.OUT_OF_WORLD.equals(source)) {
+            this.kill();
+            return false;
+        }
+        if (this.isInvulnerableTo(source)) {
+            return false;
+        }
+        if (source.getSource() instanceof FireworkRocketEntity) {
+            return false;
+        }
+        if (source.isExplosive()) {
+            this.onBreak(source);
+            this.kill();
+            return false;
+        }
+        if (DamageSource.IN_FIRE.equals(source)) {
+            if (this.isOnFire()) {
+                this.updateHealth(source, 0.15F);
+            } else {
+                this.setOnFireFor(5);
+            }
+            return false;
+        } else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F) {
+            this.updateHealth(source, 4.0F);
+            return false;
+        } else {
+            if (source.getSource() instanceof PersistentProjectileEntity) {
+                return true;
+            }
+            if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
+                return false;
+            }
+            if (source.getAttacker() instanceof PlayerEntity && !source.getAttacker().isSneaking()) {
+                this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
+            } else {
+                if (source.isSourceCreativePlayer()) {
+                    this.breakAndDropThis(source);
+                    this.spawnBreakParticles();
+                    this.kill();
+                    return false;
+                }
+                this.breakAndDropThis(source);
+                this.spawnBreakParticles();
+                this.kill();
+            }
+            return true;
+        }
+    }
 
-	@Override
-	public boolean isInvulnerableTo(DamageSource damageSource) {
-		return this.getStandType().equals(StandType.STATUE) ? damageSource.isFromFalling() || damageSource.isFire() : damageSource.isFromFalling();
-	}
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return this.getStandType().equals(StandType.STATUE) ? damageSource.isFromFalling() || damageSource.isFire() : damageSource.isFromFalling();
+    }
 
-	@Override
-	public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
-	}
+    @Override
+    public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
+    }
 
-	@Override
-	public void kill() {
-		this.remove(Entity.RemovalReason.KILLED);
-		this.emitGameEvent(GameEvent.ENTITY_DIE);
-	}
+    @Override
+    public void kill() {
+        this.remove(Entity.RemovalReason.KILLED);
+        this.emitGameEvent(GameEvent.ENTITY_DIE);
+    }
 
-	void spawnBreakParticles() {
-		if (this.world instanceof ServerWorld) {
-			((ServerWorld)this.world)
-				.spawnParticles(
-					this.getParticle(),
-					this.getX(),
-					this.getBodyY(0.6666666666666666),
-					this.getZ(),
-					10,
-					this.getWidth() / 4.0F,
-					this.getHeight() / 4.0F,
-					this.getWidth() / 4.0F,
-					0.05
-				);
-		}
-	}
+    void spawnBreakParticles() {
+        if (this.world instanceof ServerWorld) {
+            ((ServerWorld)this.world)
+                .spawnParticles(
+                    this.getParticle(),
+                    this.getX(),
+                    this.getBodyY(0.6666666666666666),
+                    this.getZ(),
+                    10,
+                    this.getWidth() / 4.0F,
+                    this.getHeight() / 4.0F,
+                    this.getWidth() / 4.0F,
+                    0.05
+                );
+        }
+    }
 
-	void updateHealth(DamageSource damageSource, float amount) {
-		float f = this.getHealth();
-		f -= amount;
-		if (f <= 0.5F) {
-			this.onBreak(damageSource);
-			this.kill();
-		} else {
-			this.setHealth(f);
-			this.emitGameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getAttacker());
-		}
-	}
+    void updateHealth(DamageSource damageSource, float amount) {
+        float f = this.getHealth();
+        f -= amount;
+        if (f <= 0.5F) {
+            this.onBreak(damageSource);
+            this.kill();
+        } else {
+            this.setHealth(f);
+            this.emitGameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getAttacker());
+        }
+    }
 
-	void breakAndDropThis(DamageSource damageSource) {
-		Block.dropStack(this.world, this.getBlockPos(), this.getItem());
-		this.onBreak(damageSource);
-	}
+    void breakAndDropThis(DamageSource damageSource) {
+        Block.dropStack(this.world, this.getBlockPos(), this.getItem());
+        this.onBreak(damageSource);
+    }
 
-	void onBreak(DamageSource damageSource) {
-		this.playBreakSound();
-		this.drop(damageSource);
-	}
+    void onBreak(DamageSource damageSource) {
+        this.playBreakSound();
+        this.drop(damageSource);
+    }
 
-	void playBreakSound() {
-		this.world.playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
-	}
+    void playBreakSound() {
+        this.world.playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
+    }
 
-	public abstract EulerAngle getHeadRotation();
+    public abstract EulerAngle getHeadRotation();
 
-	public abstract EulerAngle getBodyRotation();
+    public abstract EulerAngle getBodyRotation();
 
-	public abstract EulerAngle getLeftArmRotation();
+    public abstract EulerAngle getLeftArmRotation();
 
-	public abstract EulerAngle getRightArmRotation();
+    public abstract EulerAngle getRightArmRotation();
 
-	public abstract EulerAngle getLeftLegRotation();
+    public abstract EulerAngle getLeftLegRotation();
 
-	public abstract EulerAngle getRightLegRotation();
+    public abstract EulerAngle getRightLegRotation();
 
-	public abstract void setHeadRotation(EulerAngle angle);
+    public abstract void setHeadRotation(EulerAngle angle);
 
-	public abstract void setBodyRotation(EulerAngle angle);
+    public abstract void setBodyRotation(EulerAngle angle);
 
-	public abstract void setLeftArmRotation(EulerAngle angle);
+    public abstract void setLeftArmRotation(EulerAngle angle);
 
-	public abstract void setRightArmRotation(EulerAngle angle);
+    public abstract void setRightArmRotation(EulerAngle angle);
 
-	public abstract void setLeftLegRotation(EulerAngle angle);
+    public abstract void setLeftLegRotation(EulerAngle angle);
 
-	public abstract void setRightLegRotation(EulerAngle angle);
+    public abstract void setRightLegRotation(EulerAngle angle);
 
-	@Override
-	public Arm getMainArm() {
-		return Arm.RIGHT;
-	}
+    @Override
+    public Arm getMainArm() {
+        return Arm.RIGHT;
+    }
 
-	public StandType getStandType() {
-		return this.standType;
-	}
+    public StandType getStandType() {
+        return this.standType;
+    }
 
-	public abstract ItemStack getItem();
+    public abstract ItemStack getItem();
 
-	public abstract ParticleEffect getParticle();
+    public abstract ParticleEffect getParticle();
 
-	public abstract SoundEvent getPlaceSound();
+    public abstract SoundEvent getPlaceSound();
 
-	@Override
-	public abstract LivingEntity.FallSounds getFallSounds();
+    @Override
+    public abstract LivingEntity.FallSounds getFallSounds();
 
-	@Nullable
-	@Override
-	protected abstract SoundEvent getHurtSound(DamageSource source);
+    @Nullable
+    @Override
+    protected abstract SoundEvent getHurtSound(DamageSource source);
 
-	@Nullable
-	@Override
-	protected abstract SoundEvent getDeathSound();
+    @Nullable
+    @Override
+    protected abstract SoundEvent getDeathSound();
 
-	@Override
-	public boolean isAffectedBySplashPotions() {
-		return false;
-	}
+    @Override
+    public boolean isAffectedBySplashPotions() {
+        return false;
+    }
 
-	@Override
-	public boolean isMobOrPlayer() {
-		return false;
-	}
+    @Override
+    public boolean isMobOrPlayer() {
+        return false;
+    }
 
-	@Nullable
-	@Override
-	public ItemStack getPickBlockStack() {
-		return getItem();
-	}
+    @Nullable
+    @Override
+    public ItemStack getPickBlockStack() {
+        return getItem();
+    }
 
-	public enum StandType {
-		SCARECROW,
-		STATUE
-	}
+    public enum StandType {
+        SCARECROW,
+        STATUE
+    }
 }

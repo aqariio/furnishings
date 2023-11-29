@@ -17,42 +17,42 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntity, ScarecrowEntityModel> {
-	public static final Identifier TEXTURE = new Identifier(Furnishings.ID, "textures/entity/scarecrow/scarecrow.png");
+    public static final Identifier TEXTURE = new Identifier(Furnishings.ID, "textures/entity/scarecrow/scarecrow.png");
 
-	public ScarecrowEntityRenderer(EntityRendererFactory.Context ctx) {
-		super(ctx, new ScarecrowEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW)), 0.0F);
-		this.addFeature(
-				new ArmorFeatureRenderer<>(
-						this,
-						new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_INNER_ARMOR)),
-						new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_OUTER_ARMOR))
-				)
-		);
-		this.addFeature(new StuckArrowsFeatureRenderer<>(ctx, this));
-		this.addFeature(new HeldItemFeatureRenderer<>(this, ctx.getHeldItemRenderer()));
-		this.addFeature(new ElytraFeatureRenderer<>(this, ctx.getModelLoader()));
-		this.addFeature(new HeadFeatureRenderer<>(this, ctx.getModelLoader(), ctx.getHeldItemRenderer()));
-	}
+    public ScarecrowEntityRenderer(EntityRendererFactory.Context ctx) {
+        super(ctx, new ScarecrowEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW)), 0.0F);
+        this.addFeature(
+                new ArmorFeatureRenderer<>(
+                        this,
+                        new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_INNER_ARMOR)),
+                        new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_OUTER_ARMOR))
+                )
+        );
+        this.addFeature(new StuckArrowsFeatureRenderer<>(ctx, this));
+        this.addFeature(new HeldItemFeatureRenderer<>(this, ctx.getHeldItemRenderer()));
+        this.addFeature(new ElytraFeatureRenderer<>(this, ctx.getModelLoader()));
+        this.addFeature(new HeadFeatureRenderer<>(this, ctx.getModelLoader(), ctx.getHeldItemRenderer()));
+    }
 
-	@Override
-	public void render(ScarecrowEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
-		super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
-		matrices.push();
-		matrices.pop();
-	}
+    @Override
+    public void render(ScarecrowEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+        matrices.push();
+        matrices.pop();
+    }
 
-	@Override
-	protected void scale(ScarecrowEntity entity, MatrixStack matrices, float amount) {
-		matrices.scale(0.9375F, 0.9375F, 0.9375F);
-	}
+    @Override
+    protected void scale(ScarecrowEntity entity, MatrixStack matrices, float amount) {
+        matrices.scale(0.9375F, 0.9375F, 0.9375F);
+    }
 
-	@Override
-	protected boolean hasLabel(ScarecrowEntity livingEntity) {
-		return false;
-	}
+    @Override
+    protected boolean hasLabel(ScarecrowEntity livingEntity) {
+        return false;
+    }
 
-	@Override
-	public Identifier getTexture(ScarecrowEntity entity) {
-		return TEXTURE;
-	}
+    @Override
+    public Identifier getTexture(ScarecrowEntity entity) {
+        return TEXTURE;
+    }
 }

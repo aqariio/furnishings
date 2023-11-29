@@ -12,23 +12,23 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public abstract class FluidContainerBlock extends BlockWithEntity implements Waterloggable {
-	public FluidContainerBlock(Settings settings) {
-		super(settings);
-	}
+    public FluidContainerBlock(Settings settings) {
+        super(settings);
+    }
 
-	@Override
-	public PistonBehavior getPistonBehavior(BlockState state) {
-		return PistonBehavior.DESTROY;
-	}
+    @Override
+    public PistonBehavior getPistonBehavior(BlockState state) {
+        return PistonBehavior.DESTROY;
+    }
 
-	@Nullable
-	@Override
-	public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-		return new FluidContainerBlockEntity(pos, state);
-	}
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new FluidContainerBlockEntity(pos, state);
+    }
 
-	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.MODEL;
-	}
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
 }

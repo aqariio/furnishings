@@ -1,6 +1,6 @@
 {
-	"parent": "furnishings:block/template_candelabra_floor_2",
-	"textures": {
-		"candle": "block/candle"
-	}
+  "parent": "furnishings:block/template_candelabra_floor_2",
+  "textures": {
+    "candle": "minecraft:block/candle"
+  }
 }

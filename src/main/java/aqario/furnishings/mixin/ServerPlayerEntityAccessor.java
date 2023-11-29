@@ -8,12 +8,12 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ServerPlayerEntity.class)
 public interface ServerPlayerEntityAccessor {
-	@Accessor
-	int getScreenHandlerSyncId();
+    @Accessor
+    int getScreenHandlerSyncId();
 
-	@Invoker
-	void callOnSpawn(ScreenHandler screenHandler);
+    @Invoker
+    void callOnSpawn(ScreenHandler screenHandler);
 
-	@Invoker
-	void callIncrementScreenHandlerSyncId();
+    @Invoker
+    void callIncrementScreenHandlerSyncId();
 }

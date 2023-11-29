@@ -4,7 +4,7 @@ import aqario.furnishings.common.network.packet.s2c.OpenPoseableStandScreenS2CPa
 
 public interface FurnishingsClientPlayPacketListener {
 
-	void onOpenPoseableStandScreen(OpenPoseableStandScreenS2CPacket packet);
+    void onOpenPoseableStandScreen(OpenPoseableStandScreenS2CPacket packet);
 
-//	void handleAttackScarecrow(ClientboundAttackMannequin packet, PollinatedPacketContext ctx);
+//    void handleAttackScarecrow(ClientboundAttackMannequin packet, PollinatedPacketContext ctx);
 }

@@ -12,19 +12,19 @@ import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.block.entity.api.QuiltBlockEntityTypeBuilder;
 
 public class FurnishingsBlockEntityType {
-	public static final BlockEntityType<FluidContainerBlockEntity> FLUID_CONTAINER = register(
-		"fluid_container",
-		QuiltBlockEntityTypeBuilder.create(
-			FluidContainerBlockEntity::new,
-			FurnishingsBlocks.MUG,
-			FurnishingsBlocks.CHALICE
-		)
-	);
+    public static final BlockEntityType<FluidContainerBlockEntity> FLUID_CONTAINER = register(
+        "fluid_container",
+        QuiltBlockEntityTypeBuilder.create(
+            FluidContainerBlockEntity::new,
+            FurnishingsBlocks.MUG,
+            FurnishingsBlocks.CHALICE
+        )
+    );
 
-	private static <T extends BlockEntity> BlockEntityType<T> register(String id, QuiltBlockEntityTypeBuilder<T> builder) {
-		Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id);
-		return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Furnishings.ID, id), builder.build(type));
-	}
+    private static <T extends BlockEntity> BlockEntityType<T> register(String id, QuiltBlockEntityTypeBuilder<T> builder) {
+        Type<?> type = Util.getChoiceType(TypeReferences.BLOCK_ENTITY, id);
+        return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Furnishings.ID, id), builder.build(type));
+    }
 
-	public static void init() {}
+    public static void init() {}
 }

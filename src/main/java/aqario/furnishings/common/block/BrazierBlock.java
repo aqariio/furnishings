@@ -39,18 +39,18 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
     protected static final VoxelShape TOP_SHAPE = Block.createCuboidShape(2, 7, 2, 14, 15, 14);
     protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(3, 5, 3, 13, 7, 13);
     protected static final VoxelShape LEG_SHAPE = Stream.of(
-		Block.createCuboidShape(7, 2, 2, 9, 5, 4),
-		Block.createCuboidShape(12, 2, 7, 14, 5, 9),
-		Block.createCuboidShape(7, 2, 12, 9, 5, 14),
-		Block.createCuboidShape(2, 2, 7, 4, 5, 9),
-		Block.createCuboidShape(7, 0, 0, 9, 3, 2),
-		Block.createCuboidShape(14, 0, 7, 16, 3, 9),
-		Block.createCuboidShape(7, 0, 14, 9, 3, 16),
-		Block.createCuboidShape(0, 0, 7, 2, 3, 9)
-	).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+        Block.createCuboidShape(7, 2, 2, 9, 5, 4),
+        Block.createCuboidShape(12, 2, 7, 14, 5, 9),
+        Block.createCuboidShape(7, 2, 12, 9, 5, 14),
+        Block.createCuboidShape(2, 2, 7, 4, 5, 9),
+        Block.createCuboidShape(7, 0, 0, 9, 3, 2),
+        Block.createCuboidShape(14, 0, 7, 16, 3, 9),
+        Block.createCuboidShape(7, 0, 14, 9, 3, 16),
+        Block.createCuboidShape(0, 0, 7, 2, 3, 9)
+    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     protected static final VoxelShape STANDING_SHAPE = VoxelShapes.union(TOP_SHAPE, BASE_SHAPE, LEG_SHAPE);
     protected static final VoxelShape HANGING_SHAPE = VoxelShapes.union(CHAIN_SHAPE, TOP_SHAPE, BASE_SHAPE);
-	protected static final Box FIRE_SHAPE = new Box(0.125, 0.4375, 0.125, 0.875, 1.0, 0.875);
+    protected static final Box FIRE_SHAPE = new Box(0.125, 0.4375, 0.125, 0.875, 1.0, 0.875);
     public static final BooleanProperty LIT = Properties.LIT;
     public static final BooleanProperty HANGING = Properties.HANGING;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
@@ -83,7 +83,7 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
             if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
                 world.playSound(player, pos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0f, world.getRandom().nextFloat() * 0.4f + 0.8f);
                 world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
-				setLit(world, state, pos, true);
+                setLit(world, state, pos, true);
                 context.getStack().damage(1, player, p -> p.sendToolBreakStatus(context.getHand()));
                 return ActionResult.SUCCESS;
             }
@@ -91,7 +91,7 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
                 RandomGenerator random = world.getRandom();
                 world.playSound(player, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.BLOCKS, 1.0f, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.0f);
                 world.emitGameEvent(player, GameEvent.BLOCK_PLACE, pos);
-				setLit(world, state, pos, true);
+                setLit(world, state, pos, true);
                 if (!player.isCreative()) {
                     context.getStack().decrement(1);
                 }
@@ -104,21 +104,21 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (!entity.isFireImmune() && state.get(LIT) && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
-			Box fire = FIRE_SHAPE.offset(pos);
-			if (fire.intersects(entity.getBoundingBox())) {
-				entity.damage(DamageSource.IN_FIRE, this.fireDamage);
-			}
+            Box fire = FIRE_SHAPE.offset(pos);
+            if (fire.intersects(entity.getBoundingBox())) {
+                entity.damage(DamageSource.IN_FIRE, this.fireDamage);
+            }
         }
         super.onEntityCollision(state, world, pos, entity);
     }
 
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-		Direction direction = attachedDirection(state).getOpposite();
-		BlockPos blockPos = pos.offset(direction);
-		return direction == Direction.DOWN ?
-			world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction.getOpposite()) :
-			Block.sideCoversSmallSquare(world, blockPos, direction.getOpposite());
+        Direction direction = attachedDirection(state).getOpposite();
+        BlockPos blockPos = pos.offset(direction);
+        return direction == Direction.DOWN ?
+            world.getBlockState(blockPos).isSideSolidFullSquare(world, blockPos, direction.getOpposite()) :
+            Block.sideCoversSmallSquare(world, blockPos, direction.getOpposite());
     }
 
     protected static Direction attachedDirection(BlockState state) {
@@ -169,18 +169,18 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
         }
     }
 
-	@Override
-	public boolean isLit(BlockState state) {
-		return !state.get(WATERLOGGED) && state.get(LIT);
-	}
+    @Override
+    public boolean isLit(BlockState state) {
+        return !state.get(WATERLOGGED) && state.get(LIT);
+    }
 
-	private static void setLit(WorldAccess world, BlockState state, BlockPos pos, boolean lit) {
-		world.setBlockState(pos, state.with(LIT, lit), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
-	}
+    private static void setLit(WorldAccess world, BlockState state, BlockPos pos, boolean lit) {
+        world.setBlockState(pos, state.with(LIT, lit), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+    }
 
-	@Override
+    @Override
     public void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos) {
-		setLit(world, state, pos, false);
+        setLit(world, state, pos, false);
         world.emitGameEvent(entity, GameEvent.BLOCK_CHANGE, pos);
     }
 

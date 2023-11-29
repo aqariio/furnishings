@@ -12,47 +12,47 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
 
 public class StatueScreenHandler extends PoseableStandScreenHandler {
-	public StatueScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, StatueEntity statueEntity) {
-		super(syncId, playerInventory, inventory, statueEntity);
-	}
+    public StatueScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, StatueEntity statueEntity) {
+        super(syncId, playerInventory, inventory, statueEntity);
+    }
 
-	@Override
-	public void addStandSlots(Inventory inventory) {
-		// Head
-		this.addSlot(new Slot(inventory, 0, 44, 18) {
-			@Override
-			public int getMaxItemCount() {
-				return 1;
-			}
+    @Override
+    public void addStandSlots(Inventory inventory) {
+        // Head
+        this.addSlot(new Slot(inventory, 0, 44, 18) {
+            @Override
+            public int getMaxItemCount() {
+                return 1;
+            }
 
-			@Override
-			public boolean canInsert(ItemStack stack) {
-				return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.HEAD;
-			}
+            @Override
+            public boolean canInsert(ItemStack stack) {
+                return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.HEAD;
+            }
 
-			@Override
-			public Pair<Identifier, Identifier> getBackgroundSprite() {
-				return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_HELMET_SLOT_TEXTURE);
-			}
-		});
+            @Override
+            public Pair<Identifier, Identifier> getBackgroundSprite() {
+                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_HELMET_SLOT_TEXTURE);
+            }
+        });
 
-		// Chest
-		this.addSlot(new Slot(inventory, 1, 62, 18) {
-			@Override
-			public int getMaxItemCount() {
-				return 1;
-			}
+        // Chest
+        this.addSlot(new Slot(inventory, 1, 62, 18) {
+            @Override
+            public int getMaxItemCount() {
+                return 1;
+            }
 
-			@Override
-			public boolean canInsert(ItemStack stack) {
-				return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.CHEST;
-			}
+            @Override
+            public boolean canInsert(ItemStack stack) {
+                return MobEntity.getPreferredEquipmentSlot(stack) == EquipmentSlot.CHEST;
+            }
 
-			@Override
-			public Pair<Identifier, Identifier> getBackgroundSprite() {
-				return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_CHESTPLATE_SLOT_TEXTURE);
-			}
-		});
+            @Override
+            public Pair<Identifier, Identifier> getBackgroundSprite() {
+                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_CHESTPLATE_SLOT_TEXTURE);
+            }
+        });
 
         // Legs
         this.addSlot(new Slot(inventory, 2, 44, 36) {
@@ -91,14 +91,14 @@ public class StatueScreenHandler extends PoseableStandScreenHandler {
         });
 
         // Hand
-		this.addSlot(new Slot(inventory, 4, 44, 54));
+        this.addSlot(new Slot(inventory, 4, 44, 54));
 
-		// Offhand
-		this.addSlot(new Slot(inventory, 5, 62, 54) {
-			@Override
-			public Pair<Identifier, Identifier> getBackgroundSprite() {
-				return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_OFFHAND_ARMOR_SLOT);
-			}
-		});
-	}
+        // Offhand
+        this.addSlot(new Slot(inventory, 5, 62, 54) {
+            @Override
+            public Pair<Identifier, Identifier> getBackgroundSprite() {
+                return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, PlayerScreenHandler.EMPTY_OFFHAND_ARMOR_SLOT);
+            }
+        });
+    }
 }
