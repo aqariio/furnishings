@@ -54,7 +54,7 @@ public class ConnectingCarpetBlock extends Block {
     }
 
     public boolean canConnect(BlockState state) {
-        return !ConnectingCarpetBlock.cannotConnect(state) && state.getBlock() instanceof ConnectingCarpetBlock;
+        return state.isOf(this);
     }
 
     @SuppressWarnings("deprecation")
@@ -63,8 +63,8 @@ public class ConnectingCarpetBlock extends Block {
         if (!state.canPlaceAt(world, pos)) {
             return Blocks.AIR.getDefaultState();
         }
-        if (direction.getAxis().isHorizontal()) {
-            return state.with(FACING_PROPERTIES.get(direction), this.canConnect(neighborState));
+        if (direction.getAxis().isHorizontal() && this.canConnect(neighborState)) {
+            return state.with(FACING_PROPERTIES.get(direction), true);
         }
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }

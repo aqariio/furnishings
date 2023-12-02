@@ -61,7 +61,7 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
     public static final IntProperty CANDLES = Properties.CANDLES;
     public static final BooleanProperty LIT = AbstractCandleBlock.LIT;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
-    public static final ToIntFunction<BlockState> STATE_TO_LUMINANCE = state -> state.get(LIT) ? 3 * state.get(CANDLES) : 0;
+    public static final ToIntFunction<BlockState> STATE_TO_LUMINANCE = state -> state.get(LIT) ? Math.min(4 * state.get(CANDLES), 15) : 0;
     private static final EnumMap<Direction, EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>>> PARTICLE_OFFSETS;
 
     public CandelabraBlock(Settings settings) {
