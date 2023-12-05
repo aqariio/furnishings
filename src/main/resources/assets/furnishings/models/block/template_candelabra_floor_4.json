@@ -3,8 +3,7 @@
   "parent": "block/block",
   "textures": {
     "particle": "furnishings:block/candelabra",
-    "base": "furnishings:block/candelabra",
-    "candle": "#candle"
+    "base": "furnishings:block/candelabra"
   },
   "elements": [
     {

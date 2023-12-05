@@ -1,9 +1,6 @@
 package aqario.furnishings.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -21,6 +18,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 
 @SuppressWarnings("deprecation")
 public class IronScaffoldingBlock extends Block implements Waterloggable {
@@ -28,13 +26,14 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     private static final VoxelShape BOTTOM_OUTLINE_SHAPE;
     private static final VoxelShape BOTTOM_COLLISION_SHAPE;
     private static final VoxelShape OUTLINE_SHAPE;
-    public static final IntProperty DISTANCE = IntProperty.of("distance", 0, 32);
+    public static final int MAX_DISTANCE = 31;
+    public static final IntProperty DISTANCE = IntProperty.of("distance", 0, MAX_DISTANCE);
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty BOTTOM = Properties.BOTTOM;
 
     public IronScaffoldingBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(DISTANCE, 32).with(WATERLOGGED, false).with(BOTTOM, false));
+        this.setDefaultState(this.stateManager.getDefaultState().with(DISTANCE, MAX_DISTANCE).with(WATERLOGGED, false).with(BOTTOM, false));
     }
 
     @Override
@@ -79,13 +78,17 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     }
 
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+    public BlockState getStateForNeighborUpdate(
+        BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos
+    ) {
         if (state.get(WATERLOGGED)) {
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
+
         if (!world.isClient()) {
             world.scheduleBlockTick(pos, this, 1);
         }
+
         return state;
     }
 
@@ -93,8 +96,8 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, RandomGenerator random) {
         int distance = calculateDistance(world, pos);
         BlockState blockState = state.with(DISTANCE, distance).with(BOTTOM, this.shouldBeBottom(world, pos, distance));
-        if (blockState.get(DISTANCE) == 32) {
-            if (state.get(DISTANCE) == 32) {
+        if (blockState.get(DISTANCE) == MAX_DISTANCE) {
+            if (state.get(DISTANCE) == MAX_DISTANCE) {
                 FallingBlockEntity.fall(world, pos, blockState);
             } else {
                 world.breakBlock(pos, true);
@@ -102,6 +105,11 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
         } else if (state != blockState) {
             world.setBlockState(pos, blockState, Block.NOTIFY_ALL);
         }
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return calculateDistance(world, pos) < MAX_DISTANCE;
     }
 
     @Override
@@ -125,7 +133,7 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     public static int calculateDistance(BlockView world, BlockPos pos) {
         BlockPos.Mutable mutable = pos.mutableCopy().move(Direction.DOWN);
         BlockState blockState = world.getBlockState(mutable);
-        int distance = 32;
+        int distance = MAX_DISTANCE;
         if (blockState.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
             distance = blockState.get(DISTANCE);
         } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {

@@ -1,8 +1,8 @@
 package aqario.furnishings.common.item;
 
+import aqario.furnishings.common.block.IronScaffoldingBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ScaffoldingBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemPlacementContext;
@@ -29,7 +29,7 @@ public class IronScaffoldingItem extends BlockItem {
             Direction direction = context.shouldCancelInteraction() ? (context.hitsInsideBlock() ? context.getSide().getOpposite() : context.getSide()) : (context.getSide() == Direction.UP ? context.getPlayerFacing() : Direction.UP);
             int i = 0;
             BlockPos.Mutable mutable = blockPos.mutableCopy().move(direction);
-            while (i < 32) {
+            while (i < IronScaffoldingBlock.MAX_DISTANCE) {
                 if (!world.isClient && !world.isInBuildLimit(mutable)) {
                     PlayerEntity playerEntity = context.getPlayer();
                     int j = world.getTopY();
@@ -48,7 +48,7 @@ public class IronScaffoldingItem extends BlockItem {
             }
             return null;
         }
-        if (ScaffoldingBlock.calculateDistance(world, blockPos) == 32) {
+        if (IronScaffoldingBlock.calculateDistance(world, blockPos) == IronScaffoldingBlock.MAX_DISTANCE) {
             return null;
         }
         return context;
@@ -59,4 +59,3 @@ public class IronScaffoldingItem extends BlockItem {
         return false;
     }
 }
-

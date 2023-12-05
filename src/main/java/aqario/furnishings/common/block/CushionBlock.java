@@ -11,7 +11,6 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -129,16 +128,16 @@ public class CushionBlock extends Block implements Waterloggable {
         return false;
     }
 
-    @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (state.get(OCCUPIED) || entity instanceof PlayerEntity || !(entity instanceof LivingEntity livingEntity)) {
-            return;
-        }
-        if (entity instanceof MobEntity mobEntity && mobEntity.getTarget() != null) {
-            return;
-        }
-        seat(livingEntity, world, pos);
-    }
+//    @Override
+//    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+//        if (state.get(OCCUPIED) || entity instanceof PlayerEntity || !(entity instanceof LivingEntity livingEntity)) {
+//            return;
+//        }
+//        if (entity instanceof MobEntity mobEntity && mobEntity.getTarget() != null) {
+//            return;
+//        }
+//        seat(livingEntity, world, pos);
+//    }
 
     @Override
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {

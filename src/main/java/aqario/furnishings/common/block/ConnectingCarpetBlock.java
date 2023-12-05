@@ -36,15 +36,15 @@ public class ConnectingCarpetBlock extends Block {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         World blockView = ctx.getWorld();
         BlockPos blockPos = ctx.getBlockPos();
-        BlockPos blockPos2 = blockPos.north();
-        BlockPos blockPos3 = blockPos.south();
-        BlockPos blockPos4 = blockPos.west();
-        BlockPos blockPos5 = blockPos.east();
-        BlockState blockState = blockView.getBlockState(blockPos2);
-        BlockState blockState2 = blockView.getBlockState(blockPos3);
-        BlockState blockState3 = blockView.getBlockState(blockPos4);
-        BlockState blockState4 = blockView.getBlockState(blockPos5);
-        return this.getDefaultState().with(NORTH, this.canConnect(blockState)).with(SOUTH, this.canConnect(blockState2)).with(WEST, this.canConnect(blockState3)).with(EAST, this.canConnect(blockState4));
+        BlockPos northPos = blockPos.north();
+        BlockPos southPos = blockPos.south();
+        BlockPos westPos = blockPos.west();
+        BlockPos eastPos = blockPos.east();
+        BlockState northState = blockView.getBlockState(northPos);
+        BlockState southState = blockView.getBlockState(southPos);
+        BlockState westState = blockView.getBlockState(westPos);
+        BlockState eastState = blockView.getBlockState(eastPos);
+        return this.getDefaultState().with(NORTH, this.canConnect(northState)).with(SOUTH, this.canConnect(southState)).with(WEST, this.canConnect(westState)).with(EAST, this.canConnect(eastState));
     }
 
     @SuppressWarnings("deprecation")

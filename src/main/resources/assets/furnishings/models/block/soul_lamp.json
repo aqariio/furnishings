@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "top": "furnishings:block/soul_lamp_top",
-    "bottom": "furnishings:block/soul_lamp_bottom",
+    "top": "furnishings:block/lamp_top",
+    "bottom": "furnishings:block/lamp_bottom",
     "side": "furnishings:block/soul_lamp_side"
   }
 }
