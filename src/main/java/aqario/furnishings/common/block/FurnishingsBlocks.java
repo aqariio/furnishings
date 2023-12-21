@@ -199,8 +199,8 @@ public class FurnishingsBlocks {
 
     /** Decoration */
 
-    public static final Block MUG = register("mug", new MugBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);
-    public static final Block CHALICE = register("chalice", new ChaliceBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
+    public static final Block MUG = register("mug", new MugBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().luminance(state -> state.get(FluidContainerBlock.LUMINANCE)).sounds(BlockSoundGroup.WOOD)), ItemGroup.DECORATIONS);
+    public static final Block CHALICE = register("chalice", new ChaliceBlock(QuiltBlockSettings.of(Material.DECORATION).breakInstantly().luminance(state -> state.get(FluidContainerBlock.LUMINANCE)).sounds(BlockSoundGroup.LANTERN)), ItemGroup.DECORATIONS);
     public static final Block BOOK = registerWithoutItem("book", new BookBlock(QuiltBlockSettings.of(Material.DECORATION).mapColor(MapColor.BROWN).nonOpaque().strength(0.1F).sounds(FurnishingsSoundEvents.FurnishingsBlockSoundGroup.BOOK)));
 
     /** Glass */

@@ -88,6 +88,7 @@ public class MugBlock extends FluidContainerBlock {
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
         builder.add(WATERLOGGED, FACING);
     }
 }

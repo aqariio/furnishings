@@ -3,17 +3,18 @@
   "parent": "block/thin_block",
   "textures": {
     "0": "furnishings:block/iron_grate",
+    "1": "furnishings:block/iron_grate_side",
     "particle": "furnishings:block/iron_grate"
   },
   "elements": [
     {
-      "from": [0, 14, 0],
+      "from": [0, 13, 0],
       "to": [16, 16, 16],
       "faces": {
-        "north": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "north"},
-        "east": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "east"},
-        "south": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "south"},
-        "west": {"uv": [0, 0, 16, 1], "texture": "#0", "cullface": "west"},
+        "north": {"uv": [0, 13, 16, 16], "texture": "#1", "cullface": "north"},
+        "east": {"uv": [0, 13, 16, 16], "texture": "#1", "cullface": "east"},
+        "south": {"uv": [0, 13, 16, 16], "texture": "#1", "cullface": "south"},
+        "west": {"uv": [0, 13, 16, 16], "texture": "#1", "cullface": "west"},
         "up": {"uv": [0, 0, 16, 16], "texture": "#0"},
         "down": {"uv": [0, 16, 16, 0], "texture": "#0"}
       }
