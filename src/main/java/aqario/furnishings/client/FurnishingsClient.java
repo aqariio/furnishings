@@ -2,14 +2,17 @@ package aqario.furnishings.client;
 
 import aqario.furnishings.client.model.*;
 import aqario.furnishings.client.render.EmptyRenderer;
+import aqario.furnishings.client.render.FluidContainerBlockEntityRenderer;
 import aqario.furnishings.client.render.ScarecrowEntityRenderer;
 import aqario.furnishings.client.render.StatueEntityRenderer;
 import aqario.furnishings.common.block.FurnishingsBlocks;
+import aqario.furnishings.common.block.entity.FurnishingsBlockEntityType;
 import aqario.furnishings.common.entity.FurnishingsEntityType;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.model.Dilation;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.quiltmc.qsl.block.extensions.api.client.BlockRenderLayerMap;
@@ -50,6 +53,8 @@ public class FurnishingsClient implements ClientModInitializer {
         BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.GREEN_CANDELABRA);
         BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.RED_CANDELABRA);
         BlockRenderLayerMap.put(RenderLayer.getCutout(), FurnishingsBlocks.BLACK_CANDELABRA);
+
+        BlockEntityRendererFactories.register(FurnishingsBlockEntityType.FLUID_CONTAINER, FluidContainerBlockEntityRenderer::new);
 
         EntityRendererRegistry.register(FurnishingsEntityType.SEAT, EmptyRenderer::new);
 
