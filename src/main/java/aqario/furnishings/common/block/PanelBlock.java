@@ -2,7 +2,10 @@ package aqario.furnishings.common.block;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -95,7 +98,7 @@ public class PanelBlock extends Block implements Waterloggable {
         boolean waterlogged = worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
         if (Objects.requireNonNull(ctx.getPlayer()).isSneaking()) {
             if (ctx.getSide().getAxis().isHorizontal()) {
-                return this.getDefaultState().with(FACING, ctx.getHitPos().y - (double)ctx.getBlockPos().getY() > 0.5 ? Direction.DOWN : Direction.UP).with(WATERLOGGED, waterlogged);
+                return this.getDefaultState().with(FACING, ctx.getHitPos().y - (double) ctx.getBlockPos().getY() > 0.5 ? Direction.DOWN : Direction.UP).with(WATERLOGGED, waterlogged);
             }
 
             return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite()).with(WATERLOGGED, waterlogged);

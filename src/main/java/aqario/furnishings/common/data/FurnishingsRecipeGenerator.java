@@ -2,7 +2,7 @@ package aqario.furnishings.common.data;
 
 import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.tags.FurnishingsItemTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.RecipesProvider;
@@ -13,58 +13,54 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.tag.ItemTags;
-import net.minecraft.tag.TagKey;
+import net.minecraft.recipe.RecipeCategory;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Consumer;
 
 public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
-    public FurnishingsRecipeGenerator(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
+    public FurnishingsRecipeGenerator(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
-    protected void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
+    public void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
 
         /* Bricks */
 
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_BRICKS, Blocks.BRICKS);
-        offerChiseledBlockRecipe(exporter, FurnishingsBlocks.CHISELED_BRICKS, Blocks.BRICK_SLAB);
-        ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Blocks.MOSS_BLOCK)
-                .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
-                .group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_moss_block");
-        ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_BRICKS).input(Blocks.BRICKS).input(Items.VINE)
-                .criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
-                .group("mossy_bricks").offerTo(exporter, "mossy_bricks_from_vine");
-        offerSlabRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS, 2);
+        offerChiseledBlockRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CHISELED_BRICKS, Blocks.BRICK_SLAB);
+        offerMossyRecipe(exporter, FurnishingsBlocks.MOSSY_BRICKS, Blocks.BRICKS);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_STAIRS, FurnishingsBlocks.MOSSY_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_STAIRS, FurnishingsBlocks.MOSSY_BRICKS);
-        offerWallRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_STAIRS, FurnishingsBlocks.MOSSY_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
 
         /* Calcite */
 
-        offerSlabRecipe(exporter, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE, 2);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.CALCITE_STAIRS, Blocks.CALCITE);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.CALCITE_STAIRS, Blocks.CALCITE);
-        offerWallRecipe(exporter, FurnishingsBlocks.CALCITE_WALL, Blocks.CALCITE);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.CALCITE_WALL, Blocks.CALCITE);
-        offerPolishedStoneRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE, Blocks.CALCITE);
-        offerSlabRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_SLAB, FurnishingsBlocks.POLISHED_CALCITE);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_SLAB, FurnishingsBlocks.POLISHED_CALCITE, 2);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_STAIRS, Blocks.CALCITE);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_WALL, Blocks.CALCITE);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_WALL, Blocks.CALCITE);
+        offerPolishedStoneRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE, Blocks.CALCITE);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_SLAB, FurnishingsBlocks.POLISHED_CALCITE);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_SLAB, FurnishingsBlocks.POLISHED_CALCITE, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_STAIRS, FurnishingsBlocks.POLISHED_CALCITE);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_STAIRS, FurnishingsBlocks.POLISHED_CALCITE);
-        offerWallRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_STAIRS, FurnishingsBlocks.POLISHED_CALCITE);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
         offerPolishedBricksRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICKS, FurnishingsBlocks.POLISHED_CALCITE);
-        offerSlabRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_SLAB, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_SLAB, FurnishingsBlocks.POLISHED_CALCITE_BRICKS, 2);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_SLAB, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_SLAB, FurnishingsBlocks.POLISHED_CALCITE_BRICKS, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_STAIRS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_STAIRS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerWallRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_STAIRS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_POLISHED_CALCITE_BRICKS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
 
         /* Candelabras */
@@ -107,24 +103,19 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         /* Cobblestone Bricks */
 
         offerPolishedBricksRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICKS, Blocks.COBBLESTONE);
-        offerSlabRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS, 2);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.COBBLESTONE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.COBBLESTONE_BRICKS);
-        offerWallRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
-        ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS).input(FurnishingsBlocks.COBBLESTONE_BRICKS).input(Blocks.MOSS_BLOCK)
-            .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
-            .group("mossy_cobblestone_bricks").offerTo(exporter, "mossy_cobblestone_bricks_from_moss_block");
-        ShapelessRecipeJsonFactory.create(FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS).input(FurnishingsBlocks.COBBLESTONE_BRICKS).input(Items.VINE)
-            .criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
-            .group("mossy_cobblestone_bricks").offerTo(exporter, "mossy_cobblestone_bricks_from_vine");
-        offerSlabRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS, 2);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        offerMossyRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
-        offerWallRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_COBBLESTONE_BRICKS, FurnishingsBlocks.COBBLESTONE_BRICKS);
 
         /* Cushions */
@@ -165,26 +156,26 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
         /* Tuff */
 
-        offerSlabRecipe(exporter, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF, 2);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.TUFF_STAIRS, Blocks.TUFF);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.TUFF_STAIRS, Blocks.TUFF);
-        offerWallRecipe(exporter, FurnishingsBlocks.TUFF_WALL, Blocks.TUFF);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.TUFF_WALL, Blocks.TUFF);
-        offerPolishedStoneRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF, Blocks.TUFF);
-        offerSlabRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_SLAB, FurnishingsBlocks.POLISHED_TUFF);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_SLAB, FurnishingsBlocks.POLISHED_TUFF, 2);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_STAIRS, Blocks.TUFF);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_WALL, Blocks.TUFF);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_WALL, Blocks.TUFF);
+        offerPolishedStoneRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF, Blocks.TUFF);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_SLAB, FurnishingsBlocks.POLISHED_TUFF);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_SLAB, FurnishingsBlocks.POLISHED_TUFF, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_STAIRS, FurnishingsBlocks.POLISHED_TUFF);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_STAIRS, FurnishingsBlocks.POLISHED_TUFF);
-        offerWallRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_STAIRS, FurnishingsBlocks.POLISHED_TUFF);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
         offerPolishedBricksRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICKS, FurnishingsBlocks.POLISHED_TUFF);
-        offerSlabRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB, FurnishingsBlocks.POLISHED_TUFF_BRICKS, 2);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB, FurnishingsBlocks.POLISHED_TUFF_BRICKS, 2);
         offerStairsRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerWallRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerStonecuttingRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_POLISHED_TUFF_BRICKS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
     }
 
@@ -193,18 +184,18 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
     }
 
     public static void offerCandelabraDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
-        ShapelessRecipeJsonFactory.create(output)
-            .method_10446(FurnishingsItemTags.CANDELABRAS)
-            .input(dye)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+            .ingredient(FurnishingsItemTags.CANDELABRAS)
+            .ingredient(dye)
             .group("candelabra")
-            .criterion("has_candelabra", RecipesProvider.method_10420(FurnishingsItemTags.CANDELABRAS))
+            .criterion("has_candelabra", RecipesProvider.conditionsFromItemTag(FurnishingsItemTags.CANDELABRAS))
             .offerTo(exporter, dye(output));
     }
 
     public static void offerCandelabraRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        ShapedRecipeJsonFactory.create(output)
-            .input('#', input)
-            .input('I', Items.IRON_INGOT)
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+            .ingredient('#', input)
+            .ingredient('I', Items.IRON_INGOT)
             .pattern("#")
             .pattern("I")
             .group("candelabra")
@@ -213,18 +204,18 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
     }
 
     public static void offerCushionDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
-        ShapelessRecipeJsonFactory.create(output)
-            .method_10446(FurnishingsItemTags.CUSHIONS)
-            .input(dye)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+            .ingredient(FurnishingsItemTags.CUSHIONS)
+            .ingredient(dye)
             .group("cushion")
-            .criterion("has_cushion", RecipesProvider.method_10420(FurnishingsItemTags.CUSHIONS))
+            .criterion("has_cushion", RecipesProvider.conditionsFromItemTag(FurnishingsItemTags.CUSHIONS))
             .offerTo(exporter, dye(output));
     }
 
     public static void offerCushionRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        ShapedRecipeJsonFactory.create(output)
-            .input('#', input)
-            .input('X', Ingredient.ofTag(ItemTags.PLANKS))
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+            .ingredient('#', input)
+            .ingredient('X', Ingredient.ofTag(ItemTags.PLANKS))
             .pattern("##")
             .pattern("XX")
             .group("cushion")
@@ -233,12 +224,21 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
     }
 
     public static void offerPolishedBricksRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        ShapedRecipeJsonFactory.create(output, 4)
-            .input('#', input)
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output, 4)
+            .ingredient('#', input)
             .pattern("##")
             .pattern("##")
             .criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input))
             .offerTo(exporter);
+    }
+
+    public static void offerMossyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output).ingredient(input).ingredient(Blocks.MOSS_BLOCK)
+            .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
+            .group(output.asItem().toString()).offerTo(exporter, output.asItem().toString() + "_from_moss_block");
+        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output).ingredient(input).ingredient(Items.VINE)
+            .criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
+            .group(output.asItem().toString()).offerTo(exporter, output.asItem().toString() + "_from_vine");
     }
 
     public static String dye(ItemConvertible item) {

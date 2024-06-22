@@ -6,8 +6,9 @@ import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.quiltmc.qsl.entity.api.QuiltEntityTypeBuilder;
 
 public class FurnishingsEntityType {
@@ -22,7 +23,7 @@ public class FurnishingsEntityType {
         QuiltEntityTypeBuilder.createLiving()
             .entityFactory(ScarecrowEntity::new)
             .spawnGroup(SpawnGroup.MISC)
-            .defaultAttributes(StatueEntity.createLivingAttributes().add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0F))
+            .defaultAttributes(StatueEntity.createAttributes().add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0F))
             .setDimensions(EntityDimensions.fixed(0.6F, 2.0F))
     );
 
@@ -30,12 +31,12 @@ public class FurnishingsEntityType {
         QuiltEntityTypeBuilder.createLiving()
             .entityFactory(StatueEntity::new)
             .spawnGroup(SpawnGroup.MISC)
-            .defaultAttributes(StatueEntity.createLivingAttributes().add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0F))
+            .defaultAttributes(StatueEntity.createAttributes().add(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE, 1.0F))
             .setDimensions(EntityDimensions.fixed(0.6F, 2.0F))
     );
 
     private static <T extends Entity> EntityType<T> register(String id, QuiltEntityTypeBuilder<T> builder) {
-        return Registry.register(Registry.ENTITY_TYPE, new Identifier(Furnishings.ID, id), builder.build());
+        return Registry.register(Registries.ENTITY_TYPE, new Identifier(Furnishings.ID, id), builder.build());
     }
 
     public static void init() {

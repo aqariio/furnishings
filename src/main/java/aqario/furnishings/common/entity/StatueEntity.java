@@ -2,7 +2,6 @@ package aqario.furnishings.common.entity;
 
 import aqario.furnishings.common.item.FurnishingsItems;
 import aqario.furnishings.common.screen.StatueScreenHandler;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
@@ -11,22 +10,21 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.PickaxeItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.EulerAngle;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class StatueEntity extends PoseableStandEntity {
@@ -51,53 +49,6 @@ public class StatueEntity extends PoseableStandEntity {
 
     public StatueEntity(EntityType<? extends PoseableStandEntity> entityType, World world) {
         super(entityType, world, StandType.STATUE);
-    }
-
-    @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (this.world.isClient || this.isRemoved()) {
-            return false;
-        }
-        if (DamageSource.OUT_OF_WORLD.equals(source)) {
-            this.kill();
-            return false;
-        }
-        if (this.isInvulnerableTo(source)) {
-            return false;
-        }
-        if (source.getSource() instanceof FireworkRocketEntity) {
-            return false;
-        }
-        if (source.isExplosive()) {
-            this.onBreak(source);
-            this.kill();
-            return false;
-        }
-        if (source.getSource() instanceof PersistentProjectileEntity) {
-            return true;
-        }
-        if (source.getAttacker() instanceof PlayerEntity) {
-            if (!((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
-                return false;
-            }
-            if (source.getAttacker().isSneaking()) {
-                if (source.isSourceCreativePlayer() ) {
-                    this.onBreak(source);
-                    this.spawnBreakParticles();
-                    this.kill();
-                    return false;
-                }
-                if (source.getAttacker() instanceof PlayerEntity && (((PlayerEntity) source.getAttacker()).getMainHandStack().isIn(ConventionalItemTags.PICKAXES) || ((PlayerEntity) source.getAttacker()).getMainHandStack().getItem() instanceof PickaxeItem)) {
-                    this.breakAndDropThis(source);
-                    this.spawnBreakParticles();
-                    this.kill();
-                }
-            } else {
-                this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
-            }
-        }
-        return true;
-
     }
 
     @Override
@@ -291,5 +242,10 @@ public class StatueEntity extends PoseableStandEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.BLOCK_STONE_BREAK;
+    }
+
+    @Override
+    protected TagKey<Item> getTool() {
+        return ItemTags.PICKAXES;
     }
 }

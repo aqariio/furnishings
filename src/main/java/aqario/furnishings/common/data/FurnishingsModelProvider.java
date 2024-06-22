@@ -4,7 +4,7 @@ import aqario.furnishings.common.block.CandelabraBlock;
 import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.block.enums.NoCeilingWallMountLocation;
 import aqario.furnishings.common.data.client.model.FurnishingsModels;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -15,8 +15,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
 public class FurnishingsModelProvider extends FabricModelProvider {
-    public FurnishingsModelProvider(FabricDataGenerator dataGenerator) {
-        super(dataGenerator);
+    public FurnishingsModelProvider(FabricDataOutput output) {
+        super(output);
     }
 
     @Override

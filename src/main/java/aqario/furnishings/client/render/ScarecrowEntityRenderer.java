@@ -22,11 +22,12 @@ public class ScarecrowEntityRenderer extends LivingEntityRenderer<ScarecrowEntit
     public ScarecrowEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new ScarecrowEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW)), 0.0F);
         this.addFeature(
-                new ArmorFeatureRenderer<>(
-                        this,
-                        new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_INNER_ARMOR)),
-                        new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_OUTER_ARMOR))
-                )
+            new ArmorFeatureRenderer<>(
+                this,
+                new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_INNER_ARMOR)),
+                new ScarecrowArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.SCARECROW_OUTER_ARMOR)),
+                ctx.getModelManager()
+            )
         );
         this.addFeature(new StuckArrowsFeatureRenderer<>(ctx, this));
         this.addFeature(new HeldItemFeatureRenderer<>(this, ctx.getHeldItemRenderer()));

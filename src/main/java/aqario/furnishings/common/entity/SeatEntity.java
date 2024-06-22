@@ -12,8 +12,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtHelper;
-import net.minecraft.network.Packet;
-import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -98,7 +96,8 @@ public class SeatEntity extends Entity {
         BlockState cushionState = this.getWorld().getBlockState(cushionPos);
         if (!(cushionState.getBlock() instanceof CushionBlock)) {
             delete();
-        } else if (!((Boolean)cushionState.get(Properties.OCCUPIED))) {
+        }
+        else if (!((Boolean) cushionState.get(Properties.OCCUPIED))) {
             this.getWorld().setBlockState(cushionPos, cushionState.with(Properties.OCCUPIED, true), 2);
         }
     }
@@ -117,10 +116,5 @@ public class SeatEntity extends Entity {
 
     public void setCushionPos(BlockPos pos) {
         this.dataTracker.set(CUSHION_POS, Optional.of(pos));
-    }
-
-    @Override
-    public Packet<?> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this);
     }
 }

@@ -25,7 +25,8 @@ public class FurnishingsEntityModelLayers {
         EntityModelLayer entityModelLayer = create(id, layer);
         if (!LAYERS.add(entityModelLayer)) {
             throw new IllegalStateException("Duplicate registration for " + entityModelLayer);
-        } else {
+        }
+        else {
             return entityModelLayer;
         }
     }

@@ -55,7 +55,7 @@ public class ScarecrowScreenHandler extends PoseableStandScreenHandler {
         });
 
         // Hand
-        this.addSlot(new Slot(inventory, 4,44, 36));
+        this.addSlot(new Slot(inventory, 4, 44, 36));
 
         // Offhand
         this.addSlot(new Slot(inventory, 5, 62, 36) {

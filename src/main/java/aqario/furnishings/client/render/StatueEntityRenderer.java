@@ -22,11 +22,12 @@ public class StatueEntityRenderer extends LivingEntityRenderer<StatueEntity, Sta
     public StatueEntityRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new StatueEntityModel(ctx.getPart(FurnishingsEntityModelLayers.STATUE)), 0.0F);
         this.addFeature(
-                new ArmorFeatureRenderer<>(
-                        this,
-                        new StatueArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.STATUE_INNER_ARMOR)),
-                        new StatueArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.STATUE_OUTER_ARMOR))
-                )
+            new ArmorFeatureRenderer<>(
+                this,
+                new StatueArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.STATUE_INNER_ARMOR)),
+                new StatueArmorEntityModel(ctx.getPart(FurnishingsEntityModelLayers.STATUE_OUTER_ARMOR)),
+                ctx.getModelManager()
+            )
         );
         this.addFeature(new StuckArrowsFeatureRenderer<>(ctx, this));
         this.addFeature(new HeldItemFeatureRenderer<>(this, ctx.getHeldItemRenderer()));

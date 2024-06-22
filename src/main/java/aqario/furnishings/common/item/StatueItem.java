@@ -24,7 +24,8 @@ public class StatueItem extends Item {
         Direction direction = context.getSide();
         if (direction == Direction.DOWN) {
             return ActionResult.FAIL;
-        } else {
+        }
+        else {
             World world = context.getWorld();
             ItemPlacementContext itemPlacementContext = new ItemPlacementContext(context);
             BlockPos blockPos = itemPlacementContext.getBlockPos();
@@ -34,7 +35,7 @@ public class StatueItem extends Item {
             if (world.isSpaceEmpty(null, box) && world.getOtherEntities(null, box).isEmpty()) {
                 if (world instanceof ServerWorld serverWorld) {
                     StatueEntity statueEntity = FurnishingsEntityType.STATUE
-                            .create(serverWorld, itemStack.getNbt(), null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
+                        .create(serverWorld, itemStack.getNbt(), null, blockPos, SpawnReason.SPAWN_EGG, true, true);
                     if (statueEntity == null) {
                         return ActionResult.FAIL;
                     }
@@ -43,14 +44,15 @@ public class StatueItem extends Item {
                     statueEntity.refreshPositionAndAngles(statueEntity.getX(), statueEntity.getY(), statueEntity.getZ(), f, 0.0F);
                     serverWorld.spawnEntityAndPassengers(statueEntity);
                     world.playSound(
-                            null, statueEntity.getX(), statueEntity.getY(), statueEntity.getZ(), statueEntity.getPlaceSound(), SoundCategory.BLOCKS, 0.75F, 0.8F
+                        null, statueEntity.getX(), statueEntity.getY(), statueEntity.getZ(), statueEntity.getPlaceSound(), SoundCategory.BLOCKS, 0.75F, 0.8F
                     );
                     statueEntity.emitGameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());
                 }
 
                 itemStack.decrement(1);
                 return ActionResult.success(world.isClient);
-            } else {
+            }
+            else {
                 return ActionResult.FAIL;
             }
         }

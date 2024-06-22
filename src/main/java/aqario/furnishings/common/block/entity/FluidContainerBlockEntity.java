@@ -6,9 +6,9 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 public class FluidContainerBlockEntity extends BlockEntity {
@@ -19,7 +19,7 @@ public class FluidContainerBlockEntity extends BlockEntity {
     public FluidContainerBlockEntity(BlockPos pos, BlockState state) {
         super(FurnishingsBlockEntityType.FLUID_CONTAINER, pos, state);
         potion = Potions.EMPTY;
-        potionType = Registry.ITEM.getId(Items.POTION).toString();
+        potionType = Registries.ITEM.getId(Items.POTION).toString();
     }
 
 //    @Override
@@ -37,7 +37,7 @@ public class FluidContainerBlockEntity extends BlockEntity {
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
         if (potion != null) {
-            Identifier potionId = Registry.POTION.getId(potion);
+            Identifier potionId = Registries.POTION.getId(potion);
             String potionName = potionId.toString();
 
             nbt.putString("Potion", potionName);
@@ -48,7 +48,7 @@ public class FluidContainerBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        potion = Registry.POTION.get(Identifier.tryParse(nbt.getString("Potion")));
+        potion = Registries.POTION.get(Identifier.tryParse(nbt.getString("Potion")));
     }
 
     public @NotNull Potion getPotion() {

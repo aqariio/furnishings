@@ -58,7 +58,7 @@ public class GrateBlock extends Block implements Waterloggable {
         Direction direction = ctx.getSide();
         BlockState blockState = this.getDefaultState().with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
         if (!ctx.canReplaceExisting() && direction.getAxis().isHorizontal()) {
-            return blockState.with(FACING, direction.getOpposite()).with(HALF, ctx.getHitPos().y - (double)ctx.getBlockPos().getY() > 0.5 ? BlockHalf.TOP : BlockHalf.BOTTOM);
+            return blockState.with(FACING, direction.getOpposite()).with(HALF, ctx.getHitPos().y - (double) ctx.getBlockPos().getY() > 0.5 ? BlockHalf.TOP : BlockHalf.BOTTOM);
         }
         if (Objects.requireNonNull(ctx.getPlayer()).isSneaking()) {
             return blockState.with(FACING, ctx.getPlayerFacing()).with(HALF, direction == Direction.UP ? BlockHalf.TOP : BlockHalf.BOTTOM);

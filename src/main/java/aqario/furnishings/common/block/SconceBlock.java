@@ -39,16 +39,16 @@ import java.util.Map;
 public class SconceBlock extends Block implements Waterloggable, Extinguishable {
     protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(6.0, 0.0, 6.0, 10.0, 11.0, 10.0);
     protected static final Map<Direction, VoxelShape> WALL_SHAPES = Maps.newEnumMap(
-            ImmutableMap.of(
-                    Direction.NORTH,
-                    Block.createCuboidShape(6.0, 2.0, 10.0, 10.0, 13.0, 16.0),
-                    Direction.SOUTH,
-                    Block.createCuboidShape(6.0, 2.0, 0.0, 10.0, 13.0, 6.0),
-                    Direction.WEST,
-                    Block.createCuboidShape(10.0, 2.0, 6.0, 16.0, 13.0, 10.0),
-                    Direction.EAST,
-                    Block.createCuboidShape(0.0, 2.0, 6.0, 6.0, 13.0, 10.0)
-            )
+        ImmutableMap.of(
+            Direction.NORTH,
+            Block.createCuboidShape(6.0, 2.0, 10.0, 10.0, 13.0, 16.0),
+            Direction.SOUTH,
+            Block.createCuboidShape(6.0, 2.0, 0.0, 10.0, 13.0, 6.0),
+            Direction.WEST,
+            Block.createCuboidShape(10.0, 2.0, 6.0, 16.0, 13.0, 10.0),
+            Direction.EAST,
+            Block.createCuboidShape(0.0, 2.0, 6.0, 6.0, 13.0, 10.0)
+        )
     );
     public static final BooleanProperty LIT = Properties.LIT;
     public static final DirectionProperty FACING = DirectionProperty.of("facing", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP);
@@ -97,13 +97,14 @@ public class SconceBlock extends Block implements Waterloggable, Extinguishable 
         boolean isInWater = worldAccess.getFluidState(ctx.getBlockPos()).getFluid() == Fluids.WATER;
         BlockState blockState = this.getDefaultState();
 
-        for(Direction direction : ctx.getPlacementDirections()) {
+        for (Direction direction : ctx.getPlacementDirections()) {
             if (direction == Direction.UP) {
                 continue;
             }
             if (direction.getAxis().isHorizontal()) {
                 blockState = blockState.with(FACING, direction.getOpposite());
-            } else {
+            }
+            else {
                 blockState = blockState.with(FACING, Direction.UP);
             }
             if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
@@ -135,17 +136,18 @@ public class SconceBlock extends Block implements Waterloggable, Extinguishable 
             return;
         }
         if (state.get(FACING).equals(Direction.UP)) {
-            double d = (double)pos.getX() + 0.5;
-            double e = (double)pos.getY() + 0.7;
-            double f = (double)pos.getZ() + 0.5;
+            double d = (double) pos.getX() + 0.5;
+            double e = (double) pos.getY() + 0.7;
+            double f = (double) pos.getZ() + 0.5;
             world.addParticle(ParticleTypes.SMOKE, d, e, f, 0.0, 0.0, 0.0);
-        } else {
+        }
+        else {
             Direction direction = state.get(FACING);
-            double d = (double)pos.getX() + 0.5;
-            double e = (double)pos.getY() + 0.7;
-            double f = (double)pos.getZ() + 0.5;
+            double d = (double) pos.getX() + 0.5;
+            double e = (double) pos.getY() + 0.7;
+            double f = (double) pos.getZ() + 0.5;
             Direction direction2 = direction.getOpposite();
-            world.addParticle(ParticleTypes.SMOKE, d + 0.27 * (double)direction2.getOffsetX(), e + 0.22, f + 0.27 * (double)direction2.getOffsetZ(), 0.0, 0.0, 0.0);
+            world.addParticle(ParticleTypes.SMOKE, d + 0.27 * (double) direction2.getOffsetX(), e + 0.22, f + 0.27 * (double) direction2.getOffsetZ(), 0.0, 0.0, 0.0);
         }
     }
 

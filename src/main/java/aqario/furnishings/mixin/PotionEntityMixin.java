@@ -22,10 +22,10 @@ public abstract class PotionEntityMixin extends ThrownItemEntity implements Flyi
 
     @Inject(method = "extinguishFire", at = @At("TAIL"))
     private void furnishings$extinguishExtinguishable(BlockPos pos, CallbackInfo ci) {
-        BlockState state = this.world.getBlockState(pos);
+        BlockState state = this.getWorld().getBlockState(pos);
         Block block = state.getBlock();
         if (block instanceof Extinguishable && ((Extinguishable) block).isLit(state)) {
-            ((Extinguishable) block).extinguish(this.getOwner(), state, this.world, pos);
+            ((Extinguishable) block).extinguish(this.getOwner(), state, this.getWorld(), pos);
         }
     }
 }

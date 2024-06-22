@@ -37,9 +37,9 @@ public class StuckArrowsFeatureRenderer<T extends LivingEntity, M extends BipedE
         float tickDelta
     ) {
         float f = MathHelper.sqrt(directionX * directionX + directionZ * directionZ);
-        ArrowEntity arrowEntity = new ArrowEntity(entity.world, entity.getX(), entity.getY(), entity.getZ());
-        arrowEntity.setYaw((float)(Math.atan2(directionX, directionZ) * 180.0F / (float)Math.PI));
-        arrowEntity.setPitch((float)(Math.atan2(directionY, f) * 180.0F / (float)Math.PI));
+        ArrowEntity arrowEntity = new ArrowEntity(entity.getWorld(), entity.getX(), entity.getY(), entity.getZ());
+        arrowEntity.setYaw((float) (Math.atan2(directionX, directionZ) * 180.0F / (float) Math.PI));
+        arrowEntity.setPitch((float) (Math.atan2(directionY, f) * 180.0F / (float) Math.PI));
         arrowEntity.prevYaw = arrowEntity.getYaw();
         arrowEntity.prevPitch = arrowEntity.getPitch();
         this.dispatcher.render(arrowEntity, 0.0, 0.0, 0.0, 0.0F, tickDelta, matrices, vertexConsumers, light);
@@ -51,7 +51,7 @@ public class StuckArrowsFeatureRenderer<T extends LivingEntity, M extends BipedE
         int m = this.getObjectCount(livingEntity);
         RandomGenerator randomGenerator = RandomGenerator.createLegacy(livingEntity.getId());
         if (m > 0) {
-            for(int n = 0; n < m; ++n) {
+            for (int n = 0; n < m; ++n) {
                 matrixStack.push();
                 ModelPart modelPart = this.getContextModel().body;
                 ModelPart.Cuboid cuboid = modelPart.getRandomCuboid(randomGenerator);

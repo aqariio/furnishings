@@ -1,6 +1,9 @@
 package aqario.furnishings.common.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -99,10 +102,12 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
         if (blockState.get(DISTANCE) == MAX_DISTANCE) {
             if (state.get(DISTANCE) == MAX_DISTANCE) {
                 FallingBlockEntity.fall(world, pos, blockState);
-            } else {
+            }
+            else {
                 world.breakBlock(pos, true);
             }
-        } else if (state != blockState) {
+        }
+        else if (state != blockState) {
             world.setBlockState(pos, blockState, Block.NOTIFY_ALL);
         }
     }
@@ -116,7 +121,8 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         if (context.isAbove(VoxelShapes.fullCube(), pos, true) && !context.isDescending()) {
             return NORMAL_OUTLINE_SHAPE;
-        } else {
+        }
+        else {
             return state.get(DISTANCE) != 0 && state.get(BOTTOM) && context.isAbove(OUTLINE_SHAPE, pos, true) ? BOTTOM_COLLISION_SHAPE : VoxelShapes.empty();
         }
     }
@@ -136,11 +142,12 @@ public class IronScaffoldingBlock extends Block implements Waterloggable {
         int distance = MAX_DISTANCE;
         if (blockState.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
             distance = blockState.get(DISTANCE);
-        } else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
+        }
+        else if (blockState.isSideSolidFullSquare(world, mutable, Direction.UP)) {
             return 0;
         }
 
-        for(Direction direction : Direction.Type.HORIZONTAL) {
+        for (Direction direction : Direction.Type.HORIZONTAL) {
             BlockState blockState2 = world.getBlockState(mutable.set(pos, direction));
             if (blockState2.isOf(FurnishingsBlocks.IRON_SCAFFOLDING)) {
                 distance = Math.min(distance, blockState2.get(DISTANCE) + 1);

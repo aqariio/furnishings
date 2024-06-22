@@ -19,10 +19,12 @@ public class FurnishingsClientPlayNetworkHandler implements FurnishingsClientPla
         if (client.world != null && client.player != null) {
             PoseableStandEntity poseableStand = (PoseableStandEntity) client.world.getEntityById(packet.getStandId());
             if (poseableStand != null) {
-                PoseableStandScreenHandler screenHandler = (PoseableStandScreenHandler)poseableStand.createMenu(packet.getSyncId(), client.player.getInventory(), client.player);
+                PoseableStandScreenHandler screenHandler = (PoseableStandScreenHandler) poseableStand.createMenu(packet.getSyncId(), client.player.getInventory(), client.player);
                 PoseableStandScreen screen = switch (poseableStand.getStandType()) {
-                    case STATUE -> new StatueScreen(screenHandler, client.player.getInventory(), (StatueEntity) poseableStand);
-                    case SCARECROW -> new ScarecrowScreen(screenHandler, client.player.getInventory(), (ScarecrowEntity) poseableStand);
+                    case STATUE ->
+                        new StatueScreen(screenHandler, client.player.getInventory(), (StatueEntity) poseableStand);
+                    case SCARECROW ->
+                        new ScarecrowScreen(screenHandler, client.player.getInventory(), (ScarecrowEntity) poseableStand);
                 };
                 client.player.currentScreenHandler = screen.getScreenHandler();
                 client.setScreen(screen);

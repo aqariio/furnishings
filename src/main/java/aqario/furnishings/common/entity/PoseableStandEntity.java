@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -16,11 +17,14 @@ import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryChangedListener;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleEffect;
+import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -39,14 +43,14 @@ import java.util.function.Predicate;
 
 public abstract class PoseableStandEntity extends LivingEntity implements InventoryChangedListener, NamedScreenHandlerFactory {
     private static final Predicate<Entity> RIDEABLE_MINECART_PREDICATE = entity -> entity instanceof AbstractMinecartEntity
-            && ((AbstractMinecartEntity)entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
+        && ((AbstractMinecartEntity) entity).getMinecartType() == AbstractMinecartEntity.Type.RIDEABLE;
     private final StandType standType;
     private int disabledSlots;
     protected SimpleInventory inventory;
 
     public PoseableStandEntity(EntityType<? extends PoseableStandEntity> entityType, World world, StandType type) {
         super(entityType, world);
-        this.stepHeight = 0.0F;
+        this.setStepHeight(0.0F);
         this.standType = type;
         this.inventory = new SimpleInventory(6);
         this.inventory.addListener(this);
@@ -63,7 +67,9 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         if (this.inventory != null) {
             for (int i = 0; i < this.inventory.size(); ++i) {
                 ItemStack itemStack = this.inventory.getStack(i);
-                if (itemStack.isEmpty()) continue;
+                if (itemStack.isEmpty()) {
+                    continue;
+                }
                 this.dropStack(itemStack);
             }
         }
@@ -120,11 +126,11 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         super.writeCustomDataToNbt(nbt);
         NbtList nbtList = new NbtList();
 
-        for(int i = 0; i < this.inventory.size(); ++i) {
+        for (int i = 0; i < this.inventory.size(); ++i) {
             ItemStack itemStack = this.inventory.getStack(i);
             if (!itemStack.isEmpty()) {
                 NbtCompound nbtCompound = new NbtCompound();
-                nbtCompound.putByte("Slot", (byte)i);
+                nbtCompound.putByte("Slot", (byte) i);
                 itemStack.writeNbt(nbtCompound);
                 nbtList.add(nbtCompound);
             }
@@ -139,7 +145,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         super.readCustomDataFromNbt(nbt);
         NbtList nbtList = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
 
-        for(int i = 0; i < nbtList.size(); ++i) {
+        for (int i = 0; i < nbtList.size(); ++i) {
             NbtCompound nbtCompound = nbtList.getCompound(i);
             int j = nbtCompound.getByte("Slot") & 255;
             if (j < this.inventory.size()) {
@@ -151,8 +157,8 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
     @Override
     public ActionResult interact(PlayerEntity player, Hand hand) {
-        if (!player.world.isClient && player.getStackInHand(hand).isEmpty() && !player.shouldCancelInteraction()) {
-            openInventory((ServerPlayerEntity)player);
+        if (!player.getWorld().isClient && player.getStackInHand(hand).isEmpty() && !player.shouldCancelInteraction()) {
+            openInventory((ServerPlayerEntity) player);
             return ActionResult.CONSUME;
         }
         return super.interact(player, hand);
@@ -193,7 +199,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
     @Override
     protected void tickCramming() {
-        List<Entity> list = this.world.getOtherEntities(this, this.getBoundingBox(), RIDEABLE_MINECART_PREDICATE);
+        List<Entity> list = this.getWorld().getOtherEntities(this, this.getBoundingBox(), RIDEABLE_MINECART_PREDICATE);
         for (Entity entity : list) {
             if (this.squaredDistanceTo(entity) <= 0.2) {
                 entity.pushAwayFrom(this);
@@ -203,10 +209,10 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
 
     @Override
     public boolean damage(DamageSource source, float amount) {
-        if (this.world.isClient || this.isRemoved()) {
+        if (this.getWorld().isClient() || this.isRemoved()) {
             return false;
         }
-        if (DamageSource.OUT_OF_WORLD.equals(source)) {
+        if (source.isTypeIn(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             this.kill();
             return false;
         }
@@ -216,48 +222,57 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         if (source.getSource() instanceof FireworkRocketEntity) {
             return false;
         }
-        if (source.isExplosive()) {
+        if (source.isTypeIn(DamageTypeTags.IS_EXPLOSION)) {
             this.onBreak(source);
             this.kill();
             return false;
         }
-        if (DamageSource.IN_FIRE.equals(source)) {
+        if (source.isType(DamageTypes.LAVA)) {
             if (this.isOnFire()) {
-                this.updateHealth(source, 0.15F);
-            } else {
+                this.updateHealth(source, 1.0F);
+            }
+            else {
+                this.setOnFireFor(10);
+            }
+            return false;
+        }
+        if (source.isTypeIn(DamageTypeTags.IS_FIRE)) {
+            if (this.isOnFire()) {
+                this.updateHealth(source, 0.05F);
+            }
+            else {
                 this.setOnFireFor(5);
             }
             return false;
-        } else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F) {
-            this.updateHealth(source, 4.0F);
+        }
+        if (source.getSource() instanceof PersistentProjectileEntity) {
+            return true;
+        }
+        if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity) source.getAttacker()).getAbilities().allowModifyWorld) {
             return false;
-        } else {
-            if (source.getSource() instanceof PersistentProjectileEntity) {
-                return true;
-            }
-            if (source.getAttacker() instanceof PlayerEntity && !((PlayerEntity)source.getAttacker()).getAbilities().allowModifyWorld) {
+        }
+        if (source.getAttacker() instanceof PlayerEntity && !source.getAttacker().isSneaking()) {
+            this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
+        }
+        else {
+            if (source.isSourceCreativePlayer()) {
+                this.onBreak(source);
+                this.spawnBreakParticles();
+                this.kill();
                 return false;
             }
-            if (source.getAttacker() instanceof PlayerEntity && !source.getAttacker().isSneaking()) {
-                this.emitGameEvent(GameEvent.ENTITY_DAMAGE, source.getAttacker());
-            } else {
-                if (source.isSourceCreativePlayer()) {
-                    this.breakAndDropThis(source);
-                    this.spawnBreakParticles();
-                    this.kill();
-                    return false;
-                }
+            if (source.getAttacker() instanceof PlayerEntity && ((PlayerEntity) source.getAttacker()).getMainHandStack().isIn(this.getTool())) {
                 this.breakAndDropThis(source);
                 this.spawnBreakParticles();
                 this.kill();
             }
-            return true;
         }
+        return true;
     }
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return this.getStandType().equals(StandType.STATUE) ? damageSource.isFromFalling() || damageSource.isFire() : damageSource.isFromFalling();
+        return this.getStandType().equals(StandType.STATUE) ? damageSource.isTypeIn(DamageTypeTags.IS_FALL) || damageSource.isTypeIn(DamageTypeTags.IS_FIRE) : damageSource.isTypeIn(DamageTypeTags.IS_FALL);
     }
 
     @Override
@@ -270,9 +285,9 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         this.emitGameEvent(GameEvent.ENTITY_DIE);
     }
 
-    void spawnBreakParticles() {
-        if (this.world instanceof ServerWorld) {
-            ((ServerWorld)this.world)
+    protected void spawnBreakParticles() {
+        if (this.getWorld() instanceof ServerWorld) {
+            ((ServerWorld) this.getWorld())
                 .spawnParticles(
                     this.getParticle(),
                     this.getX(),
@@ -293,14 +308,15 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         if (f <= 0.5F) {
             this.onBreak(damageSource);
             this.kill();
-        } else {
+        }
+        else {
             this.setHealth(f);
             this.emitGameEvent(GameEvent.ENTITY_DAMAGE, damageSource.getAttacker());
         }
     }
 
     void breakAndDropThis(DamageSource damageSource) {
-        Block.dropStack(this.world, this.getBlockPos(), this.getItem());
+        Block.dropStack(this.getWorld(), this.getBlockPos(), this.getItem());
         this.onBreak(damageSource);
     }
 
@@ -310,7 +326,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
     }
 
     void playBreakSound() {
-        this.world.playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
+        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
     }
 
     public abstract EulerAngle getHeadRotation();
@@ -362,6 +378,8 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
     @Nullable
     @Override
     protected abstract SoundEvent getDeathSound();
+
+    protected abstract TagKey<Item> getTool();
 
     @Override
     public boolean isAffectedBySplashPotions() {

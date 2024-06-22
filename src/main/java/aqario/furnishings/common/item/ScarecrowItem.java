@@ -24,7 +24,8 @@ public class ScarecrowItem extends Item {
         Direction direction = context.getSide();
         if (direction == Direction.DOWN) {
             return ActionResult.FAIL;
-        } else {
+        }
+        else {
             World world = context.getWorld();
             ItemPlacementContext itemPlacementContext = new ItemPlacementContext(context);
             BlockPos blockPos = itemPlacementContext.getBlockPos();
@@ -34,7 +35,7 @@ public class ScarecrowItem extends Item {
             if (world.isSpaceEmpty(null, box) && world.getOtherEntities(null, box).isEmpty()) {
                 if (world instanceof ServerWorld serverWorld) {
                     ScarecrowEntity scarecrowEntity = FurnishingsEntityType.SCARECROW
-                            .create(serverWorld, itemStack.getNbt(), null, context.getPlayer(), blockPos, SpawnReason.SPAWN_EGG, true, true);
+                        .create(serverWorld, itemStack.getNbt(), null, blockPos, SpawnReason.SPAWN_EGG, true, true);
                     if (scarecrowEntity == null) {
                         return ActionResult.FAIL;
                     }
@@ -43,14 +44,15 @@ public class ScarecrowItem extends Item {
                     scarecrowEntity.refreshPositionAndAngles(scarecrowEntity.getX(), scarecrowEntity.getY(), scarecrowEntity.getZ(), f, 0.0F);
                     serverWorld.spawnEntityAndPassengers(scarecrowEntity);
                     world.playSound(
-                            null, scarecrowEntity.getX(), scarecrowEntity.getY(), scarecrowEntity.getZ(), scarecrowEntity.getPlaceSound(), SoundCategory.BLOCKS, 0.75F, 0.8F
+                        null, scarecrowEntity.getX(), scarecrowEntity.getY(), scarecrowEntity.getZ(), scarecrowEntity.getPlaceSound(), SoundCategory.BLOCKS, 0.75F, 0.8F
                     );
                     scarecrowEntity.emitGameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());
                 }
 
                 itemStack.decrement(1);
                 return ActionResult.success(world.isClient);
-            } else {
+            }
+            else {
                 return ActionResult.FAIL;
             }
         }

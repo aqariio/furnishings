@@ -4,7 +4,7 @@ import aqario.furnishings.common.network.FurnishingsPacket;
 import aqario.furnishings.common.network.listener.FurnishingsClientPlayPacketListener;
 import net.minecraft.network.PacketByteBuf;
 
-public class OpenPoseableStandScreenS2CPacket implements FurnishingsPacket{
+public class OpenPoseableStandScreenS2CPacket implements FurnishingsPacket {
     private final int syncId;
     private final int standId;
 

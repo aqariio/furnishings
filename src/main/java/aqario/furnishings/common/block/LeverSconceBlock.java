@@ -39,16 +39,16 @@ import java.util.Map;
 @SuppressWarnings("deprecation")
 public class LeverSconceBlock extends Block implements Waterloggable, Extinguishable {
     protected static final Map<Direction, VoxelShape> WALL_SHAPES = Maps.newEnumMap(
-            ImmutableMap.of(
-                    Direction.NORTH,
-                    Block.createCuboidShape(6.0, 2.0, 10.0, 10.0, 13.0, 16.0),
-                    Direction.SOUTH,
-                    Block.createCuboidShape(6.0, 2.0, 0.0, 10.0, 13.0, 6.0),
-                    Direction.WEST,
-                    Block.createCuboidShape(10.0, 2.0, 6.0, 16.0, 13.0, 10.0),
-                    Direction.EAST,
-                    Block.createCuboidShape(0.0, 2.0, 6.0, 6.0, 13.0, 10.0)
-            )
+        ImmutableMap.of(
+            Direction.NORTH,
+            Block.createCuboidShape(6.0, 2.0, 10.0, 10.0, 13.0, 16.0),
+            Direction.SOUTH,
+            Block.createCuboidShape(6.0, 2.0, 0.0, 10.0, 13.0, 6.0),
+            Direction.WEST,
+            Block.createCuboidShape(10.0, 2.0, 6.0, 16.0, 13.0, 10.0),
+            Direction.EAST,
+            Block.createCuboidShape(0.0, 2.0, 6.0, 6.0, 13.0, 10.0)
+        )
     );
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty LIT = Properties.LIT;
@@ -75,7 +75,7 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
         BlockPos blockPos = ctx.getBlockPos();
         Direction[] directions = ctx.getPlacementDirections();
 
-        for(Direction direction : directions) {
+        for (Direction direction : directions) {
             if (direction.getAxis().isHorizontal()) {
                 Direction direction2 = direction.getOpposite();
                 blockState = blockState.with(FACING, direction2).with(WATERLOGGED, bl).with(LIT, !bl);
@@ -130,7 +130,8 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
             }
 
             return ActionResult.SUCCESS;
-        } else {
+        }
+        else {
             BlockState blockState = this.togglePower(state, world, pos);
             float f = blockState.get(POWERED) ? 0.6F : 0.5F;
             world.playSound(null, pos, SoundEvents.BLOCK_LEVER_CLICK, SoundCategory.BLOCKS, 0.3F, f);
@@ -149,9 +150,9 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
     private static void spawnRedstoneParticles(BlockState state, WorldAccess world, BlockPos pos, float alpha) {
         Direction direction = state.get(FACING).getOpposite();
         Direction direction2 = state.get(FACING).getOpposite();
-        double d = (double)pos.getX() + 0.5 + 0.1 * (double)direction.getOffsetX() + 0.2 * (double)direction2.getOffsetX();
-        double e = (double)pos.getY() + 0.5 + 0.1 * (double)direction.getOffsetY() + 0.2 * (double)direction2.getOffsetY();
-        double f = (double)pos.getZ() + 0.5 + 0.1 * (double)direction.getOffsetZ() + 0.2 * (double)direction2.getOffsetZ();
+        double d = (double) pos.getX() + 0.5 + 0.1 * (double) direction.getOffsetX() + 0.2 * (double) direction2.getOffsetX();
+        double e = (double) pos.getY() + 0.5 + 0.1 * (double) direction.getOffsetY() + 0.2 * (double) direction2.getOffsetY();
+        double f = (double) pos.getZ() + 0.5 + 0.1 * (double) direction.getOffsetZ() + 0.2 * (double) direction2.getOffsetZ();
         world.addParticle(new DustParticleEffect(DustParticleEffect.RED, alpha), d, e, f, 0.0, 0.0, 0.0);
     }
 
@@ -170,11 +171,12 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
             double z = pos.getZ() + 0.5D;
             Direction direction1 = direction.getOpposite();
             world.addParticle(ParticleTypes.SMOKE, x + 0.125D * direction1.getOffsetX(), y + 0.15D, z + 0.125D * direction1.getOffsetZ(), 0.0D, 0.0D, 0.0D);
-        } else {
+        }
+        else {
             Direction direction = state.get(FACING);
-            double x = (double)pos.getX() + 0.5;
-            double y = (double)pos.getY() + 0.7;
-            double z = (double)pos.getZ() + 0.5;
+            double x = (double) pos.getX() + 0.5;
+            double y = (double) pos.getY() + 0.7;
+            double z = (double) pos.getZ() + 0.5;
             Direction direction2 = direction.getOpposite();
             world.addParticle(ParticleTypes.SMOKE, x + 0.27 * direction2.getOffsetX(), y + 0.22, z + 0.27 * direction2.getOffsetZ(), 0.0, 0.0, 0.0);
         }
@@ -191,7 +193,7 @@ public class LeverSconceBlock extends Block implements Waterloggable, Extinguish
     }
 
     @Override
-    public boolean emitsRedstonePower(BlockState state) {
+    public boolean isRedstonePowerSource(BlockState state) {
         return true;
     }
 

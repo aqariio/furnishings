@@ -135,8 +135,9 @@ public class BookBlock extends Block implements Waterloggable {
             BlockSoundGroup blockSoundGroup = placedState.getSoundGroup();
             world.playSound(player, pos, placedState.getSoundGroup().getPlaceSound(), SoundCategory.BLOCKS, (blockSoundGroup.getVolume() + 1.0F) / 2.0F, blockSoundGroup.getPitch() * 0.8F);
             world.emitGameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Context.create(player, placedState));
-            if (!(player.getAbilities()).creativeMode)
+            if (!(player.getAbilities()).creativeMode) {
                 stack.decrement(1);
+            }
             return ActionResult.success(world.isClient);
         }
         return ActionResult.PASS;

@@ -11,8 +11,9 @@ public interface FurnishingsPacket extends Serializable {
         buf.readBytes(data);
 
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data))) {
-            return (FurnishingsPacket)ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
+            return (FurnishingsPacket) ois.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException("SneakyThrows", e);
         }
     }
@@ -22,7 +23,8 @@ public interface FurnishingsPacket extends Serializable {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.writeObject(this);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             throw new RuntimeException("SneakyThrows", e);
         }
 

@@ -5,9 +5,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 public class FurnishingsDataGeneration implements DataGeneratorEntrypoint {
     @Override
-    public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-        fabricDataGenerator.addProvider(FurnishingsLootTableGenerator::new);
-        fabricDataGenerator.addProvider(FurnishingsRecipeGenerator::new);
-        fabricDataGenerator.addProvider(FurnishingsModelProvider::new);
+    public void onInitializeDataGenerator(FabricDataGenerator generator) {
+        FabricDataGenerator.Pack pack = generator.createPack();
+        pack.addProvider(FurnishingsLootTableGenerator::new);
+        pack.addProvider(FurnishingsRecipeGenerator::new);
+        pack.addProvider(FurnishingsModelProvider::new);
     }
 }

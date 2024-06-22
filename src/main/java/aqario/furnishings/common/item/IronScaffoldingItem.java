@@ -33,17 +33,23 @@ public class IronScaffoldingItem extends BlockItem {
                 if (!world.isClient && !world.isInBuildLimit(mutable)) {
                     PlayerEntity playerEntity = context.getPlayer();
                     int j = world.getTopY();
-                    if (!(playerEntity instanceof ServerPlayerEntity) || mutable.getY() < j) break;
+                    if (!(playerEntity instanceof ServerPlayerEntity) || mutable.getY() < j) {
+                        break;
+                    }
                     playerEntity.sendMessage(Text.translatable("build.tooHigh", j - 1).formatted(Formatting.RED), true);
                     break;
                 }
                 blockState = world.getBlockState(mutable);
                 if (!blockState.isOf(this.getBlock())) {
-                    if (!blockState.canReplace(context)) break;
+                    if (!blockState.canReplace(context)) {
+                        break;
+                    }
                     return ItemPlacementContext.offset(context, mutable, direction);
                 }
                 mutable.move(direction);
-                if (!direction.getAxis().isHorizontal()) continue;
+                if (!direction.getAxis().isHorizontal()) {
+                    continue;
+                }
                 ++i;
             }
             return null;

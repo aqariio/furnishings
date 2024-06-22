@@ -46,13 +46,13 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
     protected static final VoxelShape STANDING_SHAPE = Block.createCuboidShape(5.0, 0.0, 5.0, 11.0, 14.0, 11.0);
     protected static final Map<Direction, VoxelShape> SHAPES = Maps.newEnumMap(
         ImmutableMap.of(
-        Direction.NORTH,
+            Direction.NORTH,
             Block.createCuboidShape(5.0, 0.0, 11.0, 11.0, 14.0, 16.0),
-        Direction.SOUTH,
+            Direction.SOUTH,
             Block.createCuboidShape(5.0, 0.0, 0.0, 11.0, 14.0, 5.0),
-        Direction.WEST,
+            Direction.WEST,
             Block.createCuboidShape(11.0, 0.0, 5.0, 16.0, 14.0, 11.0),
-        Direction.EAST,
+            Direction.EAST,
             Block.createCuboidShape(0.0, 0.0, 5.0, 5.0, 14.0, 11.0)
         )
     );
@@ -146,11 +146,11 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
     public void extinguish(@Nullable Entity entity, BlockState state, WorldAccess world, BlockPos pos) {
         setLit(world, state, pos, false);
         if (state.getBlock() instanceof CandelabraBlock) {
-            ((CandelabraBlock)state.getBlock())
+            ((CandelabraBlock) state.getBlock())
                 .getParticleOffsets(state)
                 .forEach(
                     offset -> world.addParticle(
-                        ParticleTypes.SMOKE, (double)pos.getX() + offset.getX(), (double)pos.getY() + offset.getY(), (double)pos.getZ() + offset.getZ(), 0.0, 0.1F, 0.0
+                        ParticleTypes.SMOKE, (double) pos.getX() + offset.getX(), (double) pos.getY() + offset.getY(), (double) pos.getZ() + offset.getZ(), 0.0, 0.1F, 0.0
                     )
                 );
         }
@@ -194,7 +194,8 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
             }
             if (direction.getAxis().isHorizontal()) {
                 blockState = blockState.with(FACE, NoCeilingWallMountLocation.WALL).with(FACING, direction.getOpposite());
-            } else {
+            }
+            else {
                 blockState = blockState.with(FACE, NoCeilingWallMountLocation.FLOOR).with(FACING, ctx.getPlayerFacing());
             }
             if (blockState.canPlaceAt(ctx.getWorld(), ctx.getBlockPos())) {
@@ -233,13 +234,15 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
             BlockState blockState = state.with(WATERLOGGED, Boolean.TRUE);
             if (state.get(LIT)) {
                 extinguish(null, blockState, world, pos);
-            } else {
+            }
+            else {
                 world.setBlockState(pos, blockState, Block.NOTIFY_ALL);
             }
 
             world.scheduleFluidTick(pos, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
