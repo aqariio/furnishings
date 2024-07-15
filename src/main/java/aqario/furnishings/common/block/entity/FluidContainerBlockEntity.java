@@ -4,40 +4,32 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class FluidContainerBlockEntity extends BlockEntity {
-    private boolean empty;
     private Potion potion;
     private String potionType;
 
     public FluidContainerBlockEntity(BlockPos pos, BlockState state) {
         super(FurnishingsBlockEntityType.FLUID_CONTAINER, pos, state);
-        potion = Potions.EMPTY;
-        potionType = Registries.ITEM.getId(Items.POTION).toString();
+        this.potion = Potions.EMPTY;
+        this.potionType = Registries.ITEM.getId(Items.POTION).toString();
     }
-
-//    @Override
-//    public void markDirty() {
-//        if (this.world == null) return;
-//        int light = 10;
-//        if (light != this.getCachedState().get(FluidContainerBlock.LUMINANCE)) {
-//            this.world.setBlockState(this.pos, this.getCachedState().with(FluidContainerBlock.LUMINANCE, light), 2);
-//        }
-//        this.world.updateListeners(this.pos, this.getCachedState(), this.getCachedState(), Block.NOTIFY_LISTENERS);
-//        super.markDirty();
-//    }
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        if (potion != null) {
-            Identifier potionId = Registries.POTION.getId(potion);
+        if (this.potion != null) {
+            Identifier potionId = Registries.POTION.getId(this.potion);
             String potionName = potionId.toString();
 
             nbt.putString("Potion", potionName);
@@ -45,14 +37,25 @@ public class FluidContainerBlockEntity extends BlockEntity {
         }
     }
 
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.of(this);
+    }
+
+    @Override
+    public NbtCompound toSyncedNbt() {
+        return this.toIdentifiedLocatedNbt();
+    }
+
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        potion = Registries.POTION.get(Identifier.tryParse(nbt.getString("Potion")));
+        this.potion = Registries.POTION.get(Identifier.tryParse(nbt.getString("Potion")));
     }
 
     public @NotNull Potion getPotion() {
-        return potion;
+        return this.potion;
     }
 
     public void setPotion(Potion potion) {

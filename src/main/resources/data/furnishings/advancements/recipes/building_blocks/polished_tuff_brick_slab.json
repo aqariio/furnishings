@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_polished_tuff_bricks": {
+    "has_tuff_bricks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "furnishings:polished_tuff_bricks"
+              "furnishings:tuff_bricks"
             ]
           }
         ]
@@ -22,7 +22,7 @@
   },
   "requirements": [
     [
-      "has_polished_tuff_bricks",
+      "has_tuff_bricks",
       "has_the_recipe"
     ]
   ],

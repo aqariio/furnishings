@@ -223,6 +223,11 @@ public class StatueEntity extends PoseableStandEntity {
     }
 
     @Override
+    protected TagKey<Item> getTool() {
+        return ItemTags.PICKAXES;
+    }
+
+    @Override
     public SoundEvent getPlaceSound() {
         return SoundEvents.BLOCK_STONE_PLACE;
     }
@@ -242,10 +247,5 @@ public class StatueEntity extends PoseableStandEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.BLOCK_STONE_BREAK;
-    }
-
-    @Override
-    protected TagKey<Item> getTool() {
-        return ItemTags.PICKAXES;
     }
 }

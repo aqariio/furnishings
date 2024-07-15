@@ -30,5 +30,6 @@
     "recipes": [
       "furnishings:polished_calcite"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

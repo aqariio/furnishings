@@ -11,7 +11,6 @@ import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
@@ -23,28 +22,22 @@ public class FluidContainerBlockEntityRenderer implements BlockEntityRenderer<Fl
     }
 
     @Override
-    public void render(FluidContainerBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        if (entity.isEmpty()) {
+    public void render(FluidContainerBlockEntity container, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        if (container.isEmpty()) {
             return;
         }
 
-        Potion potion = entity.getPotion();
-
-        if (potion == Potions.EMPTY) {
-            return;
-        }
+        Potion potion = container.getPotion();
 
         int color = PotionUtil.getColor(potion);
         int red = color >> 16 & 255;
         int green = color >> 8 & 255;
         int blue = color & 255;
-//        int alpha = 190;
         int alpha = 255;
         Sprite water = WATER.getSprite();
 
         matrices.push();
         matrices.translate(0, 0.5, 0);
-//        matrices.scale(0.25F, 1.0F, 0.25F);
 
         VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getTranslucentMovingBlock());
         Matrix4f matrix = matrices.peek().getModel();

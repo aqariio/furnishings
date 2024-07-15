@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_polished_tuff_bricks": {
+    "has_tuff_bricks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "furnishings:polished_tuff_bricks"
+              "furnishings:tuff_bricks"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "furnishings:cracked_polished_tuff_bricks"
+        "recipe": "furnishings:chiseled_tuff_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_polished_tuff_bricks",
+      "has_tuff_bricks",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "furnishings:cracked_polished_tuff_bricks"
+      "furnishings:chiseled_tuff_bricks"
     ]
   }
 }

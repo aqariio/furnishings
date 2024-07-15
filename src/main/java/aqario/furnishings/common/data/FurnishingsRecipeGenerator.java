@@ -169,14 +169,14 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_STAIRS, FurnishingsBlocks.POLISHED_TUFF);
         offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
-        offerPolishedBricksRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICKS, FurnishingsBlocks.POLISHED_TUFF);
-        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB, FurnishingsBlocks.POLISHED_TUFF_BRICKS, 2);
-        offerStairsRecipe(exporter, FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_POLISHED_TUFF_BRICKS, FurnishingsBlocks.POLISHED_TUFF_BRICKS);
+        offerPolishedBricksRecipe(exporter, FurnishingsBlocks.TUFF_BRICKS, FurnishingsBlocks.POLISHED_TUFF);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_BRICK_SLAB, FurnishingsBlocks.TUFF_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_BRICK_SLAB, FurnishingsBlocks.TUFF_BRICKS, 2);
+        offerStairsRecipe(exporter, FurnishingsBlocks.TUFF_BRICK_STAIRS, FurnishingsBlocks.TUFF_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_BRICK_STAIRS, FurnishingsBlocks.TUFF_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_BRICK_WALL, FurnishingsBlocks.TUFF_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_BRICK_WALL, FurnishingsBlocks.TUFF_BRICKS);
+        offerChiseledBlockRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CHISELED_TUFF_BRICKS, FurnishingsBlocks.TUFF_BRICKS);
     }
 
     public static void offerStairsRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {

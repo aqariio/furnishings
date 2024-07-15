@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "furnishings:polished_tuff_bricks"
+        "recipe": "furnishings:tuff_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "furnishings:polished_tuff_bricks"
+      "furnishings:tuff_bricks"
     ]
   }
 }

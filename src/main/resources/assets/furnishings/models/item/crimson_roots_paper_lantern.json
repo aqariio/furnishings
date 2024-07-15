@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "furnishings:item/crimson_roots_paper_lantern"
-  }
-}

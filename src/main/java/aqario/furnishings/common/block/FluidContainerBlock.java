@@ -1,7 +1,10 @@
 package aqario.furnishings.common.block;
 
 import aqario.furnishings.common.block.entity.FluidContainerBlockEntity;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,8 +19,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -30,11 +31,9 @@ import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public abstract class FluidContainerBlock extends BlockWithEntity implements Waterloggable {
-    public static final IntProperty LUMINANCE = IntProperty.of("luminance", 0, 15);
 
     public FluidContainerBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(LUMINANCE, 0));
     }
 
     @Override
@@ -155,10 +154,5 @@ public abstract class FluidContainerBlock extends BlockWithEntity implements Wat
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(LUMINANCE);
     }
 }

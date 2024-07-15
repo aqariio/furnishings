@@ -3,7 +3,7 @@
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": {
-    "item": "furnishings:polished_tuff_bricks"
+    "item": "furnishings:tuff_bricks"
   },
-  "result": "furnishings:cracked_polished_tuff_bricks"
+  "result": "furnishings:chiseled_tuff_bricks"
 }

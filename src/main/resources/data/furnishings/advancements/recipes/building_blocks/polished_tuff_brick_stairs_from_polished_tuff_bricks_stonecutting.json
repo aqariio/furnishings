@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_polished_tuff_bricks": {
+    "has_tuff_bricks": {
       "conditions": {
         "items": [
           {
             "items": [
-              "furnishings:polished_tuff_bricks"
+              "furnishings:tuff_bricks"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:polished_tuff_brick_stairs_from_polished_tuff_bricks_stonecutting"
+        "recipe": "minecraft:polished_tuff_brick_stairs_from_tuff_bricks_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_polished_tuff_bricks",
+      "has_tuff_bricks",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:polished_tuff_brick_stairs_from_polished_tuff_bricks_stonecutting"
+      "minecraft:polished_tuff_brick_stairs_from_tuff_bricks_stonecutting"
     ]
   }
 }

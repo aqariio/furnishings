@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "group": "cushion",
   "key": {
     "#": {
@@ -15,5 +16,6 @@
   ],
   "result": {
     "item": "furnishings:blue_cushion"
-  }
+  },
+  "show_notification": true
 }

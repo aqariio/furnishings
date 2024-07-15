@@ -223,25 +223,20 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
             return false;
         }
         if (source.isTypeIn(DamageTypeTags.IS_EXPLOSION)) {
-            this.onBreak(source);
-            this.kill();
+            this.updateHealth(source, amount);
             return false;
         }
         if (source.isType(DamageTypes.LAVA)) {
+            this.setOnFireFor(10);
             if (this.isOnFire()) {
                 this.updateHealth(source, 1.0F);
-            }
-            else {
-                this.setOnFireFor(10);
             }
             return false;
         }
         if (source.isTypeIn(DamageTypeTags.IS_FIRE)) {
+            this.setOnFireFor(5);
             if (this.isOnFire()) {
                 this.updateHealth(source, 0.05F);
-            }
-            else {
-                this.setOnFireFor(5);
             }
             return false;
         }
@@ -302,7 +297,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         }
     }
 
-    void updateHealth(DamageSource damageSource, float amount) {
+    private void updateHealth(DamageSource damageSource, float amount) {
         float f = this.getHealth();
         f -= amount;
         if (f <= 0.5F) {
@@ -315,17 +310,17 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
         }
     }
 
-    void breakAndDropThis(DamageSource damageSource) {
+    private void breakAndDropThis(DamageSource damageSource) {
         Block.dropStack(this.getWorld(), this.getBlockPos(), this.getItem());
         this.onBreak(damageSource);
     }
 
-    void onBreak(DamageSource damageSource) {
+    private void onBreak(DamageSource damageSource) {
         this.playBreakSound();
         this.drop(damageSource);
     }
 
-    void playBreakSound() {
+    private void playBreakSound() {
         this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), this.getDeathSound(), this.getSoundCategory(), 1.0F, 1.0F);
     }
 
@@ -394,7 +389,7 @@ public abstract class PoseableStandEntity extends LivingEntity implements Invent
     @Nullable
     @Override
     public ItemStack getPickBlockStack() {
-        return getItem();
+        return this.getItem();
     }
 
     public enum StandType {

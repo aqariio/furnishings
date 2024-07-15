@@ -19,7 +19,7 @@ public class Furnishings implements ModInitializer {
 
     @Override
     public void onInitialize(ModContainer mod) {
-        LOGGER.info("Loading {}", mod.metadata().name());
+        LOGGER.info("Loading {} {}", mod.metadata().name(), mod.metadata().version());
         FurnishingsBlockEntityType.init();
         FurnishingsBlocks.init();
         FurnishingsEntityType.init();

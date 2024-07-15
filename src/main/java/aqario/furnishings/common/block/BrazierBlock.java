@@ -56,10 +56,10 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
     private final boolean emitsParticles;
     private final int fireDamage;
 
-    public BrazierBlock(boolean emitsParticles, int fireDamage, AbstractBlock.Settings settings) {
+    public BrazierBlock(BrazierType type, AbstractBlock.Settings settings) {
         super(settings);
-        this.emitsParticles = emitsParticles;
-        this.fireDamage = fireDamage;
+        this.emitsParticles = type.emitsParticles;
+        this.fireDamage = type.fireDamage;
         this.setDefaultState(this.stateManager.getDefaultState().with(LIT, true).with(HANGING, false).with(WATERLOGGED, false));
     }
 
@@ -76,7 +76,6 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
                 context.getStack().damage(1, player, p -> p.sendToolBreakStatus(context.getHand()));
                 return ActionResult.SUCCESS;
             }
-
         }
         if (!state.get(WATERLOGGED) && !state.get(LIT)) {
             if (itemStack.getItem() == Items.FLINT_AND_STEEL) {
@@ -226,5 +225,18 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
     @Override
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
         return false;
+    }
+
+    public enum BrazierType {
+        NORMAL(true, 1),
+        SOUL(false, 2);
+
+        private final boolean emitsParticles;
+        private final int fireDamage;
+
+        BrazierType(boolean emitsParticles, int fireDamage) {
+            this.emitsParticles = emitsParticles;
+            this.fireDamage = fireDamage;
+        }
     }
 }

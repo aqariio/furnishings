@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "building",
   "key": {
     "#": {
       "item": "furnishings:polished_calcite"
@@ -12,5 +13,6 @@
   "result": {
     "count": 4,
     "item": "furnishings:polished_calcite_bricks"
-  }
+  },
+  "show_notification": true
 }

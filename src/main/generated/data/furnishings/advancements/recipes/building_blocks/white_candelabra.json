@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "furnishings:white_candelabra"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_white_candle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:white_candle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_white_candle",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "furnishings:white_candelabra"
+    ]
+  },
+  "sends_telemetry_event": false
+}

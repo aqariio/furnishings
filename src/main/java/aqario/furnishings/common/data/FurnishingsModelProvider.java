@@ -42,6 +42,9 @@ public class FurnishingsModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(FurnishingsBlocks.CALCITE_SLAB.asItem(), FurnishingsModels.isometricBlock(FurnishingsBlocks.CALCITE_SLAB));
+        itemModelGenerator.register(FurnishingsBlocks.CALCITE_STAIRS.asItem(), FurnishingsModels.isometricBlock(FurnishingsBlocks.CALCITE_STAIRS));
+        itemModelGenerator.register(FurnishingsBlocks.CALCITE_WALL.asItem(), FurnishingsModels.isometricBlock(FurnishingsBlocks.CALCITE_WALL));
     }
 
     public final void registerCandelabra(BlockStateModelGenerator blockStateModelGenerator, Block candelabra, Block candle) {
@@ -66,48 +69,47 @@ public class FurnishingsModelProvider extends FabricModelProvider {
         Identifier wall3Lit = FurnishingsModels.TEMPLATE_CANDELABRA_WALL_3.upload(candelabra, "_wall_3_lit", litTexture, blockStateModelGenerator.modelCollector);
         Identifier wall4Lit = FurnishingsModels.TEMPLATE_CANDELABRA_WALL_4.upload(candelabra, "_wall_4_lit", litTexture, blockStateModelGenerator.modelCollector);
 
-        blockStateModelGenerator.blockStateCollector
-            .accept(
-                VariantsBlockStateSupplier.create(candelabra)
-                    .coordinate(
-                        BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
-                            .register(
-                                Direction.NORTH,
-                                BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R0)
-                            )
-                            .register(
-                                Direction.EAST,
-                                BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R90)
-                            )
-                            .register(
-                                Direction.SOUTH,
-                                BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R180)
-                            )
-                            .register(
-                                Direction.WEST,
-                                BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R270)
-                            )
-                    )
-                    .coordinate(
-                        BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT, CandelabraBlock.FACE)
-                            .register(1, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor1))
-                            .register(2, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor2))
-                            .register(3, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor3))
-                            .register(4, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor4))
-                            .register(1, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor1Lit))
-                            .register(2, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor2Lit))
-                            .register(3, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor3Lit))
-                            .register(4, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor4Lit))
-                            .register(1, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall1))
-                            .register(2, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall2))
-                            .register(3, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall3))
-                            .register(4, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall4))
-                            .register(1, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall1Lit))
-                            .register(2, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall2Lit))
-                            .register(3, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall3Lit))
-                            .register(4, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall4Lit))
-                    )
-            );
+        blockStateModelGenerator.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(candelabra)
+                .coordinate(
+                    BlockStateVariantMap.create(Properties.HORIZONTAL_FACING)
+                        .register(
+                            Direction.NORTH,
+                            BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R0)
+                        )
+                        .register(
+                            Direction.EAST,
+                            BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R90)
+                        )
+                        .register(
+                            Direction.SOUTH,
+                            BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R180)
+                        )
+                        .register(
+                            Direction.WEST,
+                            BlockStateVariant.create().put(VariantSettings.Y, VariantSettings.Rotation.R270)
+                        )
+                )
+                .coordinate(
+                    BlockStateVariantMap.create(Properties.CANDLES, Properties.LIT, CandelabraBlock.FACE)
+                        .register(1, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor1))
+                        .register(2, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor2))
+                        .register(3, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor3))
+                        .register(4, false, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor4))
+                        .register(1, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor1Lit))
+                        .register(2, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor2Lit))
+                        .register(3, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor3Lit))
+                        .register(4, true, NoCeilingWallMountLocation.FLOOR, BlockStateVariant.create().put(VariantSettings.MODEL, floor4Lit))
+                        .register(1, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall1))
+                        .register(2, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall2))
+                        .register(3, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall3))
+                        .register(4, false, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall4))
+                        .register(1, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall1Lit))
+                        .register(2, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall2Lit))
+                        .register(3, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall3Lit))
+                        .register(4, true, NoCeilingWallMountLocation.WALL, BlockStateVariant.create().put(VariantSettings.MODEL, wall4Lit))
+                )
+        );
     }
 
     public static Texture candle(Block block, boolean lit) {

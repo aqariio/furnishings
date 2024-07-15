@@ -170,6 +170,11 @@ public class ScarecrowEntity extends PoseableStandEntity {
     }
 
     @Override
+    protected TagKey<Item> getTool() {
+        return ItemTags.AXES;
+    }
+
+    @Override
     public SoundEvent getPlaceSound() {
         return SoundEvents.BLOCK_WOOD_PLACE;
     }
@@ -189,10 +194,5 @@ public class ScarecrowEntity extends PoseableStandEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.BLOCK_WOOD_BREAK;
-    }
-
-    @Override
-    protected TagKey<Item> getTool() {
-        return ItemTags.AXES;
     }
 }

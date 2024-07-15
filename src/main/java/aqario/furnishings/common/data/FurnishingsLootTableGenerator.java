@@ -44,11 +44,11 @@ public class FurnishingsLootTableGenerator extends FabricBlockLootTableProvider 
         slabDrops(FurnishingsBlocks.POLISHED_TUFF_SLAB);
         addDrop(FurnishingsBlocks.POLISHED_TUFF_STAIRS);
         addDrop(FurnishingsBlocks.POLISHED_TUFF_WALL);
-        addDrop(FurnishingsBlocks.POLISHED_TUFF_BRICKS);
-        slabDrops(FurnishingsBlocks.POLISHED_TUFF_BRICK_SLAB);
-        addDrop(FurnishingsBlocks.POLISHED_TUFF_BRICK_STAIRS);
-        addDrop(FurnishingsBlocks.POLISHED_TUFF_BRICK_WALL);
-        addDrop(FurnishingsBlocks.CRACKED_POLISHED_TUFF_BRICKS);
+        addDrop(FurnishingsBlocks.TUFF_BRICKS);
+        slabDrops(FurnishingsBlocks.TUFF_BRICK_SLAB);
+        addDrop(FurnishingsBlocks.TUFF_BRICK_STAIRS);
+        addDrop(FurnishingsBlocks.TUFF_BRICK_WALL);
+        addDrop(FurnishingsBlocks.CHISELED_TUFF_BRICKS);
 
         /* Candelabra */
 
