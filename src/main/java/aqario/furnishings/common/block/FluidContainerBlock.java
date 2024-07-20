@@ -19,7 +19,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
-import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -50,19 +49,19 @@ public abstract class FluidContainerBlock extends BlockWithEntity implements Wat
                         return ActionResult.PASS;
                     }
 
-                    Identifier potionTypeResourceLocation = Identifier.tryParse(container.getPotionType());
-                    if (potionTypeResourceLocation == null) {
+                    Identifier fluidTypeResourceLocation = Identifier.tryParse(container.getFluidType());
+                    if (fluidTypeResourceLocation == null) {
                         return ActionResult.PASS;
                     }
 
                     container.setPotion(Potions.EMPTY);
 
-                    Item potionType = Registries.ITEM.get(potionTypeResourceLocation);
-                    player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, PotionUtil.setPotion(new ItemStack(potionType), potion)));
+                    Item fluidType = Registries.ITEM.get(fluidTypeResourceLocation);
+                    player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, PotionUtil.setPotion(new ItemStack(Items.POTION), potion)));
                     player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
                     world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.emitGameEvent(null, GameEvent.FLUID_PICKUP, pos);
-                    player.sendMessage(Text.literal("Filled bottle"), true);
+//                    player.sendMessage(Text.literal("Filled bottle"), true);
 
                     if (!world.isClient) {
                         container.markDirty();
@@ -88,7 +87,7 @@ public abstract class FluidContainerBlock extends BlockWithEntity implements Wat
                     }
                     world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_DRINK, SoundCategory.BLOCKS, 1.0F, 1.0F);
                     world.emitGameEvent(null, GameEvent.DRINK, pos);
-                    player.sendMessage(Text.literal("Drank successfully"), true);
+//                    player.sendMessage(Text.literal("Drank successfully"), true);
 
                     if (!world.isClient) {
                         container.markDirty();
@@ -113,13 +112,13 @@ public abstract class FluidContainerBlock extends BlockWithEntity implements Wat
                 }
 
                 container.setPotion(potionInHand);
-                container.setPotionType(potionTypeInHand);
+                container.setFluidType(potionTypeInHand);
 
                 player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, new ItemStack(Items.GLASS_BOTTLE)));
                 player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
                 world.playSound(null, pos, SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
-                player.sendMessage(Text.literal("Emptied bottle"), true);
+//                player.sendMessage(Text.literal("Emptied bottle"), true);
 
                 if (!world.isClient) {
                     container.markDirty();

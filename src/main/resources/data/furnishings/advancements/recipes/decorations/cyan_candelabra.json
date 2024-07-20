@@ -30,5 +30,6 @@
     "recipes": [
       "furnishings:cyan_candelabra"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

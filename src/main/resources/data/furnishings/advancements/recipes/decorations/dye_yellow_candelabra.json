@@ -28,5 +28,6 @@
     "recipes": [
       "minecraft:dye_yellow_candelabra"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

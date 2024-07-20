@@ -1,9 +1,11 @@
 package aqario.furnishings.common.data;
 
+import aqario.furnishings.common.block.BrazierBlock;
 import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.tags.FurnishingsItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.server.RecipesProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
@@ -27,7 +29,12 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
     @Override
     public void generateRecipes(Consumer<RecipeJsonProvider> exporter) {
 
-        /* Bricks */
+        // Braziers
+
+        offerBrazierRecipe(exporter, FurnishingsBlocks.BRAZIER);
+        offerBrazierRecipe(exporter, FurnishingsBlocks.SOUL_BRAZIER);
+
+        // Bricks
 
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_BRICKS, Blocks.BRICKS);
         offerChiseledBlockRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CHISELED_BRICKS, Blocks.BRICK_SLAB);
@@ -39,7 +46,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
 
-        /* Calcite */
+        // Calcite
 
         offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE, 2);
@@ -54,16 +61,16 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_STAIRS, FurnishingsBlocks.POLISHED_CALCITE);
         offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
-        offerPolishedBricksRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICKS, FurnishingsBlocks.POLISHED_CALCITE);
-        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_SLAB, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_SLAB, FurnishingsBlocks.POLISHED_CALCITE_BRICKS, 2);
-        offerStairsRecipe(exporter, FurnishingsBlocks.POLISHED_CALCITE_BRICK_STAIRS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_STAIRS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.POLISHED_CALCITE_BRICK_WALL, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
-        offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_POLISHED_CALCITE_BRICKS, FurnishingsBlocks.POLISHED_CALCITE_BRICKS);
+        offerPolishedBricksRecipe(exporter, FurnishingsBlocks.CALCITE_BRICKS, FurnishingsBlocks.POLISHED_CALCITE);
+        offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_BRICK_SLAB, FurnishingsBlocks.CALCITE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_BRICK_SLAB, FurnishingsBlocks.CALCITE_BRICKS, 2);
+        offerStairsRecipe(exporter, FurnishingsBlocks.CALCITE_BRICK_STAIRS, FurnishingsBlocks.CALCITE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_BRICK_STAIRS, FurnishingsBlocks.CALCITE_BRICKS);
+        offerWallRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_BRICK_WALL, FurnishingsBlocks.CALCITE_BRICKS);
+        offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CALCITE_BRICK_WALL, FurnishingsBlocks.CALCITE_BRICKS);
+        offerChiseledBlockRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CHISELED_CALCITE_BRICKS, FurnishingsBlocks.CALCITE_BRICKS);
 
-        /* Candelabras */
+        // Candelabras
 
         offerCandelabraRecipe(exporter, FurnishingsBlocks.CANDELABRA, Blocks.CANDLE);
         offerCandelabraRecipe(exporter, FurnishingsBlocks.WHITE_CANDELABRA, Blocks.WHITE_CANDLE);
@@ -100,7 +107,11 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerCandelabraDyeingRecipe(exporter, FurnishingsBlocks.MAGENTA_CANDELABRA, Items.MAGENTA_DYE);
         offerCandelabraDyeingRecipe(exporter, FurnishingsBlocks.PINK_CANDELABRA, Items.PINK_DYE);
 
-        /* Cobblestone Bricks */
+        // Carpets
+
+        offerGildedCarpetRecipe(exporter, FurnishingsBlocks.GILDED_CARPET);
+
+        // Cobblestone Bricks
 
         offerPolishedBricksRecipe(exporter, FurnishingsBlocks.COBBLESTONE_BRICKS, Blocks.COBBLESTONE);
         offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS);
@@ -118,7 +129,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
         offerCrackingRecipe(exporter, FurnishingsBlocks.CRACKED_COBBLESTONE_BRICKS, FurnishingsBlocks.COBBLESTONE_BRICKS);
 
-        /* Cushions */
+        // Cushions
 
         offerCushionRecipe(exporter, FurnishingsBlocks.WHITE_CUSHION, Blocks.WHITE_WOOL);
         offerCushionRecipe(exporter, FurnishingsBlocks.LIGHT_GRAY_CUSHION, Blocks.LIGHT_GRAY_WOOL);
@@ -154,7 +165,75 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerCushionDyeingRecipe(exporter, FurnishingsBlocks.MAGENTA_CUSHION, Items.MAGENTA_DYE);
         offerCushionDyeingRecipe(exporter, FurnishingsBlocks.PINK_CUSHION, Items.PINK_DYE);
 
-        /* Tuff */
+        // Decorations
+
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.MUG, 1)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("III")
+            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.CHALICE, 1)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("III")
+            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.RED_PAPER_LANTERN, 1)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("III")
+            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+
+        // Glass
+
+        offerGlassFramingRecipe(exporter, FurnishingsBlocks.FRAMED_GLASS, Blocks.GLASS);
+        offerGlassPaneFramingRecipe(exporter, FurnishingsBlocks.FRAMED_GLASS_PANE, Blocks.GLASS_PANE);
+        offerFramedGlassPaneRecipe(exporter, FurnishingsBlocks.FRAMED_GLASS_PANE, FurnishingsBlocks.FRAMED_GLASS);
+        offerGlassPanelRecipe(exporter, FurnishingsBlocks.GLASS_PANEL, Blocks.GLASS_PANE);
+
+        // Iron
+
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.IRON_GRATE, 6)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("III")
+            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.IRON_SCAFFOLDING, 6)
+            .ingredient('~', Items.IRON_NUGGET)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("I~I")
+            .pattern("I I")
+            .pattern("I I")
+            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+
+        // Lamps
+
+        offerLampRecipe(exporter, FurnishingsBlocks.LAMP, Blocks.TORCH);
+        offerLampRecipe(exporter, FurnishingsBlocks.SOUL_LAMP, Blocks.SOUL_TORCH);
+
+        // Nature
+
+        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.ROCKY_DIRT, 4)
+            .ingredient('D', Blocks.DIRT)
+            .ingredient('C', Blocks.COBBLESTONE)
+            .pattern("DC")
+            .pattern("CD")
+            .criterion(hasItem(Blocks.DIRT), conditionsFromItem(Blocks.DIRT))
+            .offerTo(exporter);
+
+        // Pedestals
+
+        offerPedestalRecipe(exporter, FurnishingsBlocks.QUARTZ_PEDESTAL, Blocks.QUARTZ_PILLAR, Blocks.QUARTZ_SLAB);
+        offerPedestalRecipe(exporter, FurnishingsBlocks.STONE_PEDESTAL, Blocks.STONE_BRICKS, Blocks.STONE_BRICK_SLAB);
+
+        // Sconces
+
+        offerSconceRecipe(exporter, FurnishingsBlocks.SCONCE, ItemTags.COALS);
+        offerSconceRecipe(exporter, FurnishingsBlocks.SOUL_SCONCE, ItemTags.SOUL_FIRE_BASE_BLOCKS);
+        offerLeverSconceRecipe(exporter, FurnishingsBlocks.LEVER_SCONCE, FurnishingsBlocks.SCONCE);
+        offerLeverSconceRecipe(exporter, FurnishingsBlocks.LEVER_SOUL_SCONCE, FurnishingsBlocks.SOUL_SCONCE);
+
+        // Tuff
 
         offerSlabRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF);
         offerStonecuttingRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF, 2);
@@ -179,47 +258,153 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
         offerChiseledBlockRecipe(exporter, RecipeCategory.BUILDING_BLOCKS, FurnishingsBlocks.CHISELED_TUFF_BRICKS, FurnishingsBlocks.TUFF_BRICKS);
     }
 
+    public static void offerBrazierRecipe(Consumer<RecipeJsonProvider> exporter, Block brazier) {
+        TagKey<Item> baseItemTag = ((BrazierBlock) brazier).getBaseItemTag();
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, brazier)
+            .ingredient('#', baseItemTag)
+            .ingredient('I', Items.IRON_INGOT)
+            .ingredient('B', Items.IRON_BARS)
+            .pattern("B#B")
+            .pattern("III")
+            .group("brazier")
+            .criterion("has_" + getTagPath(baseItemTag), conditionsFromItemTag(baseItemTag))
+            .criterion(RecipesProvider.hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+    }
+
+    public static void offerGildedCarpetRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 3)
+            .ingredient('G', Items.GOLD_NUGGET)
+            .ingredient('C', Items.RED_CARPET)
+            .pattern("GGG")
+            .pattern("GCG")
+            .pattern("GGG")
+            .group("trimmed_carpet")
+            .criterion(hasItem(Items.RED_CARPET), conditionsFromItem(Items.RED_CARPET))
+            .offerTo(exporter);
+    }
+
+    public static void offerGlassFramingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 1)
+            .ingredient(input)
+            .ingredient(Items.IRON_BARS)
+            .group("framed_glass")
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter);
+    }
+
+    public static void offerGlassPaneFramingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 1)
+            .ingredient(input)
+            .ingredient(Items.IRON_BARS)
+            .group("framed_glass_pane")
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter, output.asItem().toString() + "_from_iron_bars");
+    }
+
+    public static void offerFramedGlassPaneRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 16)
+            .ingredient('#', input)
+            .pattern("###")
+            .pattern("###")
+            .group("framed_glass_pane")
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter, output.asItem().toString() + "_from_" + input.asItem().toString());
+    }
+
+    public static void offerGlassPanelRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 2)
+            .ingredient(input)
+            .group("glass_panel")
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter);
+    }
+
+    public static void offerLampRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output)
+            .ingredient('#', input)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("III")
+            .pattern("###")
+            .pattern("III")
+            .group("lamp")
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+            .offerTo(exporter);
+    }
+
+    public static void offerPedestalRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible middle, ItemConvertible slab) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 2)
+            .ingredient('#', middle)
+            .ingredient('S', slab)
+            .pattern("S")
+            .pattern("#")
+            .pattern("S")
+            .criterion(hasItem(middle), conditionsFromItem(middle))
+            .offerTo(exporter);
+    }
+
+    public static void offerSconceRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, TagKey<Item> input) {
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output, 4)
+            .ingredient('#', input)
+            .ingredient('I', Items.IRON_INGOT)
+            .pattern("#")
+            .pattern("I")
+            .group("sconce")
+            .criterion("has_" + getTagPath(input), conditionsFromItemTag(input))
+            .offerTo(exporter);
+    }
+
+    public static void offerLeverSconceRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
+        ShapelessRecipeJsonFactory.create(RecipeCategory.REDSTONE, output)
+            .ingredient(input)
+            .ingredient(Items.REDSTONE)
+            .group("lever_sconce")
+            .criterion(hasItem(input), conditionsFromItem(input))
+            .offerTo(exporter);
+    }
+
     public static void offerStairsRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        RecipesProvider.createStairsRecipe(output, Ingredient.ofItems(input)).criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input)).offerTo(exporter);
+        RecipesProvider.createStairsRecipe(output, Ingredient.ofItems(input)).criterion(RecipesProvider.hasItem(input), conditionsFromItem(input)).offerTo(exporter);
     }
 
     public static void offerCandelabraDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output)
             .ingredient(FurnishingsItemTags.CANDELABRAS)
             .ingredient(dye)
             .group("candelabra")
-            .criterion("has_candelabra", RecipesProvider.conditionsFromItemTag(FurnishingsItemTags.CANDELABRAS))
+            .criterion("has_candelabra", conditionsFromItemTag(FurnishingsItemTags.CANDELABRAS))
             .offerTo(exporter, dye(output));
     }
 
     public static void offerCandelabraRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output)
             .ingredient('#', input)
             .ingredient('I', Items.IRON_INGOT)
             .pattern("#")
             .pattern("I")
             .group("candelabra")
-            .criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input))
+            .criterion(RecipesProvider.hasItem(input), conditionsFromItem(input))
             .offerTo(exporter);
     }
 
     public static void offerCushionDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
-        ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        ShapelessRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output)
             .ingredient(FurnishingsItemTags.CUSHIONS)
             .ingredient(dye)
             .group("cushion")
-            .criterion("has_cushion", RecipesProvider.conditionsFromItemTag(FurnishingsItemTags.CUSHIONS))
+            .criterion("has_cushion", conditionsFromItemTag(FurnishingsItemTags.CUSHIONS))
             .offerTo(exporter, dye(output));
     }
 
     public static void offerCushionRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        ShapedRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output)
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, output)
             .ingredient('#', input)
             .ingredient('X', Ingredient.ofTag(ItemTags.PLANKS))
             .pattern("##")
             .pattern("XX")
             .group("cushion")
-            .criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input))
+            .criterion(RecipesProvider.hasItem(input), conditionsFromItem(input))
             .offerTo(exporter);
     }
 
@@ -228,16 +413,16 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .ingredient('#', input)
             .pattern("##")
             .pattern("##")
-            .criterion(RecipesProvider.hasItem(input), RecipesProvider.conditionsFromItem(input))
+            .criterion(RecipesProvider.hasItem(input), conditionsFromItem(input))
             .offerTo(exporter);
     }
 
     public static void offerMossyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output).ingredient(input).ingredient(Blocks.MOSS_BLOCK)
-            .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), RecipesProvider.conditionsFromItem(Items.MOSS_BLOCK))
+            .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), conditionsFromItem(Items.MOSS_BLOCK))
             .group(output.asItem().toString()).offerTo(exporter, output.asItem().toString() + "_from_moss_block");
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output).ingredient(input).ingredient(Items.VINE)
-            .criterion(RecipesProvider.hasItem(Items.VINE), RecipesProvider.conditionsFromItem(Items.VINE))
+            .criterion(RecipesProvider.hasItem(Items.VINE), conditionsFromItem(Items.VINE))
             .group(output.asItem().toString()).offerTo(exporter, output.asItem().toString() + "_from_vine");
     }
 

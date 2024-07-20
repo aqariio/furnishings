@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "group": "lever_sconce",
+  "ingredients": [
+    {
+      "item": "furnishings:sconce"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ],
+  "result": {
+    "item": "furnishings:lever_sconce"
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.1,
-  "ingredient": {
-    "item": "furnishings:tuff_bricks"
-  },
-  "result": "furnishings:chiseled_tuff_bricks"
-}

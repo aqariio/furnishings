@@ -45,11 +45,11 @@ public class FurnishingsBlocks {
     public static final Block POLISHED_CALCITE_SLAB = register("polished_calcite_slab", new SlabBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroups.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_STAIRS = register("polished_calcite_stairs", new StairsBlock(POLISHED_CALCITE.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroups.BUILDING_BLOCKS);
     public static final Block POLISHED_CALCITE_WALL = register("polished_calcite_wall", new WallBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE)), ItemGroups.BUILDING_BLOCKS);
-    public static final Block POLISHED_CALCITE_BRICKS = register("polished_calcite_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroups.BUILDING_BLOCKS);
-    public static final Block POLISHED_CALCITE_BRICK_SLAB = register("polished_calcite_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
-    public static final Block POLISHED_CALCITE_BRICK_STAIRS = register("polished_calcite_brick_stairs", new StairsBlock(POLISHED_CALCITE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
-    public static final Block POLISHED_CALCITE_BRICK_WALL = register("polished_calcite_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
-    public static final Block CRACKED_POLISHED_CALCITE_BRICKS = register("cracked_polished_calcite_bricks", new Block(QuiltBlockSettings.copyOf(POLISHED_CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
+    public static final Block CALCITE_BRICKS = register("calcite_bricks", new Block(QuiltBlockSettings.copyOf(Blocks.CALCITE)), ItemGroups.BUILDING_BLOCKS);
+    public static final Block CALCITE_BRICK_SLAB = register("calcite_brick_slab", new SlabBlock(QuiltBlockSettings.copyOf(CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
+    public static final Block CALCITE_BRICK_STAIRS = register("calcite_brick_stairs", new StairsBlock(CALCITE_BRICKS.getDefaultState(), QuiltBlockSettings.copyOf(CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
+    public static final Block CALCITE_BRICK_WALL = register("calcite_brick_wall", new WallBlock(QuiltBlockSettings.copyOf(CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
+    public static final Block CHISELED_CALCITE_BRICKS = register("chiseled_calcite_bricks", new Block(QuiltBlockSettings.copyOf(CALCITE_BRICKS)), ItemGroups.BUILDING_BLOCKS);
 
     /**
      * Candelabras
@@ -210,7 +210,7 @@ public class FurnishingsBlocks {
     );
 
     /**
-     * Decoration
+     * Decorations
      */
     public static final Block MUG = register("mug", new MugBlock(QuiltBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.WOOD).pistonBehavior(PistonBehavior.DESTROY)), ItemGroups.FUNCTIONAL_BLOCKS);
     public static final Block CHALICE = register("chalice", new ChaliceBlock(QuiltBlockSettings.create().breakInstantly().sounds(BlockSoundGroup.LANTERN).pistonBehavior(PistonBehavior.DESTROY)), ItemGroups.FUNCTIONAL_BLOCKS);
@@ -227,8 +227,8 @@ public class FurnishingsBlocks {
     /**
      * Iron
      */
-    public static final Block IRON_SCAFFOLDING = registerScaffolding("iron_scaffolding", new IronScaffoldingBlock(QuiltBlockSettings.create().mapColor(MapColor.METAL).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN).noCollision().dynamicBounds()));
     public static final Block IRON_GRATE = register("iron_grate", new GrateBlock(QuiltBlockSettings.create().mapColor(MapColor.NONE).requiresTool().strength(5.0F, 6.0F).sounds(BlockSoundGroup.COPPER).nonOpaque()), ItemGroups.BUILDING_BLOCKS);
+    public static final Block IRON_SCAFFOLDING = registerScaffolding("iron_scaffolding", new IronScaffoldingBlock(QuiltBlockSettings.create().mapColor(MapColor.METAL).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN).noCollision().dynamicBounds()));
 
     /**
      * Lamps
@@ -237,8 +237,8 @@ public class FurnishingsBlocks {
     public static final Block SOUL_LAMP = register("soul_lamp", new Block(QuiltBlockSettings.create().luminance(state -> 10).requiresTool().strength(4.5F).sounds(BlockSoundGroup.LANTERN)), ItemGroups.FUNCTIONAL_BLOCKS);
 
     /* Nature */
-    public static final Block ROCKY_DIRT = register("rocky_dirt", new Block(QuiltBlockSettings.copyOf(Blocks.DIRT).strength(1.0F).sounds(BlockSoundGroup.TUFF).requiresTool()), ItemGroups.BUILDING_BLOCKS);
-    public static final Block MOSS = register("moss", new GlowLichenBlock(QuiltBlockSettings.create().noCollision().strength(0.1F).sounds(BlockSoundGroup.MOSS_CARPET)), ItemGroups.FUNCTIONAL_BLOCKS);
+    public static final Block ROCKY_DIRT = register("rocky_dirt", new Block(QuiltBlockSettings.copyOf(Blocks.DIRT).strength(1.0F).sounds(BlockSoundGroup.TUFF).requiresTool()), ItemGroups.NATURAL_BLOCKS);
+    public static final Block MOSS = register("moss", new GlowLichenBlock(QuiltBlockSettings.create().noCollision().strength(0.1F).sounds(BlockSoundGroup.MOSS_CARPET)), ItemGroups.NATURAL_BLOCKS);
 
     /**
      * Pedestals
@@ -247,7 +247,7 @@ public class FurnishingsBlocks {
     public static final Block STONE_PEDESTAL = register("stone_pedestal", new PedestalBlock(QuiltBlockSettings.create().mapColor(MapColor.STONE).requiresTool().strength(1.5F, 6.0F)), ItemGroups.FUNCTIONAL_BLOCKS);
 
     /**
-     * Sconce
+     * Sconces
      */
     public static final Block SCONCE = register(
         "sconce",

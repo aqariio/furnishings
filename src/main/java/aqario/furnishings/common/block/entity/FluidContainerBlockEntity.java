@@ -17,12 +17,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class FluidContainerBlockEntity extends BlockEntity {
     private Potion potion;
-    private String potionType;
+    private String fluidType;
 
     public FluidContainerBlockEntity(BlockPos pos, BlockState state) {
         super(FurnishingsBlockEntityType.FLUID_CONTAINER, pos, state);
         this.potion = Potions.EMPTY;
-        this.potionType = Registries.ITEM.getId(Items.POTION).toString();
+        this.fluidType = Registries.ITEM.getId(Items.POTION).toString();
     }
 
     @Override
@@ -33,8 +33,35 @@ public class FluidContainerBlockEntity extends BlockEntity {
             String potionName = potionId.toString();
 
             nbt.putString("Potion", potionName);
-            nbt.putString("PotionType", potionType);
+            nbt.putString("FluidType", fluidType);
         }
+    }
+
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        this.potion = Registries.POTION.get(Identifier.tryParse(nbt.getString("Potion")));
+        this.fluidType = nbt.getString("FluidType");
+    }
+
+    public @NotNull Potion getPotion() {
+        return this.potion;
+    }
+
+    public void setPotion(Potion potion) {
+        this.potion = potion;
+    }
+
+    public @NotNull String getFluidType() {
+        return fluidType;
+    }
+
+    public void setFluidType(String fluidType) {
+        this.fluidType = fluidType;
+    }
+
+    public boolean isEmpty() {
+        return this.getPotion() == Potions.EMPTY;
     }
 
     @Nullable
@@ -46,31 +73,5 @@ public class FluidContainerBlockEntity extends BlockEntity {
     @Override
     public NbtCompound toSyncedNbt() {
         return this.toIdentifiedLocatedNbt();
-    }
-
-    @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
-        this.potion = Registries.POTION.get(Identifier.tryParse(nbt.getString("Potion")));
-    }
-
-    public @NotNull Potion getPotion() {
-        return this.potion;
-    }
-
-    public void setPotion(Potion potion) {
-        this.potion = potion;
-    }
-
-    public @NotNull String getPotionType() {
-        return potionType;
-    }
-
-    public void setPotionType(String potionType) {
-        this.potionType = potionType;
-    }
-
-    public boolean isEmpty() {
-        return this.getPotion() == Potions.EMPTY;
     }
 }

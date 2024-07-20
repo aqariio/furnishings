@@ -30,5 +30,6 @@
     "recipes": [
       "furnishings:candelabra"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

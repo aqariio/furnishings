@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "furnishings:block/polished_calcite_bricks"
-  }
-}

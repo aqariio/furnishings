@@ -11,6 +11,8 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -55,11 +57,13 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     private final boolean emitsParticles;
     private final int fireDamage;
+    private final TagKey<Item> baseItemTag;
 
     public BrazierBlock(BrazierType type, AbstractBlock.Settings settings) {
         super(settings);
         this.emitsParticles = type.emitsParticles;
         this.fireDamage = type.fireDamage;
+        this.baseItemTag = type.baseItemTag;
         this.setDefaultState(this.stateManager.getDefaultState().with(LIT, true).with(HANGING, false).with(WATERLOGGED, false));
     }
 
@@ -227,16 +231,22 @@ public class BrazierBlock extends Block implements Waterloggable, Extinguishable
         return false;
     }
 
+    public TagKey<Item> getBaseItemTag() {
+        return this.baseItemTag;
+    }
+
     public enum BrazierType {
-        NORMAL(true, 1),
-        SOUL(false, 2);
+        NORMAL(true, 1, ItemTags.COALS),
+        SOUL(false, 2, ItemTags.SOUL_FIRE_BASE_BLOCKS);
 
         private final boolean emitsParticles;
         private final int fireDamage;
+        private final TagKey<Item> baseItemTag;
 
-        BrazierType(boolean emitsParticles, int fireDamage) {
+        BrazierType(boolean emitsParticles, int fireDamage, TagKey<Item> baseItemTag) {
             this.emitsParticles = emitsParticles;
             this.fireDamage = fireDamage;
+            this.baseItemTag = baseItemTag;
         }
     }
 }

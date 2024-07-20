@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "furnishings:polished_calcite_bricks"
+        "recipe": "furnishings:calcite_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "furnishings:polished_calcite_bricks"
+      "furnishings:calcite_bricks"
     ]
   }
 }

@@ -285,35 +285,34 @@ public class CandelabraBlock extends HorizontalFacingBlock implements Waterlogga
 
     static {
         PARTICLE_OFFSETS = new EnumMap<>(Direction.class);
-        EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> temp = new EnumMap<>(NoCeilingWallMountLocation.class);
-        {
-            Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
-            int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.6875, 0.5)));
-            int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.875, 0.5), new Vec3d(0.6875, 0.875, 0.5)));
-            int2ObjectMap.put(3, List.of(new Vec3d(0.1875, 0.9375, 0.5), new Vec3d(0.5, 0.9375, 0.5), new Vec3d(0.8125, 0.9375, 0.5)));
-            int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.5), new Vec3d(0.8125, 1, 0.5), new Vec3d(0.5, 0.9375, 0.25), new Vec3d(0.5, 0.9375, 0.75)));
-            temp.put(NoCeilingWallMountLocation.FLOOR, Int2ObjectMaps.unmodifiable(int2ObjectMap));
-        }
-        {
-            Int2ObjectMap<List<Vec3d>> int2ObjectMap = new Int2ObjectOpenHashMap<>();
-            int2ObjectMap.put(1, List.of(new Vec3d(0.5, 0.9375, 0.1875)));
-            int2ObjectMap.put(2, List.of(new Vec3d(0.3125, 0.9375, 0.1875), new Vec3d(0.6875, 0.9375, 0.1875)));
-            int2ObjectMap.put(3, List.of(new Vec3d(0.8125, 0.9375, 0.1875), new Vec3d(0.1875, 0.9375, 0.1875), new Vec3d(0.5, 0.9375, 0.25)));
-            int2ObjectMap.put(4, List.of(new Vec3d(0.1875, 1, 0.1875), new Vec3d(0.8125, 1, 0.1875), new Vec3d(0.3125, 0.875, 0.3125), new Vec3d(0.6875, 0.875, 0.3125)));
-            temp.put(NoCeilingWallMountLocation.WALL, Int2ObjectMaps.unmodifiable(int2ObjectMap));
-        }
+        EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> particlePos = new EnumMap<>(NoCeilingWallMountLocation.class);
+
+        Int2ObjectMap<List<Vec3d>> floorPos = new Int2ObjectOpenHashMap<>();
+        floorPos.put(1, List.of(new Vec3d(0.5, 0.6875, 0.5)));
+        floorPos.put(2, List.of(new Vec3d(0.3125, 0.875, 0.5), new Vec3d(0.6875, 0.875, 0.5)));
+        floorPos.put(3, List.of(new Vec3d(0.1875, 0.9375, 0.5), new Vec3d(0.5, 1, 0.5), new Vec3d(0.8125, 0.9375, 0.5)));
+        floorPos.put(4, List.of(new Vec3d(0.1875, 1, 0.5), new Vec3d(0.8125, 1, 0.5), new Vec3d(0.5, 0.9375, 0.25), new Vec3d(0.5, 0.9375, 0.75)));
+        particlePos.put(NoCeilingWallMountLocation.FLOOR, Int2ObjectMaps.unmodifiable(floorPos));
+
+
+        Int2ObjectMap<List<Vec3d>> wallPos = new Int2ObjectOpenHashMap<>();
+        wallPos.put(1, List.of(new Vec3d(0.5, 0.875, 0.1875)));
+        wallPos.put(2, List.of(new Vec3d(0.3125, 0.875, 0.1875), new Vec3d(0.6875, 0.875, 0.1875)));
+        wallPos.put(3, List.of(new Vec3d(0.8125, 0.875, 0.1875), new Vec3d(0.1875, 0.875, 0.1875), new Vec3d(0.5, 0.875, 0.3125)));
+        wallPos.put(4, List.of(new Vec3d(0.1875, 0.875, 0.3125), new Vec3d(0.8125, 0.875, 0.3125), new Vec3d(0.5, 0.9375, 0.1875), new Vec3d(0.5, 0.8125, 0.4375)));
+        particlePos.put(NoCeilingWallMountLocation.WALL, Int2ObjectMaps.unmodifiable(wallPos));
+
         for (Direction direction : Direction.values()) {
             EnumMap<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> newFaceMap = new EnumMap<>(NoCeilingWallMountLocation.class);
-            for (var faceList : temp.entrySet()) {
+            for (Map.Entry<NoCeilingWallMountLocation, Int2ObjectMap<List<Vec3d>>> faceList : particlePos.entrySet()) {
                 Int2ObjectMap<List<Vec3d>> newCandleList = new Int2ObjectOpenHashMap<>();
                 newCandleList.defaultReturnValue(List.of());
                 int c = 1;
-                var oldVec = faceList.getValue();
+                Int2ObjectMap<List<Vec3d>> oldVec = faceList.getValue();
                 for (int i = 1; i < 5; i++) {
                     ArrayList<Vec3d> vectorsList = new ArrayList<>();
-                    for (var vec : oldVec.get(i)) {
-                        vectorsList.add(rotateVec3d(vec.subtract(0.5, 0.5, 0.5), direction.getOpposite())
-                            .add(0.5, 0.5, 0.5));
+                    for (Vec3d vec : oldVec.get(i)) {
+                        vectorsList.add(rotateVec3d(vec.subtract(0.5, 0.5, 0.5), direction.getOpposite()).add(0.5, 0.5, 0.5));
                     }
                     newCandleList.put(c++, ImmutableList.copyOf(vectorsList));
                 }

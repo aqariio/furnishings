@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.1,
-  "ingredient": {
-    "item": "furnishings:polished_calcite_bricks"
-  },
-  "result": "furnishings:cracked_polished_calcite_bricks"
-}

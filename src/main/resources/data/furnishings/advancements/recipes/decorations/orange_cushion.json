@@ -30,5 +30,6 @@
     "recipes": [
       "furnishings:orange_cushion"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

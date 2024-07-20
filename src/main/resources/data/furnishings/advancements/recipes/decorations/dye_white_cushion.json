@@ -28,5 +28,6 @@
     "recipes": [
       "minecraft:dye_white_cushion"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

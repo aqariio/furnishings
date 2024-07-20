@@ -28,5 +28,6 @@
     "recipes": [
       "minecraft:dye_pink_candelabra"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -1,8 +1,0 @@
-{
-  "parent": "furnishings:block/template_paper_lantern_hanging",
-  "textures": {
-    "top": "furnishings:block/paper_lantern_top",
-    "bottom": "furnishings:block/paper_lantern_bottom",
-    "side": "furnishings:block/paper_lantern_side"
-  }
-}

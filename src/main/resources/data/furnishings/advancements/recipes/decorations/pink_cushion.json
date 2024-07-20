@@ -30,5 +30,6 @@
     "recipes": [
       "furnishings:pink_cushion"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

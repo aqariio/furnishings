@@ -8,7 +8,6 @@ import net.minecraft.util.Identifier;
 
 public final class FurnishingsBlockTags {
     public static final TagKey<Block> CANDELABRAS = register("candelabras");
-    public static final TagKey<Block> COBBLESTONE_BRICKS = register("cobblestone_bricks");
     public static final TagKey<Block> CUSHIONS = register("cushions");
     public static final TagKey<Block> SCONCES = register("sconces");
 
