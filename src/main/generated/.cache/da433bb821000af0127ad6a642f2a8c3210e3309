@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-20T13:45:31.1144732	Medieval Furnishings/Block Loot Tables
+// 1.20.1	2024-07-24T10:38:35.9175549	Medieval Furnishings/Block Loot Tables
 3001a369b4e8ec4239eb3f3f698063961eb01b1f data\furnishings\loot_tables\blocks\mossy_cobblestone_brick_wall.json
 2349515372dcd45ab1a54f0b1e9e1a1e0d397079 data\furnishings\loot_tables\blocks\light_gray_cushion.json
 71ada731b8964e9ca14764141ceceb2a249a449a data\furnishings\loot_tables\blocks\sconce.json
@@ -19,8 +19,8 @@ a84e9cd4f2c52fef2a385408ba40d234b3572d2b data\furnishings\loot_tables\blocks\cob
 fda6652efcd3e164a853ffc5eedbb36728a31e3e data\furnishings\loot_tables\blocks\white_cushion.json
 0f79de3e521351ff6577b40a48e1456b4dd7a516 data\furnishings\loot_tables\blocks\soul_brazier.json
 aaeec0b1b3f3b389ce311ee1d87ba9f42c3494ef data\furnishings\loot_tables\blocks\purple_candelabra.json
-a8a6de705c9d350023515d310772f771878f55de data\furnishings\loot_tables\blocks\cobblestone_brick_wall.json
 4eedd9a0eca1d2d50e5f4eb8487128802d8000e8 data\furnishings\loot_tables\blocks\lime_candelabra.json
+a8a6de705c9d350023515d310772f771878f55de data\furnishings\loot_tables\blocks\cobblestone_brick_wall.json
 e2c999a145079e9dc3b8d3ccc692804b976f5af6 data\furnishings\loot_tables\blocks\brown_cushion.json
 6ff83658b62e23675c6c15b3224ca9269efaac1d data\furnishings\loot_tables\blocks\mossy_brick_slab.json
 9e22eb2b32d9de1b643460660117fee7f63becef data\furnishings\loot_tables\blocks\polished_calcite.json

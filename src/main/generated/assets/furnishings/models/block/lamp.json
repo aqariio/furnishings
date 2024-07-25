@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "furnishings:block/lamp_bottom",
+    "side": "furnishings:block/lamp_side",
+    "top": "furnishings:block/lamp_top"
+  }
+}

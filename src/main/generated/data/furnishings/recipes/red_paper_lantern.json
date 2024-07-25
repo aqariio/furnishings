@@ -2,12 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
+    "#": {
+      "item": "minecraft:torch"
+    },
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "P": {
+      "item": "minecraft:paper"
     }
   },
   "pattern": [
-    "III"
+    "PGP",
+    "P#P",
+    "PGP"
   ],
   "result": {
     "item": "furnishings:red_paper_lantern"

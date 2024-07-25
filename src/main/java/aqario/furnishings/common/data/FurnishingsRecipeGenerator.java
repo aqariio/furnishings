@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.data.server.RecipesProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonFactory;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonFactory;
@@ -167,20 +166,29 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
         // Decorations
 
-        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.MUG, 1)
-            .ingredient('I', Items.IRON_INGOT)
-            .pattern("III")
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.MUG, 4)
+            .ingredient('#', Blocks.SPRUCE_PLANKS)
+            .pattern("# #")
+            .pattern("# #")
+            .pattern(" # ")
+            .criterion(hasItem(Blocks.SPRUCE_PLANKS), conditionsFromItem(Blocks.SPRUCE_PLANKS))
             .offerTo(exporter);
-        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.CHALICE, 1)
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.CHALICE, 2)
+            .ingredient('#', Items.IRON_NUGGET)
             .ingredient('I', Items.IRON_INGOT)
-            .pattern("III")
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .pattern("# #")
+            .pattern("#I#")
+            .pattern(" # ")
+            .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
             .offerTo(exporter);
-        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.RED_PAPER_LANTERN, 1)
-            .ingredient('I', Items.IRON_INGOT)
-            .pattern("III")
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.RED_PAPER_LANTERN)
+            .ingredient('#', Blocks.TORCH)
+            .ingredient('P', Items.PAPER)
+            .ingredient('G', Items.GOLD_NUGGET)
+            .pattern("PGP")
+            .pattern("P#P")
+            .pattern("PGP")
+            .criterion(hasItem(Items.PAPER), conditionsFromItem(Items.PAPER))
             .offerTo(exporter);
 
         // Glass
@@ -192,10 +200,10 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
         // Iron
 
-        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.IRON_GRATE, 6)
+        ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.IRON_GRATE, 4)
             .ingredient('I', Items.IRON_INGOT)
             .pattern("III")
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
             .offerTo(exporter);
         ShapedRecipeJsonFactory.create(RecipeCategory.DECORATIONS, FurnishingsBlocks.IRON_SCAFFOLDING, 6)
             .ingredient('~', Items.IRON_NUGGET)
@@ -203,7 +211,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .pattern("I~I")
             .pattern("I I")
             .pattern("I I")
-            .criterion("has_iron_ingot", conditionsFromItem(Items.IRON_INGOT))
+            .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
             .offerTo(exporter);
 
         // Lamps
@@ -267,8 +275,8 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .pattern("B#B")
             .pattern("III")
             .group("brazier")
-            .criterion("has_" + getTagPath(baseItemTag), conditionsFromItemTag(baseItemTag))
-            .criterion(RecipesProvider.hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+            .criterion(hasTag(baseItemTag), conditionsFromItemTag(baseItemTag))
+            .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
             .offerTo(exporter);
     }
 
@@ -351,7 +359,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .pattern("#")
             .pattern("I")
             .group("sconce")
-            .criterion("has_" + getTagPath(input), conditionsFromItemTag(input))
+            .criterion(hasTag(input), conditionsFromItemTag(input))
             .offerTo(exporter);
     }
 
@@ -365,7 +373,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
     }
 
     public static void offerStairsRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
-        RecipesProvider.createStairsRecipe(output, Ingredient.ofItems(input)).criterion(RecipesProvider.hasItem(input), conditionsFromItem(input)).offerTo(exporter);
+        createStairsRecipe(output, Ingredient.ofItems(input)).criterion(hasItem(input), conditionsFromItem(input)).offerTo(exporter);
     }
 
     public static void offerCandelabraDyeingRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible dye) {
@@ -384,7 +392,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .pattern("#")
             .pattern("I")
             .group("candelabra")
-            .criterion(RecipesProvider.hasItem(input), conditionsFromItem(input))
+            .criterion(hasItem(input), conditionsFromItem(input))
             .offerTo(exporter);
     }
 
@@ -393,7 +401,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .ingredient(FurnishingsItemTags.CUSHIONS)
             .ingredient(dye)
             .group("cushion")
-            .criterion("has_cushion", conditionsFromItemTag(FurnishingsItemTags.CUSHIONS))
+            .criterion(hasTag(FurnishingsItemTags.CUSHIONS), conditionsFromItemTag(FurnishingsItemTags.CUSHIONS))
             .offerTo(exporter, dye(output));
     }
 
@@ -404,7 +412,7 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .pattern("##")
             .pattern("XX")
             .group("cushion")
-            .criterion(RecipesProvider.hasItem(input), conditionsFromItem(input))
+            .criterion(hasItem(input), conditionsFromItem(input))
             .offerTo(exporter);
     }
 
@@ -413,16 +421,16 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
             .ingredient('#', input)
             .pattern("##")
             .pattern("##")
-            .criterion(RecipesProvider.hasItem(input), conditionsFromItem(input))
+            .criterion(hasItem(input), conditionsFromItem(input))
             .offerTo(exporter);
     }
 
     public static void offerMossyRecipe(Consumer<RecipeJsonProvider> exporter, ItemConvertible output, ItemConvertible input) {
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output).ingredient(input).ingredient(Blocks.MOSS_BLOCK)
-            .criterion(RecipesProvider.hasItem(Blocks.MOSS_BLOCK), conditionsFromItem(Items.MOSS_BLOCK))
+            .criterion(hasItem(Blocks.MOSS_BLOCK), conditionsFromItem(Items.MOSS_BLOCK))
             .group(output.asItem().toString()).offerTo(exporter, output.asItem().toString() + "_from_moss_block");
         ShapelessRecipeJsonFactory.create(RecipeCategory.BUILDING_BLOCKS, output).ingredient(input).ingredient(Items.VINE)
-            .criterion(RecipesProvider.hasItem(Items.VINE), conditionsFromItem(Items.VINE))
+            .criterion(hasItem(Items.VINE), conditionsFromItem(Items.VINE))
             .group(output.asItem().toString()).offerTo(exporter, output.asItem().toString() + "_from_vine");
     }
 
@@ -432,6 +440,10 @@ public class FurnishingsRecipeGenerator extends FabricRecipeProvider {
 
     public static String convertBetween(ItemConvertible from, TagKey<Item> to) {
         return getItemPath(from) + "_from_" + getTagPath(to);
+    }
+
+    public static String hasTag(TagKey<Item> tagKey) {
+        return "has_" + getTagPath(tagKey);
     }
 
     public static String getTagPath(TagKey<Item> tagKey) {

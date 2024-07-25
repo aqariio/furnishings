@@ -4,6 +4,7 @@ import aqario.furnishings.common.block.CandelabraBlock;
 import aqario.furnishings.common.block.FurnishingsBlocks;
 import aqario.furnishings.common.block.enums.NoCeilingWallMountLocation;
 import aqario.furnishings.common.data.client.model.FurnishingsModels;
+import aqario.furnishings.common.data.client.model.FurnishingsTexturedModel;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
@@ -21,6 +22,37 @@ public class FurnishingsModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+
+        // Braziers
+
+
+
+        // Bricks
+
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.MOSSY_BRICKS);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.MOSSY_BRICK_SLAB, FurnishingsBlocks.MOSSY_BRICKS);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.MOSSY_BRICK_STAIRS, FurnishingsBlocks.MOSSY_BRICKS);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.MOSSY_BRICK_WALL, FurnishingsBlocks.MOSSY_BRICKS);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.CRACKED_BRICKS);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.CHISELED_BRICKS);
+
+        // Calcite
+
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.CALCITE_SLAB, Blocks.CALCITE);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.CALCITE_STAIRS, Blocks.CALCITE);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.CALCITE_WALL, Blocks.CALCITE);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.POLISHED_CALCITE);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.POLISHED_CALCITE_SLAB, FurnishingsBlocks.POLISHED_CALCITE);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.POLISHED_CALCITE_STAIRS, FurnishingsBlocks.POLISHED_CALCITE);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.POLISHED_CALCITE_WALL, FurnishingsBlocks.POLISHED_CALCITE);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.CALCITE_BRICKS);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.CALCITE_BRICK_SLAB, FurnishingsBlocks.CALCITE_BRICKS);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.CALCITE_BRICK_STAIRS, FurnishingsBlocks.CALCITE_BRICKS);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.CALCITE_BRICK_WALL, FurnishingsBlocks.CALCITE_BRICKS);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.CHISELED_CALCITE_BRICKS);
+
+        // Candelabras
+
         registerCandelabra(blockStateModelGenerator, FurnishingsBlocks.CANDELABRA, Blocks.CANDLE);
         registerCandelabra(blockStateModelGenerator, FurnishingsBlocks.WHITE_CANDELABRA, Blocks.WHITE_CANDLE);
         registerCandelabra(blockStateModelGenerator, FurnishingsBlocks.LIGHT_GRAY_CANDELABRA, Blocks.LIGHT_GRAY_CANDLE);
@@ -38,13 +70,119 @@ public class FurnishingsModelProvider extends FabricModelProvider {
         registerCandelabra(blockStateModelGenerator, FurnishingsBlocks.PURPLE_CANDELABRA, Blocks.PURPLE_CANDLE);
         registerCandelabra(blockStateModelGenerator, FurnishingsBlocks.MAGENTA_CANDELABRA, Blocks.MAGENTA_CANDLE);
         registerCandelabra(blockStateModelGenerator, FurnishingsBlocks.PINK_CANDELABRA, Blocks.PINK_CANDLE);
+
+        // Carpets
+
+
+
+        // Cobblestone Bricks
+
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.COBBLESTONE_BRICK_WALL, FurnishingsBlocks.COBBLESTONE_BRICKS);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_SLAB, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_STAIRS, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICK_WALL, FurnishingsBlocks.MOSSY_COBBLESTONE_BRICKS);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.CRACKED_COBBLESTONE_BRICKS);
+
+        // Cushions
+
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.WHITE_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.LIGHT_GRAY_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.GRAY_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.BLACK_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.BROWN_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.RED_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.ORANGE_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.YELLOW_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.LIME_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.GREEN_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.CYAN_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.LIGHT_BLUE_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.BLUE_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.PURPLE_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.MAGENTA_CUSHION);
+        registerCushion(blockStateModelGenerator, FurnishingsBlocks.PINK_CUSHION);
+
+        // Decorations
+
+
+
+        // Glass
+
+
+
+        // Iron
+
+
+
+        // Lamps
+
+        registerLamp(blockStateModelGenerator, FurnishingsBlocks.LAMP);
+        registerLamp(blockStateModelGenerator, FurnishingsBlocks.SOUL_LAMP);
+
+        // Nature
+
+
+
+        // Pedestals
+
+
+
+        // Sconces
+
+
+
+        // Tuff
+
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.TUFF_SLAB, Blocks.TUFF);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.TUFF_STAIRS, Blocks.TUFF);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.TUFF_WALL, Blocks.TUFF);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.POLISHED_TUFF);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.POLISHED_TUFF_SLAB, FurnishingsBlocks.POLISHED_TUFF);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.POLISHED_TUFF_STAIRS, FurnishingsBlocks.POLISHED_TUFF);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.POLISHED_TUFF_WALL, FurnishingsBlocks.POLISHED_TUFF);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.TUFF_BRICKS);
+        registerSlab(blockStateModelGenerator, FurnishingsBlocks.TUFF_BRICK_SLAB, FurnishingsBlocks.TUFF_BRICKS);
+        registerStairs(blockStateModelGenerator, FurnishingsBlocks.TUFF_BRICK_STAIRS, FurnishingsBlocks.TUFF_BRICKS);
+        registerWall(blockStateModelGenerator, FurnishingsBlocks.TUFF_BRICK_WALL, FurnishingsBlocks.TUFF_BRICKS);
+        registerCubeAll(blockStateModelGenerator, FurnishingsBlocks.CHISELED_TUFF_BRICKS);
     }
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(FurnishingsBlocks.CALCITE_SLAB.asItem(), FurnishingsModels.isometricBlock(FurnishingsBlocks.CALCITE_SLAB));
-        itemModelGenerator.register(FurnishingsBlocks.CALCITE_STAIRS.asItem(), FurnishingsModels.isometricBlock(FurnishingsBlocks.CALCITE_STAIRS));
-        itemModelGenerator.register(FurnishingsBlocks.CALCITE_WALL.asItem(), FurnishingsModels.isometricBlock(FurnishingsBlocks.CALCITE_WALL));
+    }
+
+    public final void registerCubeAll(BlockStateModelGenerator blockStateModelGenerator, Block block) {
+        blockStateModelGenerator.registerSimpleCubeAll(block);
+    }
+
+    public final void registerSlab(BlockStateModelGenerator blockStateModelGenerator, Block slab, Block block) {
+        TexturedModel texturedModel = TexturedModel.CUBE_ALL.get(block);
+        Identifier slabBottomModel = Models.SLAB.upload(slab, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        Identifier slabTopModel = Models.SLAB_TOP.upload(slab, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        Identifier fullModel = ModelIds.getBlockModelId(block);
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createSlabBlockState(slab, slabBottomModel, slabTopModel, fullModel));
+    }
+
+    public final void registerStairs(BlockStateModelGenerator blockStateModelGenerator, Block stairs, Block block) {
+        TexturedModel texturedModel = TexturedModel.CUBE_ALL.get(block);
+        Identifier innerStairsModel = Models.INNER_STAIRS.upload(stairs, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        Identifier stairsModel = Models.STAIRS.upload(stairs, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        Identifier outerStairsModel = Models.OUTER_STAIRS.upload(stairs, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createStairsBlockState(stairs, innerStairsModel, stairsModel, outerStairsModel));
+    }
+
+    public final void registerWall(BlockStateModelGenerator blockStateModelGenerator, Block wall, Block block) {
+        TexturedModel texturedModel = TexturedModel.CUBE_ALL.get(block);
+        Identifier postModel = Models.TEMPLATE_WALL_POST.upload(wall, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        Identifier lowSideModel = Models.TEMPLATE_WALL_SIDE.upload(wall, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        Identifier tallSideModel = Models.TEMPLATE_WALL_SIDE_TALL.upload(wall, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createWallBlockState(wall, postModel, lowSideModel, tallSideModel));
+        Identifier inventoryModel = Models.WALL_INVENTORY.upload(wall, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
+        blockStateModelGenerator.registerParentedItemModel(wall, inventoryModel);
     }
 
     public final void registerCandelabra(BlockStateModelGenerator blockStateModelGenerator, Block candelabra, Block candle) {
@@ -115,5 +253,17 @@ public class FurnishingsModelProvider extends FabricModelProvider {
     public static Texture candle(Block block, boolean lit) {
         return new Texture()
             .put(TextureKey.CANDLE, Texture.getSubId(block, lit ? "_lit" : ""));
+    }
+
+    public final void registerConnectingCarpet(BlockStateModelGenerator blockStateModelGenerator, Block carpet) {
+
+    }
+
+    public final void registerCushion(BlockStateModelGenerator blockStateModelGenerator, Block cushion) {
+        blockStateModelGenerator.registerSingleton(cushion, FurnishingsTexturedModel.TEMPLATE_CUSHION);
+    }
+
+    public final void registerLamp(BlockStateModelGenerator blockStateModelGenerator, Block lamp) {
+        blockStateModelGenerator.registerSingleton(lamp, TexturedModel.CUBE_BOTTOM_TOP);
     }
 }

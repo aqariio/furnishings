@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cushion": {
+    "has_cushions": {
       "conditions": {
         "items": [
           {
@@ -20,7 +20,7 @@
   },
   "requirements": [
     [
-      "has_cushion",
+      "has_cushions",
       "has_the_recipe"
     ]
   ],
