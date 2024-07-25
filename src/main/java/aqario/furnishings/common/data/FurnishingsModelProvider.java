@@ -25,7 +25,8 @@ public class FurnishingsModelProvider extends FabricModelProvider {
 
         // Braziers
 
-
+        registerBrazier(blockStateModelGenerator, FurnishingsBlocks.BRAZIER);
+        registerBrazier(blockStateModelGenerator, FurnishingsBlocks.SOUL_BRAZIER);
 
         // Bricks
 
@@ -112,7 +113,8 @@ public class FurnishingsModelProvider extends FabricModelProvider {
 
         // Glass
 
-
+        // Glass is already registered in the glass pane method
+        registerGlassWithPane(blockStateModelGenerator, FurnishingsBlocks.FRAMED_GLASS, FurnishingsBlocks.FRAMED_GLASS_PANE);
 
         // Iron
 
@@ -183,6 +185,36 @@ public class FurnishingsModelProvider extends FabricModelProvider {
         blockStateModelGenerator.blockStateCollector.accept(BlockStateModelGenerator.createWallBlockState(wall, postModel, lowSideModel, tallSideModel));
         Identifier inventoryModel = Models.WALL_INVENTORY.upload(wall, texturedModel.getTexture(), blockStateModelGenerator.modelCollector);
         blockStateModelGenerator.registerParentedItemModel(wall, inventoryModel);
+    }
+
+    public final void registerBrazier(BlockStateModelGenerator blockStateModelGenerator, Block brazier) {
+        blockStateModelGenerator.registerItemModel(brazier.asItem());
+        blockStateModelGenerator.blockStateCollector.accept(
+            VariantsBlockStateSupplier.create(brazier)
+                .coordinate(
+                    BlockStateVariantMap.create(Properties.LIT, Properties.HANGING)
+                        .register(
+                            true,
+                            false,
+                            BlockStateVariant.create().put(VariantSettings.MODEL, FurnishingsTexturedModel.TEMPLATE_BRAZIER.create(brazier, blockStateModelGenerator.modelCollector))
+                        )
+                        .register(
+                            true,
+                            true,
+                            BlockStateVariant.create().put(VariantSettings.MODEL, FurnishingsTexturedModel.TEMPLATE_BRAZIER_HANGING.create(brazier, blockStateModelGenerator.modelCollector))
+                        )
+                        .register(
+                            false,
+                            false,
+                            BlockStateVariant.create().put(VariantSettings.MODEL, FurnishingsTexturedModel.TEMPLATE_BRAZIER_OFF.create(brazier, blockStateModelGenerator.modelCollector))
+                        )
+                        .register(
+                            false,
+                            true,
+                            BlockStateVariant.create().put(VariantSettings.MODEL, FurnishingsTexturedModel.TEMPLATE_BRAZIER_OFF_HANGING.create(brazier, blockStateModelGenerator.modelCollector))
+                        )
+                )
+        );
     }
 
     public final void registerCandelabra(BlockStateModelGenerator blockStateModelGenerator, Block candelabra, Block candle) {
@@ -261,6 +293,10 @@ public class FurnishingsModelProvider extends FabricModelProvider {
 
     public final void registerCushion(BlockStateModelGenerator blockStateModelGenerator, Block cushion) {
         blockStateModelGenerator.registerSingleton(cushion, FurnishingsTexturedModel.TEMPLATE_CUSHION);
+    }
+
+    public final void registerGlassWithPane(BlockStateModelGenerator blockStateModelGenerator, Block glass, Block glassPane) {
+        blockStateModelGenerator.registerGlassPane(glass, glassPane);
     }
 
     public final void registerLamp(BlockStateModelGenerator blockStateModelGenerator, Block lamp) {
